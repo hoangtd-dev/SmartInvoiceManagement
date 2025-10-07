@@ -1,6 +1,6 @@
 ﻿namespace SIM.Core.Enums
 {
-    public enum ProductCategoryEnum
+    public enum InvoiceCategoryEnum
     {
         None = 0,
     }

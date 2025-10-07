@@ -5,6 +5,11 @@ namespace SIM.Infrastructure.Respositories
 {
     public class InvoiceItemRepository : IInvoiceItemRepository
     {
+        private readonly AppDbContext _appDbContext;
+        public InvoiceItemRepository(AppDbContext appDbContext) 
+        { 
+            _appDbContext = appDbContext;
+        }
         public Task<InvoiceItem> AddAsync(InvoiceItem entity)
         {
             throw new NotImplementedException();

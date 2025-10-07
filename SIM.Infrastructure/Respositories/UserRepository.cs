@@ -5,6 +5,11 @@ namespace SIM.Infrastructure.Respositories
 {
     public class UserRepository : IUserRepository
     {
+        private readonly AppDbContext _appDbContext;
+        public UserRepository(AppDbContext appDbContext)
+        {
+            _appDbContext = appDbContext;
+        }
         public Task<User> AddAsync(User entity)
         {
             throw new NotImplementedException();

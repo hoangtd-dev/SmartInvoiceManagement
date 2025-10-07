@@ -5,6 +5,11 @@ namespace SIM.Infrastructure.Respositories
 {
     public class VendorRepository : IVendorRespository
     {
+        private readonly AppDbContext _appDbContext;
+        public VendorRepository(AppDbContext appDbContext)
+        {
+            _appDbContext = appDbContext;
+        }
         public Task<Vendor> AddAsync(Vendor entity)
         {
             throw new NotImplementedException();

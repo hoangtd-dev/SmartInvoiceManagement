@@ -37,8 +37,12 @@ namespace SIM.Core.Services
         {
             var invoices = await _invoiceRepository.GetAllAsync();
 
-            // TODO: Mapping
-            return new List<InvoiceModel> { };
+            return invoices.Select(invoice => new InvoiceModel
+            {
+                Category = invoice.Category,
+                Status = invoice.Status,
+                TotalAmount = invoice.TotalAmount,
+            }).ToList();
         }
 
         public async Task UpdateInvoice(UpdateInvoiceRequest invoice)

@@ -8,6 +8,7 @@ namespace SIM.Core.Entities
     {
         public decimal TotalAmount { get; set; }
         public InvoiceStatusEnum Status { get; set; }
+        public InvoiceCategoryEnum Category { get; set; } = InvoiceCategoryEnum.None;
 
         public int UserId { get; set; }
         public virtual User User { get; set; }
