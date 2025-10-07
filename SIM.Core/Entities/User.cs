@@ -13,6 +13,6 @@ namespace SIM.Core.Entities
         public string Address { get; set; }
 
 
-        public virtual ICollection<Invoice> Invoices { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

@@ -9,8 +9,9 @@ namespace SIM.Infrastructure.Configurations
             UserConfigureTable(modelBuilder);
             VendorConfigureTable(modelBuilder);
             ProductConfigureTable(modelBuilder);
-            InvoiceConfigureTable(modelBuilder);
-            InvoiceItemConfigureTable(modelBuilder);
+            TransactionCategoryConfigureTable(modelBuilder);
+            TransactionConfigureTable(modelBuilder);
+            TransactionItemConfigureTable(modelBuilder);
         }
     }
 }

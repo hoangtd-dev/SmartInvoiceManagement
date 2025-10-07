@@ -24,8 +24,8 @@ namespace SIM.Infrastructure
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IVendorRespository, VendorRepository>();
-            services.AddScoped<IInvoiceRepository, InvoiceRepository>();
-            services.AddScoped<IInvoiceItemRepository, InvoiceItemRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<ITransactionItemRepository, TransactionItemRepository>();
             
             return services;
         }
