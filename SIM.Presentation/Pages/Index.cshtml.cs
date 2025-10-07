@@ -1,20 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SIM.Core.DTOs.Responses;
+using SIM.Core.Interfaces.Services;
 
 namespace SIM.Presentation.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        public IndexModel() { }
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public async Task OnGetAsync()
         {
-            _logger = logger;
-        }
-
-        public void OnGet()
-        {
-
+            await Task.CompletedTask;
         }
     }
 }

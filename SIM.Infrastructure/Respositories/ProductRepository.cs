@@ -5,6 +5,11 @@ namespace SIM.Infrastructure.Respositories
 {
     public class ProductRepository : IProductRepository
     {
+        private readonly AppDbContext _appDbContext;
+        public ProductRepository(AppDbContext appDbContext)
+        {
+            _appDbContext = appDbContext;
+        }
         public Task<Product> AddAsync(Product entity)
         {
             throw new NotImplementedException();

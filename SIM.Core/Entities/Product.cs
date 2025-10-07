@@ -10,7 +10,6 @@ namespace SIM.Core.Entities
         public string Description { get; set; }
         public decimal Price { get; set; }
         public int StockQuantity { get; set; }
-        public ProductCategoryEnum Category { get; set; } = ProductCategoryEnum.None;
         public string ImageBase64 { get; set; } = string.Empty;
 
         public int VendorId { get; set; }
