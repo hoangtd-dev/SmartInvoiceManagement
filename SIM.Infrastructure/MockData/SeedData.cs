@@ -43,68 +43,110 @@ namespace SIM.Infrastructure.MockData
                 new Product { Id = 8, ProductName = "Headset", Description = "Noise-cancelling headset", Price = product8, StockQuantity = 60, VendorId = 3, CreatedDate = new DateTime(2024, 1, 1) }
             );
 
-            var invoice1Total = (1 * product1) + (2 * product2);
-            var invoice2Total = 3 * product3;
-            var invoice3Total = product4 + product5;
-            var invoice4Total = product6 + (3 * product7);
-            var invoice5Total = product8;
+            modelBuilder.Entity<TransactionCategory>().HasData(
+                new TransactionCategory
+                { 
+                    Id = 1,
+                    Name = "Food",
+                    CreatedDate = new DateTime(2024, 2, 15)
+                },
+                new TransactionCategory
+                {
+                    Id = 2,
+                    Name = "Transportation",
+                    CreatedDate = new DateTime(2024, 2, 15)
+                },
+                new TransactionCategory
+                {
+                    Id = 3,
+                    Name = "Housing",
+                    CreatedDate = new DateTime(2024, 2, 15)
+                }
+            );
 
-            modelBuilder.Entity<Invoice>().HasData(
-                new Invoice
+            var transaction1Total = (1 * product1) + (2 * product2);
+            var transaction2Total = 3 * product3;
+            var transaction3Total = product4 + product5;
+            var transaction4Total = product6 + (3 * product7);
+            var transaction5Total = product8;
+
+            modelBuilder.Entity<Transaction>().HasData(
+                new Transaction
                 {
                     Id = 1,
                     CreatedDate = new DateTime(2024, 2, 15),
-                    TotalAmount = invoice1Total,
-                    Status = InvoiceStatusEnum.Paid,
-                    UserId = 1
+                    TotalAmount = transaction1Total,
+                    TransactionType = TransactionTypeEnum.Expense,
+                    UserId = 1,
+                    CategoryId = 1
                 },
-                new Invoice
+                new Transaction
                 {
                     Id = 2,
                     CreatedDate = new DateTime(2024, 1, 20),
-                    TotalAmount = invoice2Total,
-                    Status = InvoiceStatusEnum.Paid,
-                    UserId = 2
+                    TotalAmount = transaction2Total,
+                    TransactionType = TransactionTypeEnum.Expense,
+                    UserId = 2,
+                    CategoryId = 2
                 },
-                new Invoice
+                new Transaction
                 {
                     Id = 3,
                     CreatedDate = new DateTime(2024, 2, 1),
-                    TotalAmount = invoice3Total,
-                    Status = InvoiceStatusEnum.Pending,
-                    UserId = 1
+                    TotalAmount = transaction3Total,
+                    TransactionType = TransactionTypeEnum.Expense,
+                    UserId = 1,
+                    CategoryId = 3
                 },
-                new Invoice
+                new Transaction
                 {
                     Id = 4,
                     CreatedDate = new DateTime(2024, 2, 5),
-                    TotalAmount = invoice4Total,
-                    Status = InvoiceStatusEnum.Pending,
-                    UserId = 3
+                    TotalAmount = transaction4Total,
+                    TransactionType = TransactionTypeEnum.Expense,
+                    UserId = 3,
+                    CategoryId = 1
                 },
-                new Invoice
+                new Transaction
                 {
                     Id = 5,
                     CreatedDate = new DateTime(2024, 2, 8),
-                    TotalAmount = invoice5Total,
-                    Status = InvoiceStatusEnum.Cancelled,
+                    TotalAmount = transaction5Total,
+                    TransactionType = TransactionTypeEnum.Expense,
+                    UserId = 2,
+                    CategoryId = 1
+                },
+                new Transaction
+                {
+                    Id = 6,
+                    CreatedDate = new DateTime(2024, 2, 8),
+                    TotalAmount = 10000,
+                    TransactionType = TransactionTypeEnum.Income,
+                    UserId = 1
+                },
+                new Transaction
+                {
+                    Id = 7,
+                    CreatedDate = new DateTime(2024, 2, 8),
+                    TotalAmount = 20000,
+                    TransactionType = TransactionTypeEnum.Income,
                     UserId = 2
                 }
             );
 
-            modelBuilder.Entity<InvoiceItem>().HasData(
-                new InvoiceItem { Id = 1, InvoiceId = 1, ProductId = 1, Quantity = 1, Price = product1, Total = product1 * 1, CreatedDate = new DateTime(2024, 1, 1) },
-                new InvoiceItem { Id = 2, InvoiceId = 1, ProductId = 2, Quantity = 2, Price = product2, Total = product2 * 2, CreatedDate = new DateTime(2024, 1, 1) },
+            modelBuilder.Entity<TransactionItem>().HasData(
+                new TransactionItem { Id = 1, TransactionId = 1, ProductId = 1, Quantity = 1, Price = product1, Total = product1 * 1, CreatedDate = new DateTime(2024, 1, 1) },
+                new TransactionItem { Id = 2, TransactionId = 1, ProductId = 2, Quantity = 2, Price = product2, Total = product2 * 2, CreatedDate = new DateTime(2024, 1, 1) },
 
-                new InvoiceItem { Id = 3, InvoiceId = 2, ProductId = 3, Quantity = 3, Price = product3, Total = product3 * 3, CreatedDate = new DateTime(2024, 1, 1) },
+                new TransactionItem { Id = 3, TransactionId = 2, ProductId = 3, Quantity = 3, Price = product3, Total = product3 * 3, CreatedDate = new DateTime(2024, 1, 1) },
 
-                new InvoiceItem { Id = 4, InvoiceId = 3, ProductId = 5, Quantity = 1, Price = product4, Total = product4 * 1, CreatedDate = new DateTime(2024, 1, 1) },
-                new InvoiceItem { Id = 5, InvoiceId = 3, ProductId = 6, Quantity = 1, Price = product5, Total = product5 * 1, CreatedDate = new DateTime(2024, 1, 1) },
+                new TransactionItem { Id = 4, TransactionId = 3, ProductId = 5, Quantity = 1, Price = product4, Total = product4 * 1, CreatedDate = new DateTime(2024, 1, 1) },
+                new TransactionItem { Id = 5, TransactionId = 3, ProductId = 6, Quantity = 1, Price = product5, Total = product5 * 1, CreatedDate = new DateTime(2024, 1, 1) },
 
-                new InvoiceItem { Id = 6, InvoiceId = 4, ProductId = 4, Quantity = 1, Price = product6, Total = product6 * 1, CreatedDate = new DateTime(2024, 1, 1) },
-                new InvoiceItem { Id = 7, InvoiceId = 4, ProductId = 3, Quantity = 3, Price = product7, Total = product7 * 3, CreatedDate = new DateTime(2024, 1, 1) },
+                new TransactionItem { Id = 6, TransactionId = 4, ProductId = 4, Quantity = 1, Price = product6, Total = product6 * 1, CreatedDate = new DateTime(2024, 1, 1) },
+                new TransactionItem { Id = 7, TransactionId = 4, ProductId = 3, Quantity = 3, Price = product7, Total = product7 * 3, CreatedDate = new DateTime(2024, 1, 1) },
 
-                new InvoiceItem { Id = 8, InvoiceId = 5, ProductId = 2, Quantity = 1, Price = product8, Total = product8 * 1, CreatedDate = new DateTime(2024, 1, 1) }
+                new TransactionItem { Id = 8, TransactionId = 5, ProductId = 2, Quantity = 1, Price = product8, Total = product8 * 1, CreatedDate = new DateTime(2024, 1, 1) }
             );
         }
     }

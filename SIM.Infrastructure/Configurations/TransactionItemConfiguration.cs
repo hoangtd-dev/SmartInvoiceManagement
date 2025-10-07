@@ -5,22 +5,22 @@ namespace SIM.Infrastructure.Configurations
 {
     partial class TableConfigurations
     {
-        static void InvoiceItemConfigureTable(ModelBuilder modelBuilder)
+        static void TransactionItemConfigureTable(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<InvoiceItem>(entity =>
+            modelBuilder.Entity<TransactionItem>(entity =>
             {
                 entity.Property(e => e.Quantity).IsRequired();
                 entity.Property(e => e.Price).HasColumnType("decimal(18,2)").IsRequired();
                 entity.Property(e => e.Total).HasColumnType("decimal(18,2)").IsRequired();
 
-                entity.HasOne(ii => ii.Invoice)
-                      .WithMany(i => i.InvoiceItems)
-                      .HasForeignKey(ii => ii.InvoiceId)
+                entity.HasOne(ti => ti.Transtraction)
+                      .WithMany(i => i.TransactionItems)
+                      .HasForeignKey(ti => ti.TransactionId)
                       .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasOne(ii => ii.Product)
-                      .WithMany(p => p.InvoiceItems)
-                      .HasForeignKey(ii => ii.ProductId)
+                entity.HasOne(ti => ti.Product)
+                      .WithMany(p => p.TransactionItems)
+                      .HasForeignKey(ti => ti.ProductId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
         }

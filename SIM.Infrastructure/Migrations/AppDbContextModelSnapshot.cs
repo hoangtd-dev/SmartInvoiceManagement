@@ -22,200 +22,6 @@ namespace SIM.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SIM.Core.Entities.Invoice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Invoices");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Category = 0,
-                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0,
-                            TotalAmount = 1399.97m,
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Category = 0,
-                            CreatedDate = new DateTime(2024, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0,
-                            TotalAmount = 449.97m,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Category = 0,
-                            CreatedDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 1,
-                            TotalAmount = 109.98m,
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Category = 0,
-                            CreatedDate = new DateTime(2024, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 1,
-                            TotalAmount = 749.96m,
-                            UserId = 3
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Category = 0,
-                            CreatedDate = new DateTime(2024, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 2,
-                            TotalAmount = 199.99m,
-                            UserId = 2
-                        });
-                });
-
-            modelBuilder.Entity("SIM.Core.Entities.InvoiceItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("InvoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("InvoiceItems");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 1,
-                            Price = 999.99m,
-                            ProductId = 1,
-                            Quantity = 1,
-                            Total = 999.99m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 1,
-                            Price = 199.99m,
-                            ProductId = 2,
-                            Quantity = 2,
-                            Total = 399.98m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 2,
-                            Price = 149.99m,
-                            ProductId = 3,
-                            Quantity = 3,
-                            Total = 449.97m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 3,
-                            Price = 79.99m,
-                            ProductId = 5,
-                            Quantity = 1,
-                            Total = 79.99m
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 3,
-                            Price = 29.99m,
-                            ProductId = 6,
-                            Quantity = 1,
-                            Total = 29.99m
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 4,
-                            Price = 299.99m,
-                            ProductId = 4,
-                            Quantity = 1,
-                            Total = 299.99m
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 4,
-                            Price = 149.99m,
-                            ProductId = 3,
-                            Quantity = 3,
-                            Total = 449.97m
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 5,
-                            Price = 199.99m,
-                            ProductId = 2,
-                            Quantity = 1,
-                            Total = 199.99m
-                        });
-                });
-
             modelBuilder.Entity("SIM.Core.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -342,6 +148,261 @@ namespace SIM.Infrastructure.Migrations
                             ProductName = "Headset",
                             StockQuantity = 60,
                             VendorId = 3
+                        });
+                });
+
+            modelBuilder.Entity("SIM.Core.Entities.Transaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Transactions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 1399.97m,
+                            TransactionType = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(2024, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 449.97m,
+                            TransactionType = 1,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 109.98m,
+                            TransactionType = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2024, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 749.96m,
+                            TransactionType = 1,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2024, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 199.99m,
+                            TransactionType = 1,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedDate = new DateTime(2024, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 10000m,
+                            TransactionType = 0,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedDate = new DateTime(2024, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 20000m,
+                            TransactionType = 0,
+                            UserId = 2
+                        });
+                });
+
+            modelBuilder.Entity("SIM.Core.Entities.TransactionCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TransactionCategory");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Food"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Transportation"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Housing"
+                        });
+                });
+
+            modelBuilder.Entity("SIM.Core.Entities.TransactionItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("TransactionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("TransactionId");
+
+                    b.ToTable("TransactionItems");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 999.99m,
+                            ProductId = 1,
+                            Quantity = 1,
+                            Total = 999.99m,
+                            TransactionId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 199.99m,
+                            ProductId = 2,
+                            Quantity = 2,
+                            Total = 399.98m,
+                            TransactionId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 149.99m,
+                            ProductId = 3,
+                            Quantity = 3,
+                            Total = 449.97m,
+                            TransactionId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 79.99m,
+                            ProductId = 5,
+                            Quantity = 1,
+                            Total = 79.99m,
+                            TransactionId = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 29.99m,
+                            ProductId = 6,
+                            Quantity = 1,
+                            Total = 29.99m,
+                            TransactionId = 3
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 299.99m,
+                            ProductId = 4,
+                            Quantity = 1,
+                            Total = 299.99m,
+                            TransactionId = 4
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 149.99m,
+                            ProductId = 3,
+                            Quantity = 3,
+                            Total = 449.97m,
+                            TransactionId = 4
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 199.99m,
+                            ProductId = 2,
+                            Quantity = 1,
+                            Total = 199.99m,
+                            TransactionId = 5
                         });
                 });
 
@@ -510,36 +571,6 @@ namespace SIM.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SIM.Core.Entities.Invoice", b =>
-                {
-                    b.HasOne("SIM.Core.Entities.User", "User")
-                        .WithMany("Invoices")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SIM.Core.Entities.InvoiceItem", b =>
-                {
-                    b.HasOne("SIM.Core.Entities.Invoice", "Invoice")
-                        .WithMany("InvoiceItems")
-                        .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SIM.Core.Entities.Product", "Product")
-                        .WithMany("InvoiceItems")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Invoice");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("SIM.Core.Entities.Product", b =>
                 {
                     b.HasOne("SIM.Core.Entities.Vendor", "Vendor")
@@ -551,19 +582,61 @@ namespace SIM.Infrastructure.Migrations
                     b.Navigation("Vendor");
                 });
 
-            modelBuilder.Entity("SIM.Core.Entities.Invoice", b =>
+            modelBuilder.Entity("SIM.Core.Entities.Transaction", b =>
                 {
-                    b.Navigation("InvoiceItems");
+                    b.HasOne("SIM.Core.Entities.TransactionCategory", "Category")
+                        .WithMany("Transactions")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SIM.Core.Entities.User", "User")
+                        .WithMany("Transactions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SIM.Core.Entities.TransactionItem", b =>
+                {
+                    b.HasOne("SIM.Core.Entities.Product", "Product")
+                        .WithMany("TransactionItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SIM.Core.Entities.Transaction", "Transtraction")
+                        .WithMany("TransactionItems")
+                        .HasForeignKey("TransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Transtraction");
                 });
 
             modelBuilder.Entity("SIM.Core.Entities.Product", b =>
                 {
-                    b.Navigation("InvoiceItems");
+                    b.Navigation("TransactionItems");
+                });
+
+            modelBuilder.Entity("SIM.Core.Entities.Transaction", b =>
+                {
+                    b.Navigation("TransactionItems");
+                });
+
+            modelBuilder.Entity("SIM.Core.Entities.TransactionCategory", b =>
+                {
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("SIM.Core.Entities.User", b =>
                 {
-                    b.Navigation("Invoices");
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("SIM.Core.Entities.Vendor", b =>

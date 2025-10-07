@@ -1,17 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SIM.Core.Entities;
+﻿using SIM.Core.Entities;
 using SIM.Core.Interfaces.Repositories;
 
 namespace SIM.Infrastructure.Respositories
 {
-    public class InvoiceRepository : IInvoiceRepository
+    public class TransactionItemRepository : ITransactionItemRepository
     {
         private readonly AppDbContext _appDbContext;
-        public InvoiceRepository(AppDbContext appDbContext)
-        {
+        public TransactionItemRepository(AppDbContext appDbContext) 
+        { 
             _appDbContext = appDbContext;
         }
-        public Task<Invoice> AddAsync(Invoice entity)
+        public Task<TransactionItem> AddAsync(TransactionItem entity)
         {
             throw new NotImplementedException();
         }
@@ -21,17 +20,17 @@ namespace SIM.Infrastructure.Respositories
             throw new NotImplementedException();
         }
 
-        public async Task<List<Invoice>> GetAllAsync()
-        {
-            return await _appDbContext.Invoices.ToListAsync();
-        }
-
-        public Task<Invoice?> GetByIdAsync(int id)
+        public Task<List<TransactionItem>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Invoice entity)
+        public Task<TransactionItem?> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(TransactionItem entity)
         {
             throw new NotImplementedException();
         }

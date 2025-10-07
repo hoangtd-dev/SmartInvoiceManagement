@@ -15,6 +15,6 @@ namespace SIM.Core.Entities
         public int VendorId { get; set; }
         public virtual Vendor Vendor { get; set; }
 
-        public virtual ICollection<InvoiceItem> InvoiceItems { get; set; }
+        public virtual ICollection<TransactionItem> TransactionItems { get; set; }
     }
 }
