@@ -1,5 +1,7 @@
 ﻿
+using SIM.Core.DTOs.Requests;
 using SIM.Core.DTOs.Responses;
+using SIM.Core.Entities;
 using SIM.Core.Interfaces.Repositories;
 using SIM.Core.Interfaces.Services;
 
@@ -15,8 +17,32 @@ namespace SIM.Core.Services
         {
             var user = await _userRepository.GetByIdAsync(id);
 
-            // TODO: Mapping
-            return new UserModel();
+            if (user == null)
+            {
+                // Handle Exception
+            }
+
+            return new UserModel { 
+                Address = user.Address,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Phone = user.Phone
+            };
+        }
+
+        public async Task UpdateUser(UpdateUserRequest user)
+        {
+            var updatedUser = new User {
+                Id = user.Id,
+                Email = user.Email,
+                Address = user.Address,
+                Phone = user.Phone,
+                FirstName = user.Firstname,
+                LastName = user.Lastname
+            };
+
+            await _userRepository.UpdateAsync(updatedUser);
         }
     }
 }

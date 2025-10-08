@@ -1,0 +1,32 @@
+﻿@page
+@model SIM.Presentation.Pages.Account.AccountModel
+@{
+    ViewData["Title"] = ViewData["ActivePage"] = "Account";
+}
+
+
+<form method="post">
+    <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div>
+            <label asp-for="UserInfo.FirstName" class="block mb-2 text-sm font-medium text-white"></label>
+            <input type="text" asp-for="UserInfo.FirstName" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500" placeholder="Enter your first name" />
+        </div>
+        <div>
+            <label asp-for="UserInfo.LastName" class="block mb-2 text-sm font-medium text-white"></label>
+            <input type="text" asp-for="UserInfo.LastName" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500" placeholder="Enter your last name" />
+        </div>
+        <div>
+            <label asp-for="UserInfo.Phone" class="block mb-2 text-sm font-medium text-white"></label>
+            <input type="text" asp-for="UserInfo.Phone" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500" placeholder="Enter your phone" />
+        </div>
+        <div>
+            <label asp-for="UserInfo.Email" class="block mb-2 text-sm font-medium text-white"></label>
+            <input type="email" asp-for="UserInfo.Email" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500" placeholder="Enter your email" />
+        </div>
+    </div>
+    <div class="mb-6">
+        <label asp-for="UserInfo.Address" class="block mb-2 text-sm font-medium text-white"></label>
+        <input type="text" asp-for="UserInfo.Address" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500" placeholder="Enter your address" />
+    </div>
+    <button type="submit" class="text-white font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700">Submit</button>
+</form>

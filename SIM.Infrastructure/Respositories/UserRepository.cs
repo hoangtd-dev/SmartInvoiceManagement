@@ -1,4 +1,5 @@
-﻿using SIM.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SIM.Core.Entities;
 using SIM.Core.Interfaces.Repositories;
 
 namespace SIM.Infrastructure.Respositories
@@ -25,14 +26,26 @@ namespace SIM.Infrastructure.Respositories
             throw new NotImplementedException();
         }
 
-        public Task<User?> GetByIdAsync(int id)
+        public async Task<User?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _appDbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task UpdateAsync(User entity)
+        public async Task UpdateAsync(User user)
         {
-            throw new NotImplementedException();
+            var updatedUser = await _appDbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
+
+            if (updatedUser != null) {
+                // Handle exception
+            }
+
+            updatedUser.Email = user.Email;
+            updatedUser.Address = user.Address;
+            updatedUser.Phone = user.Phone;
+            updatedUser.FirstName = user.FirstName;
+            updatedUser.LastName = user.LastName;
+
+            await _appDbContext.SaveChangesAsync();
         }
     }
 }
