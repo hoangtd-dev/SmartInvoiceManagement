@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
 using SIM.Core.Interfaces.Services;
 
 namespace SIM.Presentation.Pages.Account
@@ -11,8 +10,7 @@ namespace SIM.Presentation.Pages.Account
     public class LoginModel : PageModel
     {
         [BindProperty]
-        public InputModel? Input { get; set; }
-
+        public LoginInputModel Input { get; set; }
         private readonly IAuthService _authService;
 
         public LoginModel(IAuthService authService)
@@ -63,17 +61,6 @@ namespace SIM.Presentation.Pages.Account
                 ModelState.AddModelError(string.Empty, ex.Message);
                 return Page();
             }
-        }
-
-        public class InputModel
-        {
-            [Required(ErrorMessage = "Email is required")]
-            [EmailAddress (ErrorMessage = "Invalid email address")]
-            public string? Email { get; set; }
-
-            [Required(ErrorMessage = "Password is required")]
-            [DataType(DataType.Password)]
-            public string? Password { get; set; }
         }
     }
 }
