@@ -20,9 +20,7 @@ namespace SIM.Presentation.Pages.Account
                 return Page();
             }
 
-            // TODO: Hook up user creation using IUserService or an Auth service.
-            // For now, redirect to Login page after 'successful' registration.
-            return RedirectToPage("./Login");
+            return RedirectToPage("/Dashboard");
         }
 
         public class InputModel

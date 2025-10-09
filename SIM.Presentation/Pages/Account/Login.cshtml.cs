@@ -7,7 +7,7 @@ namespace SIM.Presentation.Pages.Account
     public class LoginModel : PageModel
     {
         [BindProperty]
-        public InputModel Input { get; set; }
+        public LoginInputModel Input { get; set; }
 
         public void OnGet()
         {
@@ -20,11 +20,10 @@ namespace SIM.Presentation.Pages.Account
                 return Page();
             }
 
-            // TODO: Integrate authentication. For now, redirect to Index.
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Dashboard");
         }
 
-        public class InputModel
+        public class LoginInputModel
         {
             [Required]
             [EmailAddress]
