@@ -9,9 +9,16 @@ namespace SIM.Presentation.Pages
     {
         public IndexModel() { }
 
-        public async Task OnGetAsync()
+        public IActionResult OnGet()
         {
-            await Task.CompletedTask;
+            // If the user is not authenticated, send them to the public welcome page.
+            if (!(User?.Identity?.IsAuthenticated ?? false))
+            {
+                return RedirectToPage("/Welcome");
+            }
+
+            // Authenticated users remain on the dashboard (render Index)
+            return Page();
         }
     }
 }
