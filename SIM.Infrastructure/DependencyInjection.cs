@@ -2,11 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using SIM.Core.Interfaces.Repositories;
 using SIM.Infrastructure.Respositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SIM.Core.Interfaces.Services;
+using SIM.Core.Services;
 
 namespace SIM.Infrastructure
 {
@@ -15,7 +12,7 @@ namespace SIM.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, string? connectionString)
         {
             if (connectionString is null) {
-                connectionString = "Server=localhost\\SQLEXPRESS;Database=imdb;Trusted_Connection=true;TrustServerCertificate=true;";
+                connectionString = "Server=localhost;Database=imdb;Trusted_Connection=true;TrustServerCertificate=true;";
             }
 
             services.AddDbContext<AppDbContext>(options =>
@@ -23,6 +20,7 @@ namespace SIM.Infrastructure
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IVendorRespository, VendorRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<ITransactionItemRepository, TransactionItemRepository>();
