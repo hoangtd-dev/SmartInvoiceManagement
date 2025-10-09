@@ -11,5 +11,7 @@ namespace SIM.Core.Interfaces.Services
         Task DeleteTransaction(int id);
         Task<TransactionModel> GetTransactionById(int id);
         Task<ICollection<TransactionModel>> GetTransactions();
+        Task<ICollection<TransactionModel>> GetLastestTransactions(int take);
+        Task<IncomeExpenseModel> GetIncomeExpensesInMonth(int month, int year);
     }
 }
