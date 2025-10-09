@@ -53,12 +53,29 @@ namespace SIM.Presentation.Pages.Account
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
                 // Redirect to Index. Include userId in query string so the client can store it if desired.
-                return RedirectToPage("/Index", new { userId = user.Id });
+                return RedirectToPage("/Dashboard", new { userId = user.Id });
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                // Map domain errors to model state
-                ModelState.AddModelError(string.Empty, ex.Message);
+                // Map domain error codes from service
+                switch (ex.Message)
+                {
+                    case "EmailNotFound":
+                        ModelState.AddModelError(string.Empty, "Email address not found.");
+                        break;
+                    case "PasswordIncorrect":
+                        ModelState.AddModelError(string.Empty, "Password is incorrect.");
+                        break;
+                    default:
+                        ModelState.AddModelError(string.Empty, "Authentication failed.");
+                        break;
+                }
+
+                return Page();
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "An internal error occurred. Please try again later.");
                 return Page();
             }
         }

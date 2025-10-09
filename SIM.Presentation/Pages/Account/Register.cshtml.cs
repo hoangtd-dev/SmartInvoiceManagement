@@ -53,11 +53,25 @@ namespace SIM.Presentation.Pages.Account
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                return RedirectToPage("/Index", new { userId = user.Id });
+                return RedirectToPage("/Dashboard", new { userId = user.Id });
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
+                switch (ex.Message)
+                {
+                    case "EmailAlreadyExists":
+                        ModelState.AddModelError(string.Empty, "Email already exists.");
+                        break;
+                    default:
+                        ModelState.AddModelError(string.Empty, "Registration failed.");
+                        break;
+                }
+
+                return Page();
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "An internal error occurred. Please try again later.");
                 return Page();
             }
         }
