@@ -24,11 +24,13 @@ namespace SIM.Infrastructure.Respositories
 
         public async Task<ICollection<Transaction>> GetAllAsync()
         {
+            // TODO: Get transactions of current user Id
             return await _appDbContext.Transactions.ToListAsync();
         }
 
         public async Task<ICollection<Transaction>> GetLatestTransactionsAsync(int take)
         {
+            // TODO: Get transactions of current user Id
             return await _appDbContext.Transactions
                 .Include(x => x.Category)
                 .Include(x => x.Vendor)
@@ -51,6 +53,7 @@ namespace SIM.Infrastructure.Respositories
         {
             var (startDate, endDate) = DateHelpers.GetStartAndEndDateOfMonth(month, year);
 
+            // TODO: Get transactions of current user Id
             return await _appDbContext.Transactions
                 .Where(x => x.CreatedDate >= startDate && x.CreatedDate <= endDate)
                 .ToListAsync();
