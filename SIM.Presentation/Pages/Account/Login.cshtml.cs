@@ -52,8 +52,7 @@ namespace SIM.Presentation.Pages.Account
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                // Redirect to Index. Include userId in query string so the client can store it if desired.
-                return RedirectToPage("/Dashboard", new { userId = user.Id });
+                return RedirectToPage("/Dashboard");
             }
             catch (ArgumentException ex)
             {

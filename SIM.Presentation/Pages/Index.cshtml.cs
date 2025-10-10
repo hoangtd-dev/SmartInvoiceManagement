@@ -14,7 +14,6 @@ namespace SIM.Presentation.Pages
             // If the user is not authenticated, send them to the public welcome page.
             if (!(User?.Identity?.IsAuthenticated ?? false))
             {
-                Console.WriteLine("User is not authenticated, redirecting to Welcome page.");
                 return RedirectToPage("/Welcome");
             }
 

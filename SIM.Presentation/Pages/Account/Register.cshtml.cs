@@ -40,7 +40,6 @@ namespace SIM.Presentation.Pages.Account
 
                 var user = await _authService.RegisterAsync(Input.FirstName!, Input.LastName!, Input.Email!, Input.Password!);
 
-                // sign in
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -53,7 +52,7 @@ namespace SIM.Presentation.Pages.Account
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                return RedirectToPage("/Dashboard", new { userId = user.Id });
+                return RedirectToPage("/Dashboard");
             }
             catch (ArgumentException ex)
             {
