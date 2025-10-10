@@ -159,7 +159,7 @@ namespace SIM.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -174,11 +174,16 @@ namespace SIM.Infrastructure.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int>("VendorId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("VendorId");
 
                     b.ToTable("Transactions");
 
@@ -186,63 +191,202 @@ namespace SIM.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CategoryId = 1,
-                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TotalAmount = 1399.97m,
-                            TransactionType = 1,
-                            UserId = 1
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 12000m,
+                            TransactionType = 0,
+                            UserId = 1,
+                            VendorId = 3
                         },
                         new
                         {
                             Id = 2,
-                            CategoryId = 2,
-                            CreatedDate = new DateTime(2024, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TotalAmount = 449.97m,
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 1029.98m,
                             TransactionType = 1,
-                            UserId = 2
+                            UserId = 1,
+                            VendorId = 1
                         },
                         new
                         {
                             Id = 3,
-                            CategoryId = 3,
-                            CreatedDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TotalAmount = 109.98m,
-                            TransactionType = 1,
-                            UserId = 1
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 12500m,
+                            TransactionType = 0,
+                            UserId = 2,
+                            VendorId = 3
                         },
                         new
                         {
                             Id = 4,
-                            CategoryId = 1,
-                            CreatedDate = new DateTime(2024, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TotalAmount = 749.96m,
+                            CategoryId = 6,
+                            CreatedDate = new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 299.98m,
                             TransactionType = 1,
-                            UserId = 3
+                            UserId = 2,
+                            VendorId = 2
                         },
                         new
                         {
                             Id = 5,
-                            CategoryId = 1,
-                            CreatedDate = new DateTime(2024, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TotalAmount = 199.99m,
-                            TransactionType = 1,
-                            UserId = 2
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 11800m,
+                            TransactionType = 0,
+                            UserId = 3,
+                            VendorId = 3
                         },
                         new
                         {
                             Id = 6,
-                            CreatedDate = new DateTime(2024, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TotalAmount = 10000m,
-                            TransactionType = 0,
-                            UserId = 1
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 499.98m,
+                            TransactionType = 1,
+                            UserId = 3,
+                            VendorId = 1
                         },
                         new
                         {
                             Id = 7,
-                            CreatedDate = new DateTime(2024, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TotalAmount = 20000m,
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 13000m,
                             TransactionType = 0,
-                            UserId = 2
+                            UserId = 1,
+                            VendorId = 3
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CategoryId = 6,
+                            CreatedDate = new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 229.98m,
+                            TransactionType = 1,
+                            UserId = 4,
+                            VendorId = 2
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 12200m,
+                            TransactionType = 0,
+                            UserId = 2,
+                            VendorId = 3
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 399.98m,
+                            TransactionType = 1,
+                            UserId = 5,
+                            VendorId = 3
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 6, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 12800m,
+                            TransactionType = 0,
+                            UserId = 3,
+                            VendorId = 3
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 999.99m,
+                            TransactionType = 1,
+                            UserId = 1,
+                            VendorId = 1
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 7, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 13500m,
+                            TransactionType = 0,
+                            UserId = 4,
+                            VendorId = 3
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CategoryId = 6,
+                            CreatedDate = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 389.96m,
+                            TransactionType = 1,
+                            UserId = 2,
+                            VendorId = 1
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 8, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 12600m,
+                            TransactionType = 0,
+                            UserId = 5,
+                            VendorId = 3
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CategoryId = 6,
+                            CreatedDate = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 229.98m,
+                            TransactionType = 1,
+                            UserId = 3,
+                            VendorId = 2
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 13200m,
+                            TransactionType = 0,
+                            UserId = 1,
+                            VendorId = 3
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 399.98m,
+                            TransactionType = 1,
+                            UserId = 4,
+                            VendorId = 1
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 12400m,
+                            TransactionType = 0,
+                            UserId = 2,
+                            VendorId = 3
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalAmount = 349.98m,
+                            TransactionType = 1,
+                            UserId = 5,
+                            VendorId = 3
                         });
                 });
 
@@ -286,6 +430,24 @@ namespace SIM.Infrastructure.Migrations
                             Id = 3,
                             CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Housing"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Salary"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Electronics"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Office Supplies"
                         });
                 });
 
@@ -327,82 +489,162 @@ namespace SIM.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 999.99m,
                             ProductId = 1,
                             Quantity = 1,
                             Total = 999.99m,
-                            TransactionId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 199.99m,
-                            ProductId = 2,
-                            Quantity = 2,
-                            Total = 399.98m,
-                            TransactionId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 149.99m,
-                            ProductId = 3,
-                            Quantity = 3,
-                            Total = 449.97m,
                             TransactionId = 2
                         },
                         new
                         {
-                            Id = 4,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 79.99m,
+                            Id = 2,
+                            CreatedDate = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 29.99m,
                             ProductId = 5,
                             Quantity = 1,
-                            Total = 79.99m,
-                            TransactionId = 3
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 29.99m,
-                            ProductId = 6,
-                            Quantity = 1,
                             Total = 29.99m,
-                            TransactionId = 3
+                            TransactionId = 2
                         },
                         new
                         {
-                            Id = 6,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 299.99m,
-                            ProductId = 4,
-                            Quantity = 1,
-                            Total = 299.99m,
-                            TransactionId = 4
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 3,
+                            CreatedDate = new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 149.99m,
                             ProductId = 3,
-                            Quantity = 3,
-                            Total = 449.97m,
+                            Quantity = 2,
+                            Total = 299.98m,
                             TransactionId = 4
                         },
                         new
                         {
-                            Id = 8,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 4,
+                            CreatedDate = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 199.99m,
                             ProductId = 2,
                             Quantity = 1,
                             Total = 199.99m,
-                            TransactionId = 5
+                            TransactionId = 6
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedDate = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 299.99m,
+                            ProductId = 6,
+                            Quantity = 1,
+                            Total = 299.99m,
+                            TransactionId = 6
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedDate = new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 79.99m,
+                            ProductId = 4,
+                            Quantity = 1,
+                            Total = 79.99m,
+                            TransactionId = 8
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedDate = new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 149.99m,
+                            ProductId = 7,
+                            Quantity = 1,
+                            Total = 149.99m,
+                            TransactionId = 8
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedDate = new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 199.99m,
+                            ProductId = 8,
+                            Quantity = 2,
+                            Total = 399.98m,
+                            TransactionId = 10
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedDate = new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 999.99m,
+                            ProductId = 1,
+                            Quantity = 1,
+                            Total = 999.99m,
+                            TransactionId = 12
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedDate = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 29.99m,
+                            ProductId = 5,
+                            Quantity = 3,
+                            Total = 89.97m,
+                            TransactionId = 14
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedDate = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 299.99m,
+                            ProductId = 6,
+                            Quantity = 1,
+                            Total = 299.99m,
+                            TransactionId = 14
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedDate = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 149.99m,
+                            ProductId = 3,
+                            Quantity = 1,
+                            Total = 149.99m,
+                            TransactionId = 16
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedDate = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 79.99m,
+                            ProductId = 4,
+                            Quantity = 1,
+                            Total = 79.99m,
+                            TransactionId = 16
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedDate = new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 199.99m,
+                            ProductId = 2,
+                            Quantity = 2,
+                            Total = 399.98m,
+                            TransactionId = 18
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedDate = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 149.99m,
+                            ProductId = 7,
+                            Quantity = 1,
+                            Total = 149.99m,
+                            TransactionId = 20
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedDate = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 199.99m,
+                            ProductId = 8,
+                            Quantity = 1,
+                            Total = 199.99m,
+                            TransactionId = 20
                         });
                 });
 
@@ -587,7 +829,8 @@ namespace SIM.Infrastructure.Migrations
                     b.HasOne("SIM.Core.Entities.TransactionCategory", "Category")
                         .WithMany("Transactions")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SIM.Core.Entities.User", "User")
                         .WithMany("Transactions")
@@ -595,9 +838,17 @@ namespace SIM.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("SIM.Core.Entities.Vendor", "Vendor")
+                        .WithMany("Transactions")
+                        .HasForeignKey("VendorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Category");
 
                     b.Navigation("User");
+
+                    b.Navigation("Vendor");
                 });
 
             modelBuilder.Entity("SIM.Core.Entities.TransactionItem", b =>
@@ -642,6 +893,8 @@ namespace SIM.Infrastructure.Migrations
             modelBuilder.Entity("SIM.Core.Entities.Vendor", b =>
                 {
                     b.Navigation("Products");
+
+                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }

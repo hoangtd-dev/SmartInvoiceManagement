@@ -2,6 +2,7 @@
 using SIM.Core.DTOs.Requests;
 using SIM.Core.DTOs.Responses;
 using SIM.Core.Entities;
+using SIM.Core.Enums;
 using SIM.Core.Interfaces.Repositories;
 using SIM.Core.Interfaces.Services;
 
@@ -33,6 +34,21 @@ namespace SIM.Core.Services
             return new TransactionModel();
         }
 
+        public async Task<ICollection<TransactionModel>> GetLastestTransactions(int take)
+        {
+            var transactions = await _transactionRepository.GetLatestTransactionsAsync(take);
+
+            return transactions.Select(transaction => new TransactionModel
+            {
+                Id = transaction.Id,
+                Type = transaction.TransactionType,
+                TotalAmount = transaction.TotalAmount,
+                CreateDate = transaction.CreatedDate,
+                CategoryName = transaction.Category is not null ? transaction.Category.Name : null,
+                VendorName = transaction.Vendor is not null ? transaction.Vendor.VendorName : null
+            }).ToList();
+        }
+
         public async Task<ICollection<TransactionModel>> GetTransactions()
         {
             var transactions = await _transactionRepository.GetAllAsync();
@@ -48,6 +64,21 @@ namespace SIM.Core.Services
         {
             // TODO: Mapping
             await _transactionRepository.UpdateAsync(new Transaction());
+        }
+
+        public async Task<IncomeExpenseModel> GetIncomeExpensesInMonth(int month, int year)
+        {
+            var transactions = await _transactionRepository.GetIncomeExpenseInMonthAsync(month, year);
+
+            var totalIncome = transactions.Where(t => t.TransactionType == TransactionTypeEnum.Income).Sum(transaction => transaction.TotalAmount);
+            var totalExpense = transactions.Where(t => t.TransactionType == TransactionTypeEnum.Expense).Sum(transaction => transaction.TotalAmount);
+
+            return new IncomeExpenseModel { 
+                Expense = totalExpense,
+                Income = totalIncome,
+                Month = month,
+                Year = year
+            };
         }
     }
 }

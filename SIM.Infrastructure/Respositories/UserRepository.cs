@@ -21,7 +21,7 @@ namespace SIM.Infrastructure.Respositories
             throw new NotImplementedException();
         }
 
-        public Task<List<User>> GetAllAsync()
+        public Task<ICollection<User>> GetAllAsync()
         {
             throw new NotImplementedException();
         }

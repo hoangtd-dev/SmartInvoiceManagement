@@ -12,5 +12,6 @@ namespace SIM.Core.Entities
 
 
         public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }
