@@ -1,5 +1,9 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SIM.Core.Interfaces.Services;
 
 namespace SIM.Presentation.Pages.Account
 {
@@ -7,19 +11,69 @@ namespace SIM.Presentation.Pages.Account
     {
         [BindProperty]
         public LoginInputModel Input { get; set; }
+        private readonly IAuthService _authService;
+
+        public LoginModel(IAuthService authService)
+        {
+            _authService = authService;
+        }
 
         public void OnGet()
         {
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            return RedirectToPage("/Dashboard");
+            try
+            {
+                if (Input is null)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid input.");
+                    return Page();
+                }
+
+                var user = await _authService.LoginAsync(Input.Email!, Input.Password!);
+
+                // create claims and sign in
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
+                    new Claim(ClaimTypes.Email, user.Email ?? string.Empty)
+                };
+
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(identity);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                return RedirectToPage("/Dashboard/Index");
+            }
+            catch (ArgumentException ex)
+            {
+                // Map domain error codes from service
+                switch (ex.Message)
+                {
+                    case "EmailOrPasswordInvalid":
+                        ModelState.AddModelError(string.Empty, "Email or password is incorrect.");
+                        break;
+                    default:
+                        ModelState.AddModelError(string.Empty, "Authentication failed.");
+                        break;
+                }
+
+                return Page();
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "An internal error occurred. Please try again later.");
+                return Page();
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SIM.Core.DTOs.Requests;
 using SIM.Core.DTOs.Responses;
@@ -9,7 +10,7 @@ namespace SIM.Presentation.Pages.Account
     public class AccountModel : PageModel
     {
         [BindProperty]
-        public UserModel UserInfo { get; set; }
+        public UserModel? UserInfo { get; set; }
 
         private readonly IUserService _userService;
         public AccountModel(IUserService userService)
@@ -23,14 +24,21 @@ namespace SIM.Presentation.Pages.Account
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync() 
+        public async Task<IActionResult> OnPostSubmitAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            var updateUser = new UpdateUserRequest { 
+            if (UserInfo == null)
+            {
+                ModelState.AddModelError(string.Empty, "User info is missing.");
+                return Page();
+            }
+
+            var updateUser = new UpdateUserRequest
+            {
                 Id = 1, // TODO: Update when Authen finish
                 Address = UserInfo.Address,
                 Phone = UserInfo.Phone,
@@ -41,6 +49,12 @@ namespace SIM.Presentation.Pages.Account
             await _userService.UpdateUser(updateUser);
 
             return RedirectToPage("./Index");
+        }
+
+        public async Task<IActionResult> OnPostLogoutAsync()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToPage("/Welcome");
         }
     }
 }

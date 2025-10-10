@@ -31,6 +31,24 @@ namespace SIM.Core.Services
                 Phone = user.Phone
             };
         }
+        
+        public async Task<UserModel> GetUserByEmail(string email)
+        {
+             var user = await _userRepository.GetByEmailAsync(email);
+
+            if (user == null)
+            {
+                // Handle Exception
+            }
+
+            return new UserModel { 
+                Address = user.Address,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Phone = user.Phone
+            };
+        }
 
         public async Task UpdateUser(UpdateUserRequest user)
         {
