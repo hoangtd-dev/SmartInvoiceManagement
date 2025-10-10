@@ -410,7 +410,7 @@ namespace SIM.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TransactionCategory");
+                    b.ToTable("TransactionCategories");
 
                     b.HasData(
                         new

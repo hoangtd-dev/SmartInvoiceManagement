@@ -1,17 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using SIM.Core.Entities;
 using SIM.Core.Interfaces.Repositories;
 
 namespace SIM.Infrastructure.Respositories
 {
-    public class ProductRepository : IProductRepository
+    public class TransactionCategoryRepository : ITransactionCategoryRepository
     {
         private readonly AppDbContext _appDbContext;
-        public ProductRepository(AppDbContext appDbContext)
+        public TransactionCategoryRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
-        public Task<Product> AddAsync(Product entity)
+        public Task<TransactionCategory> AddAsync(TransactionCategory entity)
         {
             throw new NotImplementedException();
         }
@@ -21,19 +22,17 @@ namespace SIM.Infrastructure.Respositories
             throw new NotImplementedException();
         }
 
-        public async Task<ICollection<Product>> GetAllAsync()
+        public async Task<ICollection<TransactionCategory>> GetAllAsync()
         {
-            return await _appDbContext.Products
-                .Include(x => x.Vendor)
-                .ToListAsync();
+            return await _appDbContext.TransactionCategories.ToListAsync();
         }
 
-        public Task<Product?> GetByIdAsync(int id)
+        public Task<TransactionCategory?> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Product entity)
+        public Task UpdateAsync(TransactionCategory entity)
         {
             throw new NotImplementedException();
         }

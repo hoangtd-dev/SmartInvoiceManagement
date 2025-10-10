@@ -12,7 +12,7 @@ using SIM.Infrastructure;
 namespace SIM.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251009050815_InitialCreate")]
+    [Migration("20251009141300_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -413,7 +413,7 @@ namespace SIM.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TransactionCategory");
+                    b.ToTable("TransactionCategories");
 
                     b.HasData(
                         new

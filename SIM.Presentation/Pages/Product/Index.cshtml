@@ -1,0 +1,26 @@
+﻿@page
+@using SIM.Core.DTOs.Common
+@model SIM.Presentation.Pages.Product.ProductModel
+@{
+    ViewData["Title"] = ViewData["ActivePage"] = "Product";
+}
+
+<div class="p-4 border border-gray-700 shadow-sm rounded-lg">
+    <h1 class="mb-4 text-lg font-bold">Products</h1>
+
+    @await Html.PartialAsync("_DataTable", new DataTableViewModel
+    {
+        Headers = new List<string> { "Name", "VendorName", "Price", "Quantity", "Description" },
+        Rows = Model.Products.Select(tc => new TableRow
+        {
+            Cells = new List<TableCell>
+            {
+                new TableCell { Value = tc.Name },
+                new TableCell { Value = tc.VendorName },
+                new TableCell { Value = $"${tc.Price}" },
+                new TableCell { Value = tc.StockQuantity },
+                new TableCell { Value = tc.Description }
+            }
+        }).ToList()
+    })
+</div>

@@ -14,6 +14,9 @@ builder.Services.AddInfrastructure(connectionString);
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<IVendorService, VendorService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ITransactionCategoryService, TransactionCategoryService>();
 
 var app = builder.Build();
 

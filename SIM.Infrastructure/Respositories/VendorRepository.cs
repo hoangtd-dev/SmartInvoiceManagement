@@ -1,4 +1,5 @@
-﻿using SIM.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SIM.Core.Entities;
 using SIM.Core.Interfaces.Repositories;
 
 namespace SIM.Infrastructure.Respositories
@@ -20,9 +21,9 @@ namespace SIM.Infrastructure.Respositories
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<Vendor>> GetAllAsync()
+        public async Task<ICollection<Vendor>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _appDbContext.Vendors.ToListAsync();
         }
 
         public Task<Vendor?> GetByIdAsync(int id)

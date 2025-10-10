@@ -22,7 +22,8 @@ namespace SIM.Core.Services
                 // Handle Exception
             }
 
-            return new UserModel { 
+            return new UserModel {
+                Id = id,
                 Address = user.Address,
                 Email = user.Email,
                 FirstName = user.FirstName,

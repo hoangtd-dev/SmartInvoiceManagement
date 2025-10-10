@@ -14,7 +14,7 @@ namespace SIM.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "TransactionCategory",
+                name: "TransactionCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -25,7 +25,7 @@ namespace SIM.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TransactionCategory", x => x.Id);
+                    table.PrimaryKey("PK_TransactionCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -106,9 +106,9 @@ namespace SIM.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Transactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transactions_TransactionCategory_CategoryId",
+                        name: "FK_Transactions_TransactionCategories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "TransactionCategory",
+                        principalTable: "TransactionCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -156,7 +156,7 @@ namespace SIM.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "TransactionCategory",
+                table: "TransactionCategories",
                 columns: new[] { "Id", "CreatedDate", "Description", "Name" },
                 values: new object[,]
                 {
@@ -306,7 +306,7 @@ namespace SIM.Infrastructure.Migrations
                 name: "Transactions");
 
             migrationBuilder.DropTable(
-                name: "TransactionCategory");
+                name: "TransactionCategories");
 
             migrationBuilder.DropTable(
                 name: "Users");
