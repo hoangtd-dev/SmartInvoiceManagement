@@ -12,7 +12,7 @@ namespace SIM.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, string? connectionString)
         {
             if (connectionString is null) {
-                connectionString = "Server=localhost;Database=imdb;Trusted_Connection=true;TrustServerCertificate=true;";
+                connectionString = "Server=localhost\\SQLEXPRESS;Database=imdb;Trusted_Connection=true;TrustServerCertificate=true;";
             }
 
             services.AddDbContext<AppDbContext>(options =>
