@@ -1,6 +1,5 @@
 ﻿@{
-    // Choose layout based on the current user identity. If you need a different layout
-    // for authenticated users, keep a separate _LayoutAuth file and the check below.
-    var isAuthenticated = false;
+    // Choose layout based on the current user identity. Use the PageModel's User property
+    var isAuthenticated = (User?.Identity?.IsAuthenticated ?? false);
     Layout = isAuthenticated ? "_LayoutAuth" : "_Layout";
 }

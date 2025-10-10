@@ -2,11 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using SIM.Core.Interfaces.Repositories;
 using SIM.Infrastructure.Respositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SIM.Core.Interfaces.Services;
+using SIM.Core.Services;
 
 namespace SIM.Infrastructure
 {
@@ -26,7 +23,7 @@ namespace SIM.Infrastructure
             services.AddScoped<IVendorRespository, VendorRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<ITransactionItemRepository, TransactionItemRepository>();
-            
+
             return services;
         }
     }

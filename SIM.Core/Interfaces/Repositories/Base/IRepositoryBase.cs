@@ -1,5 +1,5 @@
-﻿
-namespace SIM.Core.Interfaces.Repositories.Base
+﻿namespace SIM.Core.Interfaces.Repositories.Base
+
 {
     public interface IRepositoryBase<T> where T : class
     {

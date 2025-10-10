@@ -2,31 +2,48 @@
 @model SIM.Presentation.Pages.Account.LoginModel
 @{
     ViewData["Title"] = "Login";
+    var hasGlobalErrors = ViewData.ModelState.ContainsKey(string.Empty) &&
+    ViewData.ModelState[string.Empty].Errors.Count > 0;
+
 }
 
 <div class="flex items-center justify-center min-h-[50vh] bg-gray-900 text-white">
     <div class="w-full max-w-md p-8 bg-gray-800 rounded-lg shadow">
         <h2 class="text-2xl font-semibold mb-6">Sign in to your account</h2>
 
+        <div id="loginErrorBox" class="mb-4" style="@(hasGlobalErrors ? "" : "display:none")">
+            <div class="flex items-center justify-between text-red-400 bg-red-900/10 p-3 rounded mb-2">
+                <div asp-validation-summary="ModelOnly" class="text-red-400"></div>
+                <button type="button" aria-label="Close"
+                    onclick="document.getElementById('loginErrorBox').style.display='none'"
+                    class="ml-4 text-red-200 hover:text-white px-2 py-1 rounded">×</button>
+            </div>
+        </div>
+
         <form method="post" novalidate>
             <div class="mb-4">
                 <label asp-for="Input.Email" class="block text-sm font-medium text-gray-200"></label>
-                <input asp-for="Input.Email" class="mt-1 block w-full rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 focus:outline-none focus:ring focus:ring-indigo-500" />
+                <input asp-for="Input.Email"
+                    class="mt-1 block w-full rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 focus:outline-none focus:ring focus:ring-indigo-500" />
                 <span asp-validation-for="Input.Email" class="text-red-400 text-sm"></span>
+
             </div>
 
             <div class="mb-4">
                 <label asp-for="Input.Password" class="block text-sm font-medium text-gray-200"></label>
-                <input asp-for="Input.Password" type="password" class="mt-1 block w-full rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 focus:outline-none focus:ring focus:ring-indigo-500" />
+                <input asp-for="Input.Password" type="password"
+                    class="mt-1 block w-full rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 focus:outline-none focus:ring focus:ring-indigo-500" />
                 <span asp-validation-for="Input.Password" class="text-red-400 text-sm"></span>
             </div>
 
-            <div class="flex justify-end mb-4">
+            <div class="flex items-center justify-end mb-4">
                 <a asp-page="./Register" class="text-sm text-indigo-400 hover:underline">Register</a>
             </div>
 
             <div>
-                <button type="submit" class="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-500 rounded text-white font-semibold">Sign in</button>
+                <button type="submit"
+                    class="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-500 rounded text-white font-semibold">Sign
+                    in</button>
             </div>
         </form>
 

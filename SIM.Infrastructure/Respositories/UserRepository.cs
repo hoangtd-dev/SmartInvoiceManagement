@@ -11,10 +11,11 @@ namespace SIM.Infrastructure.Respositories
         {
             _appDbContext = appDbContext;
         }
-        public Task<User> AddAsync(User entity)
+        public async Task<User> AddAsync(User entity)
         {
-            throw new NotImplementedException();
-        }
+            var entry = await _appDbContext.Users.AddAsync(entity);
+            await _appDbContext.SaveChangesAsync();
+            return entry.Entity;        }
 
         public Task DeleteAsync(int id)
         {
@@ -29,6 +30,11 @@ namespace SIM.Infrastructure.Respositories
         public async Task<User?> GetByIdAsync(int id)
         {
             return await _appDbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+        }
+        
+        public async Task<User?> GetByEmailAsync(string email)
+        {
+            return await _appDbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
         }
 
         public async Task UpdateAsync(User user)
