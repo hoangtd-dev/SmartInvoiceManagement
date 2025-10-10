@@ -59,11 +59,8 @@ namespace SIM.Presentation.Pages.Account
                 // Map domain error codes from service
                 switch (ex.Message)
                 {
-                    case "EmailNotFound":
-                        ModelState.AddModelError(string.Empty, "Email address not found.");
-                        break;
-                    case "PasswordIncorrect":
-                        ModelState.AddModelError(string.Empty, "Password is incorrect.");
+                    case "EmailOrPasswordInvalid":
+                        ModelState.AddModelError(string.Empty, "Email or password is incorrect.");
                         break;
                     default:
                         ModelState.AddModelError(string.Empty, "Authentication failed.");

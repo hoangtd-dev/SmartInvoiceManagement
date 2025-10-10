@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using SIM.Core.DTOs.Responses;
 using SIM.Core.Entities;
 using SIM.Core.Interfaces.Repositories;
 using SIM.Core.Interfaces.Services;
@@ -14,18 +15,23 @@ namespace SIM.Core.Services
             _userRepository = userRepository;
         }
 
-        public async Task<User> LoginAsync(string email, string password)
+        public async Task<UserLoginModel> LoginAsync(string email, string password)
         {
             try
             {
                 var user = await _userRepository.GetByEmailAsync(email);
-                if (user == null)
-                    throw new ArgumentException("EmailNotFound");
+                if (user == null || !VerifyPassword(password, user.PasswordHash))
+                {
+                    throw new ArgumentException("EmailOrPasswordInvalid");
+                }
 
-                if (!VerifyPassword(password, user.PasswordHash))
-                    throw new ArgumentException("PasswordIncorrect");
-
-                return user;
+                return new UserLoginModel
+                {
+                    Id = user.Id.ToString(),
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                };
             }
             catch (ArgumentException)
             {
@@ -38,7 +44,7 @@ namespace SIM.Core.Services
             }
         }
 
-        public async Task<User> RegisterAsync(string firstName, string lastName, string email, string rawPassword)
+        public async Task RegisterAsync(string firstName, string lastName, string email, string rawPassword)
         {
             try
             {
@@ -55,7 +61,7 @@ namespace SIM.Core.Services
                 };
 
                 var created = await _userRepository.AddAsync(user);
-                return created;
+                return;
             }
             catch (ArgumentException)
             {
