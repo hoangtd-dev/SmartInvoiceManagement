@@ -52,7 +52,7 @@ namespace SIM.Presentation.Pages.Account
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                return RedirectToPage("/Dashboard");
+                return RedirectToPage("/Dashboard/Index");
             }
             catch (ArgumentException ex)
             {
