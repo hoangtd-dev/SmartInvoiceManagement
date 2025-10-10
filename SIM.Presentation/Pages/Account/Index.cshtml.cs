@@ -26,7 +26,6 @@ namespace SIM.Presentation.Pages.Account
 
         public async Task<IActionResult> OnPostSubmitAsync()
         {
-            Console.WriteLine("here");
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -54,7 +53,6 @@ namespace SIM.Presentation.Pages.Account
 
         public async Task<IActionResult> OnPostLogoutAsync()
         {
-            Console.WriteLine("Logging out user and redirecting to Welcome page.");
             await HttpContext.SignOutAsync();
             return RedirectToPage("/Welcome");
         }
