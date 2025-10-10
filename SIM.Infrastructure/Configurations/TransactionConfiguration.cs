@@ -21,6 +21,11 @@ namespace SIM.Infrastructure.Configurations
                       .WithMany(c => c.Transactions)
                       .HasForeignKey(i => i.UserId)
                       .OnDelete(DeleteBehavior.Restrict);
+                
+                entity.HasOne(i => i.Vendor)
+                      .WithMany(c => c.Transactions)
+                      .HasForeignKey(i => i.VendorId)
+                      .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }

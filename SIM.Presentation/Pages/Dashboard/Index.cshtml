@@ -1,0 +1,126 @@
+﻿@page
+@using SIM.Core.DTOs.Common
+@using SIM.Core.Enums
+@using SIM.Presentation.Pages.Shared
+@model SIM.Presentation.Pages.Dashboard.DashboardModel
+@{
+    ViewData["Title"] = ViewData["ActivePage"] = "Dashboard";
+}
+<div class="flex flex-col gap-4">
+    @* Waiting for authen *@
+    <h1 class="text-4xl font-bold">Welcome Edward !!</h1>
+
+    <div class="flex gap-4">
+        <div class="flex-1 p-4 gap-4 border rounded-lg shadow-sm bg-gray-800 border-gray-700">
+            <h5 class="text-sm text-gray-400">Total Income in Month</h5>
+            <div class="flex justify-between items-center py-8">
+                <p class="text-3xl text-white font-bold">$@Model.CurrentIncomeOutcomeInMonth.Income</p>
+                <p class="text-sm @(Model.MonthlyIncomeGrowthPercentage >= 0 ? "text-green-400" : "text-red-400")">@Model.MonthlyIncomeGrowthPercentage% vs last month</p>
+            </div>
+        </div>
+
+        <div class="flex-1 p-4 gap-4 border rounded-lg shadow-sm bg-gray-800 border-gray-700">
+            <h5 class="text-sm text-gray-400">Total Expense in Month</h5>
+            <div class="flex justify-between items-center py-8">
+                <p class="text-3xl text-white font-bold">$@Model.CurrentIncomeOutcomeInMonth.Expense</p>
+                <p class="text-sm @(Model.MonthlyExpenseGrowthPercentage >= 0 ? "text-green-400" : "text-red-400")">@Model.MonthlyExpenseGrowthPercentage% vs last month</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="h-96 p-4 border border-gray-700 shadow-sm rounded-lg">
+        <h1 class="text-lg font-bold mb-2">Summary</h1>
+        <div id="chart"></div>
+    </div>
+
+    <div class="p-4 border border-gray-700 shadow-sm rounded-lg">
+        <h1 class="mb-4 text-lg font-bold">Lastest Transactions</h1>
+
+        @await Html.PartialAsync("_DataTable", new DataTableViewModel
+        {
+            Headers = new List<string> { "Date", "Vendor", "Category", "Amount" },
+            Rows = Model.Transactions.Select(t => new TableRow
+            {
+                Cells = new List<TableCell>
+            {
+            new TableCell { Value = t.CreateDate.ToString("dd/MM/yyyy") },
+            new TableCell { Value = t.VendorName },
+            new TableCell { Value = t.CategoryName },
+            new TableCell {
+                Value = (t.Type == TransactionTypeEnum.Expense ? "-" : "+") + $"${t.TotalAmount}",
+                CssClass = t.Type == TransactionTypeEnum.Expense ? "text-red-400" : "text-green-400"
+            }}
+            }).ToList()
+        })
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <script>
+        var options = {
+            series: [{
+                name: 'Income',
+                data: @Json.Serialize(Model.IncomesInMonth),
+                color: '#003366'
+            }, {
+                name: 'Expense',
+                data: @Json.Serialize(Model.ExpensesInMonth),
+                color: '#990000'
+            }],
+            legend: {
+                labels: {
+                    colors: '#ffffff'
+                }
+            },
+            chart: {
+                type: 'bar',
+                height: 324,
+                background: '1F2937',
+                toolbar: {
+                    show: false
+                }
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                    borderRadius: 5,
+                    borderRadiusApplication: 'end'
+                  },
+            },
+            dataLabels: {
+              enabled: false
+            },
+            xaxis: {
+              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            },
+            yaxis: {
+              title: {
+                text: '$ (Australian dollar)',
+                style: {
+                    fontWeight: 500,
+                }
+              }
+            },
+            fill: {
+              opacity: 1
+            },
+            tooltip: {
+              y: {
+                formatter: function (val) {
+                  return "$ " + val
+                }
+              },
+              fillSeriesColor: true
+            },
+            theme: {
+                mode: 'dark',
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    </script>
+}

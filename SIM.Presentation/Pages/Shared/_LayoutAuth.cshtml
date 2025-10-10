@@ -13,7 +13,7 @@
         <div class="h-full px-3 py-4 overflow-y-auto bg-gray-800">
             <ul class="space-y-2 font-medium">
                 <li>
-                    <a asp-page="/Index" class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Dashboard" ? "bg-gray-700" : "")">
+                    <a asp-page="/Dashboard/Index" class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Dashboard" ? "bg-gray-700" : "")">
                         <span class="material-symbols-outlined">
                             dashboard
                         </span>
@@ -32,7 +32,7 @@
         </div>
     </aside>
 
-    <div class="p-4 bg-gray-900 text-white min-h-screen sm:ml-64">
+    <div class="px-4 py-8 bg-gray-900 text-white min-h-screen sm:ml-64">
         @RenderBody()
     </div>
 

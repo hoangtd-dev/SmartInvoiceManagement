@@ -1,0 +1,25 @@
+﻿@model SIM.Core.DTOs.Common.DataTableViewModel
+
+<div class="relative overflow-x-auto shadow-md rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-400">
+        <thead class="text-xs uppercase bg-gray-700 text-gray-400">
+            <tr>
+                @foreach (var header in Model.Headers)
+                {
+                    <th scope="col" class="px-6 py-3">@header</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in Model.Rows)
+            {
+                <tr class="border-b bg-gray-800 border-gray-700">
+                    @foreach (var cell in row.Cells)
+                    {
+                        <td class="px-6 py-4 @cell.CssClass">@cell.Value</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
