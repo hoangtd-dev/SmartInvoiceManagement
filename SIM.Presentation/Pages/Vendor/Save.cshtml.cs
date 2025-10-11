@@ -21,7 +21,7 @@ namespace SIM.Presentation.Pages.Vendor
         {
             _vendorService = vendorService;
         }
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             if (Id.HasValue)
             {
@@ -33,6 +33,7 @@ namespace SIM.Presentation.Pages.Vendor
                 {
                     TempData["ToastStatus"] = ToastStatusEnum.Fail;
                     TempData["ToastMessage"] = ex.Message;
+                    return RedirectToPage("/Vendor/Index");
                 }
                 catch (Exception)
                 {
@@ -40,6 +41,7 @@ namespace SIM.Presentation.Pages.Vendor
                     TempData["ToastMessage"] = "System Error !!!";
                 }
             }
+            return Page();
         }
 
         public IActionResult OnPostBack()

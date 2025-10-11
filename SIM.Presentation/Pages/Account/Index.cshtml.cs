@@ -12,7 +12,7 @@ namespace SIM.Presentation.Pages.Account
     public class AccountModel : PageModel
     {
         [BindProperty]
-        public UserModel? UserInfo { get; set; }
+        public UserModel UserInfo { get; set; }
 
         private readonly IUserService _userService;
         public AccountModel(IUserService userService)
@@ -25,7 +25,6 @@ namespace SIM.Presentation.Pages.Account
             {
                 var userId = 1; // TODO: Update when Authen finish
                 UserInfo = await _userService.GetUserById(userId);
-
             }
             catch (NotFoundException ex)
             {

@@ -20,7 +20,7 @@ namespace SIM.Presentation.Pages.TransactionCategory
         {
             _transactionCategoryService = transactionCategoryService;
         }
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             if (Id.HasValue)
             {
@@ -32,6 +32,7 @@ namespace SIM.Presentation.Pages.TransactionCategory
                 {
                     TempData["ToastStatus"] = ToastStatusEnum.Fail;
                     TempData["ToastMessage"] = ex.Message;
+                    return RedirectToPage("/TransactionCategory/Index");
                 }
                 catch (Exception)
                 {
@@ -39,6 +40,8 @@ namespace SIM.Presentation.Pages.TransactionCategory
                     TempData["ToastMessage"] = "System Error !!!";
                 }
             }
+
+            return Page();
         }
 
         public IActionResult OnPostBack()
