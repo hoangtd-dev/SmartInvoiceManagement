@@ -1,7 +1,7 @@
 ﻿
 using SIM.Core.DTOs.Requests;
 using SIM.Core.DTOs.Responses;
-using SIM.Core.Entities;
+using SIM.Core.Exceptions;
 using SIM.Core.Interfaces.Repositories;
 using SIM.Core.Interfaces.Services;
 
@@ -17,10 +17,7 @@ namespace SIM.Core.Services
         {
             var user = await _userRepository.GetByIdAsync(id);
 
-            if (user == null)
-            {
-                // Handle Exception
-            }
+            if (user is null) throw new NotFoundException($"Product with id:{id} is not found !!!");
 
             return new UserModel {
                 Id = id,
@@ -50,18 +47,19 @@ namespace SIM.Core.Services
             };
         }
 
-        public async Task UpdateUser(UpdateUserRequest user)
+        public async Task UpdateUser(UpdateUserRequest updatedUser)
         {
-            var updatedUser = new User {
-                Id = user.Id,
-                Email = user.Email,
-                Address = user.Address,
-                Phone = user.Phone,
-                FirstName = user.Firstname,
-                LastName = user.Lastname
-            };
+            var user = await _userRepository.GetByIdAsync(updatedUser.Id);
 
-            await _userRepository.UpdateAsync(updatedUser);
+            if (user is null) throw new NotFoundException($"Product with id:{updatedUser.Id} is not found !!!");
+
+            user.FirstName = updatedUser.Firstname;
+            user.LastName = updatedUser.Lastname;
+            user.Phone = updatedUser.Phone;
+            user.Email = updatedUser.Email;
+            user.Address = updatedUser.Address;
+
+            await _userRepository.UpdateAsync(user);
         }
     }
 }

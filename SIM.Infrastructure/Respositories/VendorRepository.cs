@@ -11,29 +11,37 @@ namespace SIM.Infrastructure.Respositories
         {
             _appDbContext = appDbContext;
         }
-        public Task<Vendor> AddAsync(Vendor entity)
+        public async Task<Vendor> AddAsync(Vendor entity)
         {
-            throw new NotImplementedException();
+            var vendor = await _appDbContext.Vendors.AddAsync(entity);
+            await _appDbContext.SaveChangesAsync();
+            return vendor.Entity;
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(Vendor entity)
         {
-            throw new NotImplementedException();
+            entity.IsDeleted = true;
+            await _appDbContext.SaveChangesAsync();
         }
 
         public async Task<ICollection<Vendor>> GetAllAsync()
         {
-            return await _appDbContext.Vendors.ToListAsync();
+            return await _appDbContext.Vendors
+                .Where(x => !x.IsDeleted)
+                .ToListAsync();
         }
 
-        public Task<Vendor?> GetByIdAsync(int id)
+        public async Task<Vendor?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _appDbContext.Vendors
+                .Where(x => !x.IsDeleted)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task UpdateAsync(Vendor entity)
+        public async Task UpdateAsync(Vendor entity)
         {
-            throw new NotImplementedException();
+            _appDbContext.Vendors.Update(entity);
+            await _appDbContext.SaveChangesAsync();
         }
     }
 }

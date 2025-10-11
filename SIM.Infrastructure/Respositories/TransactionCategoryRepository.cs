@@ -12,29 +12,37 @@ namespace SIM.Infrastructure.Respositories
         {
             _appDbContext = appDbContext;
         }
-        public Task<TransactionCategory> AddAsync(TransactionCategory entity)
+        public async Task<TransactionCategory> AddAsync(TransactionCategory entity)
         {
-            throw new NotImplementedException();
+            var transactionCategory = await _appDbContext.TransactionCategories.AddAsync(entity);
+            await _appDbContext.SaveChangesAsync();
+            return transactionCategory.Entity;
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(TransactionCategory entity)
         {
-            throw new NotImplementedException();
+            entity.IsDeleted = true;
+            await _appDbContext.SaveChangesAsync();
         }
 
         public async Task<ICollection<TransactionCategory>> GetAllAsync()
         {
-            return await _appDbContext.TransactionCategories.ToListAsync();
+            return await _appDbContext.TransactionCategories
+                .Where(x => !x.IsDeleted)
+                .ToListAsync();
         }
 
-        public Task<TransactionCategory?> GetByIdAsync(int id)
+        public async Task<TransactionCategory?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _appDbContext.TransactionCategories
+                .Where(x => !x.IsDeleted)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task UpdateAsync(TransactionCategory entity)
+        public async Task UpdateAsync(TransactionCategory entity)
         {
-            throw new NotImplementedException();
+            _appDbContext.TransactionCategories.Update(entity);
+            await _appDbContext.SaveChangesAsync();
         }
     }
 }

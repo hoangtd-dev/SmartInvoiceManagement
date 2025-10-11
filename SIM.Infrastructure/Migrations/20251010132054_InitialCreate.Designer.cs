@@ -12,7 +12,7 @@ using SIM.Infrastructure;
 namespace SIM.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251009141300_InitialCreate")]
+    [Migration("20251010132054_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -43,6 +43,9 @@ namespace SIM.Infrastructure.Migrations
                     b.Property<string>("ImageBase64")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -70,6 +73,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "High-performance laptop",
                             ImageBase64 = "",
+                            IsDeleted = false,
                             Price = 999.99m,
                             ProductName = "Laptop",
                             StockQuantity = 50,
@@ -81,6 +85,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "24-inch LED monitor",
                             ImageBase64 = "",
+                            IsDeleted = false,
                             Price = 199.99m,
                             ProductName = "Monitor",
                             StockQuantity = 100,
@@ -92,6 +97,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Ergonomic office chair",
                             ImageBase64 = "",
+                            IsDeleted = false,
                             Price = 149.99m,
                             ProductName = "Office Chair",
                             StockQuantity = 75,
@@ -103,6 +109,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Standing desk",
                             ImageBase64 = "",
+                            IsDeleted = false,
                             Price = 79.99m,
                             ProductName = "Desk",
                             StockQuantity = 30,
@@ -114,6 +121,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Mechanical keyboard",
                             ImageBase64 = "",
+                            IsDeleted = false,
                             Price = 29.99m,
                             ProductName = "Keyboard",
                             StockQuantity = 200,
@@ -125,6 +133,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Wireless mouse",
                             ImageBase64 = "",
+                            IsDeleted = false,
                             Price = 299.99m,
                             ProductName = "Mouse",
                             StockQuantity = 150,
@@ -136,6 +145,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "HD webcam",
                             ImageBase64 = "",
+                            IsDeleted = false,
                             Price = 149.99m,
                             ProductName = "Webcam",
                             StockQuantity = 80,
@@ -147,6 +157,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Noise-cancelling headset",
                             ImageBase64 = "",
+                            IsDeleted = false,
                             Price = 199.99m,
                             ProductName = "Headset",
                             StockQuantity = 60,
@@ -167,6 +178,9 @@ namespace SIM.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
@@ -196,6 +210,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 1,
                             CategoryId = 4,
                             CreatedDate = new DateTime(2025, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 12000m,
                             TransactionType = 0,
                             UserId = 1,
@@ -206,6 +221,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 2,
                             CategoryId = 5,
                             CreatedDate = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 1029.98m,
                             TransactionType = 1,
                             UserId = 1,
@@ -216,6 +232,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 3,
                             CategoryId = 4,
                             CreatedDate = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 12500m,
                             TransactionType = 0,
                             UserId = 2,
@@ -226,6 +243,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 4,
                             CategoryId = 6,
                             CreatedDate = new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 299.98m,
                             TransactionType = 1,
                             UserId = 2,
@@ -236,6 +254,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 5,
                             CategoryId = 4,
                             CreatedDate = new DateTime(2025, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 11800m,
                             TransactionType = 0,
                             UserId = 3,
@@ -246,6 +265,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 6,
                             CategoryId = 5,
                             CreatedDate = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 499.98m,
                             TransactionType = 1,
                             UserId = 3,
@@ -256,6 +276,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 7,
                             CategoryId = 4,
                             CreatedDate = new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 13000m,
                             TransactionType = 0,
                             UserId = 1,
@@ -266,6 +287,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 8,
                             CategoryId = 6,
                             CreatedDate = new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 229.98m,
                             TransactionType = 1,
                             UserId = 4,
@@ -276,6 +298,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 9,
                             CategoryId = 4,
                             CreatedDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 12200m,
                             TransactionType = 0,
                             UserId = 2,
@@ -286,6 +309,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 10,
                             CategoryId = 5,
                             CreatedDate = new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 399.98m,
                             TransactionType = 1,
                             UserId = 5,
@@ -296,6 +320,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 11,
                             CategoryId = 4,
                             CreatedDate = new DateTime(2025, 6, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 12800m,
                             TransactionType = 0,
                             UserId = 3,
@@ -306,6 +331,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 12,
                             CategoryId = 5,
                             CreatedDate = new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 999.99m,
                             TransactionType = 1,
                             UserId = 1,
@@ -316,6 +342,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 13,
                             CategoryId = 4,
                             CreatedDate = new DateTime(2025, 7, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 13500m,
                             TransactionType = 0,
                             UserId = 4,
@@ -326,6 +353,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 14,
                             CategoryId = 6,
                             CreatedDate = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 389.96m,
                             TransactionType = 1,
                             UserId = 2,
@@ -336,6 +364,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 15,
                             CategoryId = 4,
                             CreatedDate = new DateTime(2025, 8, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 12600m,
                             TransactionType = 0,
                             UserId = 5,
@@ -346,6 +375,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 16,
                             CategoryId = 6,
                             CreatedDate = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 229.98m,
                             TransactionType = 1,
                             UserId = 3,
@@ -356,6 +386,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 17,
                             CategoryId = 4,
                             CreatedDate = new DateTime(2025, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 13200m,
                             TransactionType = 0,
                             UserId = 1,
@@ -366,6 +397,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 18,
                             CategoryId = 5,
                             CreatedDate = new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 399.98m,
                             TransactionType = 1,
                             UserId = 4,
@@ -376,6 +408,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 19,
                             CategoryId = 4,
                             CreatedDate = new DateTime(2025, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 12400m,
                             TransactionType = 0,
                             UserId = 2,
@@ -386,6 +419,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 20,
                             CategoryId = 5,
                             CreatedDate = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             TotalAmount = 349.98m,
                             TransactionType = 1,
                             UserId = 5,
@@ -407,6 +441,9 @@ namespace SIM.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -420,36 +457,42 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Name = "Food"
                         },
                         new
                         {
                             Id = 2,
                             CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Name = "Transportation"
                         },
                         new
                         {
                             Id = 3,
                             CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Name = "Housing"
                         },
                         new
                         {
                             Id = 4,
                             CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Name = "Salary"
                         },
                         new
                         {
                             Id = 5,
                             CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Name = "Electronics"
                         },
                         new
                         {
                             Id = 6,
                             CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Name = "Office Supplies"
                         });
                 });
@@ -464,6 +507,9 @@ namespace SIM.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -493,6 +539,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedDate = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 999.99m,
                             ProductId = 1,
                             Quantity = 1,
@@ -503,6 +550,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedDate = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 29.99m,
                             ProductId = 5,
                             Quantity = 1,
@@ -513,6 +561,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 3,
                             CreatedDate = new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 149.99m,
                             ProductId = 3,
                             Quantity = 2,
@@ -523,6 +572,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 4,
                             CreatedDate = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 199.99m,
                             ProductId = 2,
                             Quantity = 1,
@@ -533,6 +583,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 5,
                             CreatedDate = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 299.99m,
                             ProductId = 6,
                             Quantity = 1,
@@ -543,6 +594,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 6,
                             CreatedDate = new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 79.99m,
                             ProductId = 4,
                             Quantity = 1,
@@ -553,6 +605,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 7,
                             CreatedDate = new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 149.99m,
                             ProductId = 7,
                             Quantity = 1,
@@ -563,6 +616,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 8,
                             CreatedDate = new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 199.99m,
                             ProductId = 8,
                             Quantity = 2,
@@ -573,6 +627,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 9,
                             CreatedDate = new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 999.99m,
                             ProductId = 1,
                             Quantity = 1,
@@ -583,6 +638,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 10,
                             CreatedDate = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 29.99m,
                             ProductId = 5,
                             Quantity = 3,
@@ -593,6 +649,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 11,
                             CreatedDate = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 299.99m,
                             ProductId = 6,
                             Quantity = 1,
@@ -603,6 +660,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 12,
                             CreatedDate = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 149.99m,
                             ProductId = 3,
                             Quantity = 1,
@@ -613,6 +671,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 13,
                             CreatedDate = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 79.99m,
                             ProductId = 4,
                             Quantity = 1,
@@ -623,6 +682,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 14,
                             CreatedDate = new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 199.99m,
                             ProductId = 2,
                             Quantity = 2,
@@ -633,6 +693,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 15,
                             CreatedDate = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 149.99m,
                             ProductId = 7,
                             Quantity = 1,
@@ -643,6 +704,7 @@ namespace SIM.Infrastructure.Migrations
                         {
                             Id = 16,
                             CreatedDate = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Price = 199.99m,
                             ProductId = 8,
                             Quantity = 1,
@@ -675,6 +737,9 @@ namespace SIM.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -704,6 +769,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "john.doe@email.com",
                             FirstName = "John",
+                            IsDeleted = false,
                             LastName = "Doe",
                             PasswordHash = "abc@123",
                             Phone = "123-456-7890"
@@ -715,6 +781,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "jane.smith@email.com",
                             FirstName = "Jane",
+                            IsDeleted = false,
                             LastName = "Smith",
                             PasswordHash = "abc@123",
                             Phone = "123-456-7891"
@@ -726,6 +793,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "bob.johnson@email.com",
                             FirstName = "Bob",
+                            IsDeleted = false,
                             LastName = "Johnson",
                             PasswordHash = "abc@123",
                             Phone = "123-456-7892"
@@ -737,6 +805,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "alice.brown@email.com",
                             FirstName = "Alice",
+                            IsDeleted = false,
                             LastName = "Brown",
                             PasswordHash = "abc@123",
                             Phone = "123-456-7893"
@@ -748,6 +817,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "charlie.wilson@email.com",
                             FirstName = "Charlie",
+                            IsDeleted = false,
                             LastName = "Wilson",
                             PasswordHash = "abc@123",
                             Phone = "123-456-7894"
@@ -777,6 +847,9 @@ namespace SIM.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("VendorName")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -794,6 +867,7 @@ namespace SIM.Infrastructure.Migrations
                             ContactEmail = "info@techsupplies.com",
                             ContactPhone = "555-100-2000",
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             VendorName = "Tech Supplies Inc."
                         },
                         new
@@ -803,6 +877,7 @@ namespace SIM.Infrastructure.Migrations
                             ContactEmail = "sales@officeessentials.com",
                             ContactPhone = "555-100-3000",
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             VendorName = "Office Essentials"
                         },
                         new
@@ -812,6 +887,7 @@ namespace SIM.Infrastructure.Migrations
                             ContactEmail = "support@premiumelectronics.com",
                             ContactPhone = "555-100-4000",
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             VendorName = "Premium Electronics"
                         });
                 });
