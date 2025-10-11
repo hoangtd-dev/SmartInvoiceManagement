@@ -12,8 +12,8 @@ using SIM.Infrastructure;
 namespace SIM.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251010132054_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251011062945_InitalCreate")]
+    partial class InitalCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
