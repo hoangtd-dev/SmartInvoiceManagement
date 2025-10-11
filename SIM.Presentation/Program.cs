@@ -16,6 +16,9 @@ builder.Services.AddInfrastructure(connectionString);
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<IVendorService, VendorService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ITransactionCategoryService, TransactionCategoryService>();
 
 // Configure cookie authentication so SignInAsync/SignOutAsync work and
 // User.Identity.IsAuthenticated is populated by the auth middleware.

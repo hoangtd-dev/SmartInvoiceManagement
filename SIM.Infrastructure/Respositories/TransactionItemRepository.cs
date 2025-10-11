@@ -15,7 +15,7 @@ namespace SIM.Infrastructure.Respositories
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(int id)
+        public Task DeleteAsync(TransactionItem entity)
         {
             throw new NotImplementedException();
         }

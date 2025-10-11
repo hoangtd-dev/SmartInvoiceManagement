@@ -1,4 +1,4 @@
-﻿using SIM.Core.DTOs.Responses;
+using SIM.Core.DTOs.Responses;
 using SIM.Core.Entities;
 using SIM.Core.Interfaces.Repositories.Base;
 

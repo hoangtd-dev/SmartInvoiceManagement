@@ -13,6 +13,7 @@ namespace SIM.Infrastructure
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<TransactionCategory> TransactionCategories { get; set; }
         public DbSet<TransactionItem> TransactionItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

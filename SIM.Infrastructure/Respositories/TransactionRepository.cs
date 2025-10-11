@@ -17,9 +17,10 @@ namespace SIM.Infrastructure.Respositories
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(Transaction entity)
         {
-            throw new NotImplementedException();
+            entity.IsDeleted = true;
+            await _appDbContext.SaveChangesAsync();
         }
 
         public async Task<ICollection<Transaction>> GetAllAsync()

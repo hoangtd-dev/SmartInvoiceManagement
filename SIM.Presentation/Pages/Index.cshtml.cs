@@ -10,13 +10,14 @@ namespace SIM.Presentation.Pages
         public IActionResult OnGet()
         {
             // If the user is not authenticated, send them to the public welcome page.
-            if (!(User?.Identity?.IsAuthenticated ?? false))
+            if (!User!.Identity!.IsAuthenticated)
             {
-                return RedirectToPage("/Welcome");
+               return RedirectToPage("/Welcome");
             }
-
-            // Authenticated users remain on the dashboard (render Index)
-            return Page();
+            else
+            {
+               return RedirectToPage("/Dashboard/Index");
+            }
         }
     }
 }

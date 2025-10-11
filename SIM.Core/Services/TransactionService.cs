@@ -23,7 +23,7 @@ namespace SIM.Core.Services
 
         public async Task DeleteTransaction(int id)
         {
-            await _transactionRepository.DeleteAsync(id);
+            throw new NotImplementedException();
         }
 
         public async Task<TransactionModel> GetTransactionById(int id)

@@ -1,0 +1,43 @@
+﻿@using SIM.Core.Enums
+@if (TempData["ToastMessage"] != null)
+{
+    <div id="toast" class="absolute top-4 right-4 p-4 mb-4 rounded-lg shadow-sm text-white bg-gray-800 transform -translate-y-full transition-all duration-300 ease-in-out">
+        <div class="flex gap-2">
+            @switch (TempData["ToastStatus"])
+            {
+                case (int)ToastStatusEnum.Success:
+                    <span class="material-symbols-outlined text-md text-green-400">
+                        check_circle
+                    </span>
+                    break;
+                case (int)ToastStatusEnum.Fail:
+                    <span class="material-symbols-outlined text-md text-red-400">
+                        cancel
+                    </span>
+                    break;
+            }
+            <div class="ms-3 text-sm font-normal">@TempData["ToastMessage"]</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var toast = document.getElementById('toast');
+            if (toast) {
+                setTimeout(function() {
+                    toast.classList.remove('-translate-y-full');
+                    toast.classList.add('translate-y-0');
+                }, 100);
+
+                setTimeout(function() {
+                    toast.classList.remove('translate-y-0');
+                    toast.classList.add('-translate-y-full');
+                    
+                    setTimeout(function() {
+                        toast.remove();
+                    }, 300);
+                }, 3000);
+            }
+        });
+    </script>
+}
