@@ -9,7 +9,7 @@ namespace SIM.Presentation.Pages
 
         public IActionResult OnGet()
         {
-            if (!User.Identity!.IsAuthenticated)
+            if (!(User?.Identity?.IsAuthenticated ?? false))
             {
                return RedirectToPage("/Welcome");
             }

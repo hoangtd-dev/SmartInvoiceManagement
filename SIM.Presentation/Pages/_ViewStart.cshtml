@@ -1,3 +1,4 @@
 ﻿@{
-    Layout = User.Identity!.IsAuthenticated ? "_LayoutAuth" : "_Layout";
+    var isAuthenticated = (User?.Identity?.IsAuthenticated ?? false);
+    Layout = isAuthenticated ? "_LayoutAuth" : "_Layout";
 }
