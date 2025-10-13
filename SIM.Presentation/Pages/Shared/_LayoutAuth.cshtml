@@ -27,6 +27,33 @@
                     </a>
                 </li>
                 <li>
+                    <a asp-page="/TransactionCategory/Index"
+                        class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Transaction Category" ? "bg-gray-700" : "")">
+                        <span class="material-symbols-outlined">
+                            category
+                        </span>
+                        <span class="ms-3">Transaction Category</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="/Product/Index"
+                        class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Product" ? "bg-gray-700" : "")">
+                        <span class="material-symbols-outlined">
+                            inventory_2
+                        </span>
+                        <span class="ms-3">Product</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="/Vendor/Index"
+                        class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Vendor" ? "bg-gray-700" : "")">
+                        <span class="material-symbols-outlined">
+                            store
+                        </span>
+                        <span class="ms-3">Vendor</span>
+                    </a>
+                </li>
+                <li>
                     <a asp-page="/Account/Index"
                         class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Account" ? "bg-gray-700" : "")">
                         <span class="material-symbols-outlined">

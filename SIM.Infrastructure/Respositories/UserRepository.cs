@@ -17,9 +17,10 @@ namespace SIM.Infrastructure.Respositories
             await _appDbContext.SaveChangesAsync();
             return entry.Entity;        }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(User entity)
         {
-            throw new NotImplementedException();
+            entity.IsDeleted = true;
+            await _appDbContext.SaveChangesAsync();
         }
 
         public Task<ICollection<User>> GetAllAsync()
@@ -39,18 +40,7 @@ namespace SIM.Infrastructure.Respositories
 
         public async Task UpdateAsync(User user)
         {
-            var updatedUser = await _appDbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
-
-            if (updatedUser != null) {
-                // Handle exception
-            }
-
-            updatedUser.Email = user.Email;
-            updatedUser.Address = user.Address;
-            updatedUser.Phone = user.Phone;
-            updatedUser.FirstName = user.FirstName;
-            updatedUser.LastName = user.LastName;
-
+            _appDbContext.Users.Update(user);
             await _appDbContext.SaveChangesAsync();
         }
     }

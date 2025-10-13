@@ -1,4 +1,5 @@
-﻿using SIM.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SIM.Core.Entities;
 using SIM.Core.Interfaces.Repositories;
 
 namespace SIM.Infrastructure.Respositories
@@ -10,29 +11,38 @@ namespace SIM.Infrastructure.Respositories
         {
             _appDbContext = appDbContext;
         }
-        public Task<Product> AddAsync(Product entity)
+        public async Task<Product> AddAsync(Product entity)
         {
-            throw new NotImplementedException();
+            var product = await _appDbContext.Products.AddAsync(entity);
+            await _appDbContext.SaveChangesAsync();
+            return product.Entity;
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(Product entity)
         {
-            throw new NotImplementedException();
+            entity.IsDeleted = true;
+            await _appDbContext.SaveChangesAsync();
         }
 
-        public Task<ICollection<Product>> GetAllAsync()
+        public async Task<ICollection<Product>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _appDbContext.Products
+                .Where(x => !x.IsDeleted)
+                .Include(x => x.Vendor)
+                .ToListAsync();
         }
 
-        public Task<Product?> GetByIdAsync(int id)
+        public async Task<Product?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _appDbContext.Products
+                .Where(x => !x.IsDeleted)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task UpdateAsync(Product entity)
+        public async Task UpdateAsync(Product entity)
         {
-            throw new NotImplementedException();
+            _appDbContext.Products.Update(entity);
+            await _appDbContext.SaveChangesAsync();
         }
     }
 }

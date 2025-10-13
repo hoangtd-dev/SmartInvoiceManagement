@@ -1,0 +1,60 @@
+﻿@page "{id?}"
+@model SIM.Presentation.Pages.Product.UpsertModel
+@{
+    ViewData["ActivePage"] = "Product";
+    ViewData["Title"] = Model.Id.HasValue ? "Update Product" : "Create Product";
+}
+
+<form method="post">
+    <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div>
+            <div class="flex gap-1">
+                <label asp-for="Product.Name" class="block mb-2 text-sm font-medium text-white"></label>
+                <span class="text-sm text-red-400">*</span>
+            </div>
+            <input type="text" asp-for="Product.Name" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500" placeholder="Enter your product name" />
+            <span asp-validation-for="Product.Name" class="text-red-400 text-sm"></span>
+        </div>
+        <div>
+            <div class="flex gap-1">
+                <label asp-for="Product.Price" class="block mb-2 text-sm font-medium text-white"></label>
+                <span class="text-sm text-red-400">*</span>
+            </div>
+            <input type="number" asp-for="Product.Price" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500" placeholder="Enter your product price" />
+            <span asp-validation-for="Product.Price" class="text-red-400 text-sm"></span>
+        </div>
+        <div>
+            <label asp-for="Product.Description" class="block mb-2 text-sm font-medium text-white"></label>
+            <input type="text" asp-for="Product.Description" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500" placeholder="Enter your product description" />
+        </div>
+        <div>
+            <div class="flex gap-1">
+                <label asp-for="Product.StockQuantity" class="block mb-2 text-sm font-medium text-white"></label>
+                <span class="text-sm text-red-400">*</span>
+            </div>
+            <input type="number" asp-for="Product.StockQuantity" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500" placeholder="Enter your product stock quantity" />
+            <span asp-validation-for="Product.StockQuantity" class="text-red-400 text-sm"></span>
+        </div>
+    </div>
+    <div class="mb-6">
+        <div class="flex gap-1">
+            <label asp-for="Product.VendorId" class="block mb-2 text-sm font-medium text-white"></label>
+            <span class="text-sm text-red-400">*</span>
+        </div>
+        <select asp-for="Product.VendorId" asp-items="Model.Vendors" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500">
+            <option value="">-- Select Vendor --</option>
+        </select>
+        <span asp-validation-for="Product.VendorId" class="text-red-400 text-sm"></span>
+    </div>
+    <div class="flex justify-end gap-2">
+        <button type="submit" asp-page-handler="Back" class="text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gray-600 hover:bg-gray-700">
+            Back
+        </button>
+        <button type="submit" asp-page-handler="Save" class="text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700">
+            @(Model.Id.HasValue ? "Update" : "Create")
+        </button>
+    </div>
+</form>
+
+<partial name="_ValidationScriptsPartial" />
+<partial name="_Toast" />
