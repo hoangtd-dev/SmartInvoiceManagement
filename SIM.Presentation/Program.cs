@@ -19,6 +19,7 @@ builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IVendorService, VendorService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ITransactionCategoryService, TransactionCategoryService>();
+builder.Services.AddScoped<IBudgetService, BudgetService>();
 
 // Configure cookie authentication so SignInAsync/SignOutAsync work and
 // User.Identity.IsAuthenticated is populated by the auth middleware.

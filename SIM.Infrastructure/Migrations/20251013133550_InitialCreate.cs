@@ -68,6 +68,38 @@ namespace SIM.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Budgets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Budgets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Budgets_TransactionCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "TransactionCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Budgets_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -190,6 +222,25 @@ namespace SIM.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Budgets",
+                columns: new[] { "Id", "CategoryId", "CreatedDate", "EndDate", "IsDeleted", "StartDate", "Status", "TotalAmount", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 500.00m, 1 },
+                    { 2, 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 300.00m, 1 },
+                    { 3, 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1200.00m, 1 },
+                    { 4, 1, new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 2, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 550.00m, 1 },
+                    { 5, 2, new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 2, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 350.00m, 1 },
+                    { 6, 3, new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 2, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1200.00m, 1 },
+                    { 7, 1, new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 600.00m, 1 },
+                    { 8, 2, new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 400.00m, 1 },
+                    { 9, 3, new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1200.00m, 1 },
+                    { 10, 1, new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2025, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 650.00m, 1 },
+                    { 11, 2, new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2025, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 450.00m, 1 },
+                    { 12, 3, new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2025, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 1250.00m, 1 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "CreatedDate", "Description", "ImageBase64", "IsDeleted", "Price", "ProductName", "StockQuantity", "VendorId" },
                 values: new object[,]
@@ -221,11 +272,11 @@ namespace SIM.Infrastructure.Migrations
                     { 10, 5, new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 399.98m, 1, 1, 3 },
                     { 11, 4, new DateTime(2025, 6, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12800m, 0, 1, 3 },
                     { 12, 5, new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 999.99m, 1, 1, 1 },
-                    { 13, 4, new DateTime(2025, 7, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 13500m, 0, 1, 3 },
+                    { 13, 1, new DateTime(2025, 7, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 13500m, 0, 1, 3 },
                     { 14, 6, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 389.96m, 1, 1, 1 },
-                    { 15, 4, new DateTime(2025, 8, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12600m, 0, 1, 3 },
+                    { 15, 3, new DateTime(2025, 8, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12600m, 0, 1, 3 },
                     { 16, 6, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 229.98m, 1, 1, 2 },
-                    { 17, 4, new DateTime(2025, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 13200m, 0, 1, 3 },
+                    { 17, 3, new DateTime(2025, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 13200m, 0, 1, 3 },
                     { 18, 5, new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 399.98m, 1, 1, 1 },
                     { 19, 4, new DateTime(2025, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12400m, 0, 1, 3 },
                     { 20, 5, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 349.98m, 1, 1, 3 }
@@ -253,6 +304,16 @@ namespace SIM.Infrastructure.Migrations
                     { 15, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 7, 1, 149.99m, 20 },
                     { 16, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 8, 1, 199.99m, 20 }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Budgets_CategoryId",
+                table: "Budgets",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Budgets_UserId",
+                table: "Budgets",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_VendorId",
@@ -295,6 +356,9 @@ namespace SIM.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Budgets");
+
             migrationBuilder.DropTable(
                 name: "TransactionItems");
 
