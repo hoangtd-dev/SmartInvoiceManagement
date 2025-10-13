@@ -151,7 +151,7 @@
                     rules: {},
                     success: function () {
                         onSuccess.apply(form, arguments);
-                        execInContext("success", arguments);
+                        execInContext(ToastStatusEnum.Success, arguments);
                     }
                 },
                 attachValidation: function () {

@@ -8,24 +8,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SIM.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitalCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "TransactionCategory",
+                name: "TransactionCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TransactionCategory", x => x.Id);
+                    table.PrimaryKey("PK_TransactionCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -40,6 +41,7 @@ namespace SIM.Infrastructure.Migrations
                     Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -57,6 +59,7 @@ namespace SIM.Infrastructure.Migrations
                     ContactEmail = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     ContactPhone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -76,6 +79,7 @@ namespace SIM.Infrastructure.Migrations
                     StockQuantity = table.Column<int>(type: "int", nullable: false),
                     ImageBase64 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VendorId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -100,15 +104,16 @@ namespace SIM.Infrastructure.Migrations
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     VendorId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transactions_TransactionCategory_CategoryId",
+                        name: "FK_Transactions_TransactionCategories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "TransactionCategory",
+                        principalTable: "TransactionCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -136,6 +141,7 @@ namespace SIM.Infrastructure.Migrations
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TransactionId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -156,103 +162,103 @@ namespace SIM.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "TransactionCategory",
-                columns: new[] { "Id", "CreatedDate", "Description", "Name" },
+                table: "TransactionCategories",
+                columns: new[] { "Id", "CreatedDate", "Description", "IsDeleted", "Name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Food" },
-                    { 2, new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Transportation" },
-                    { 3, new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Housing" },
-                    { 4, new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Salary" },
-                    { 5, new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Electronics" },
-                    { 6, new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Office Supplies" }
+                    { 1, new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, "Food" },
+                    { 2, new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, "Transportation" },
+                    { 3, new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, "Housing" },
+                    { 4, new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, "Salary" },
+                    { 5, new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, "Electronics" },
+                    { 6, new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, "Office Supplies" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Address", "CreatedDate", "Email", "FirstName", "LastName", "PasswordHash", "Phone" },
+                columns: new[] { "Id", "Address", "CreatedDate", "Email", "FirstName", "IsDeleted", "LastName", "PasswordHash", "Phone" },
                 values: new object[,]
                 {
-                    { 1, "123 Main St", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "john.doe@email.com", "John", "Doe", "abc@123", "123-456-7890" },
-                    { 2, "456 Oak Ave", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jane.smith@email.com", "Jane", "Smith", "abc@123", "123-456-7891" },
-                    { 3, "789 Pine Rd", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "bob.johnson@email.com", "Bob", "Johnson", "abc@123", "123-456-7892" },
-                    { 4, "321 Elm St", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "alice.brown@email.com", "Alice", "Brown", "abc@123", "123-456-7893" },
-                    { 5, "654 Maple Dr", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "charlie.wilson@email.com", "Charlie", "Wilson", "abc@123", "123-456-7894" }
+                    { 1, "123 Main St", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "john.doe@email.com", "John", false, "Doe", "abc@123", "123-456-7890" },
+                    { 2, "456 Oak Ave", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jane.smith@email.com", "Jane", false, "Smith", "abc@123", "123-456-7891" },
+                    { 3, "789 Pine Rd", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "bob.johnson@email.com", "Bob", false, "Johnson", "abc@123", "123-456-7892" },
+                    { 4, "321 Elm St", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "alice.brown@email.com", "Alice", false, "Brown", "abc@123", "123-456-7893" },
+                    { 5, "654 Maple Dr", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "charlie.wilson@email.com", "Charlie", false, "Wilson", "abc@123", "123-456-7894" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Vendors",
-                columns: new[] { "Id", "Address", "ContactEmail", "ContactPhone", "CreatedDate", "VendorName" },
+                columns: new[] { "Id", "Address", "ContactEmail", "ContactPhone", "CreatedDate", "IsDeleted", "VendorName" },
                 values: new object[,]
                 {
-                    { 1, "789 Tech Park", "info@techsupplies.com", "555-100-2000", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tech Supplies Inc." },
-                    { 2, "321 Business Blvd", "sales@officeessentials.com", "555-100-3000", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Office Essentials" },
-                    { 3, "555 Digital Ave", "support@premiumelectronics.com", "555-100-4000", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Premium Electronics" }
+                    { 1, "789 Tech Park", "info@techsupplies.com", "555-100-2000", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Tech Supplies Inc." },
+                    { 2, "321 Business Blvd", "sales@officeessentials.com", "555-100-3000", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Office Essentials" },
+                    { 3, "555 Digital Ave", "support@premiumelectronics.com", "555-100-4000", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Premium Electronics" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "CreatedDate", "Description", "ImageBase64", "Price", "ProductName", "StockQuantity", "VendorId" },
+                columns: new[] { "Id", "CreatedDate", "Description", "ImageBase64", "IsDeleted", "Price", "ProductName", "StockQuantity", "VendorId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "High-performance laptop", "", 999.99m, "Laptop", 50, 1 },
-                    { 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "24-inch LED monitor", "", 199.99m, "Monitor", 100, 1 },
-                    { 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ergonomic office chair", "", 149.99m, "Office Chair", 75, 2 },
-                    { 4, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Standing desk", "", 79.99m, "Desk", 30, 2 },
-                    { 5, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mechanical keyboard", "", 29.99m, "Keyboard", 200, 1 },
-                    { 6, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Wireless mouse", "", 299.99m, "Mouse", 150, 1 },
-                    { 7, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "HD webcam", "", 149.99m, "Webcam", 80, 3 },
-                    { 8, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Noise-cancelling headset", "", 199.99m, "Headset", 60, 3 }
+                    { 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "High-performance laptop", "", false, 999.99m, "Laptop", 50, 1 },
+                    { 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "24-inch LED monitor", "", false, 199.99m, "Monitor", 100, 1 },
+                    { 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ergonomic office chair", "", false, 149.99m, "Office Chair", 75, 2 },
+                    { 4, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Standing desk", "", false, 79.99m, "Desk", 30, 2 },
+                    { 5, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mechanical keyboard", "", false, 29.99m, "Keyboard", 200, 1 },
+                    { 6, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Wireless mouse", "", false, 299.99m, "Mouse", 150, 1 },
+                    { 7, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "HD webcam", "", false, 149.99m, "Webcam", 80, 3 },
+                    { 8, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Noise-cancelling headset", "", false, 199.99m, "Headset", 60, 3 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Transactions",
-                columns: new[] { "Id", "CategoryId", "CreatedDate", "TotalAmount", "TransactionType", "UserId", "VendorId" },
+                columns: new[] { "Id", "CategoryId", "CreatedDate", "IsDeleted", "TotalAmount", "TransactionType", "UserId", "VendorId" },
                 values: new object[,]
                 {
-                    { 1, 4, new DateTime(2025, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 12000m, 0, 1, 3 },
-                    { 2, 5, new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 1029.98m, 1, 1, 1 },
-                    { 3, 4, new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 12500m, 0, 2, 3 },
-                    { 4, 6, new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 299.98m, 1, 2, 2 },
-                    { 5, 4, new DateTime(2025, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 11800m, 0, 3, 3 },
-                    { 6, 5, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 499.98m, 1, 3, 1 },
-                    { 7, 4, new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 13000m, 0, 1, 3 },
-                    { 8, 6, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), 229.98m, 1, 4, 2 },
-                    { 9, 4, new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 12200m, 0, 2, 3 },
-                    { 10, 5, new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 399.98m, 1, 5, 3 },
-                    { 11, 4, new DateTime(2025, 6, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 12800m, 0, 3, 3 },
-                    { 12, 5, new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 999.99m, 1, 1, 1 },
-                    { 13, 4, new DateTime(2025, 7, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 13500m, 0, 4, 3 },
-                    { 14, 6, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 389.96m, 1, 2, 1 },
-                    { 15, 4, new DateTime(2025, 8, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 12600m, 0, 5, 3 },
-                    { 16, 6, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 229.98m, 1, 3, 2 },
-                    { 17, 4, new DateTime(2025, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 13200m, 0, 1, 3 },
-                    { 18, 5, new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 399.98m, 1, 4, 1 },
-                    { 19, 4, new DateTime(2025, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 12400m, 0, 2, 3 },
-                    { 20, 5, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 349.98m, 1, 5, 3 }
+                    { 1, 4, new DateTime(2025, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12000m, 0, 1, 3 },
+                    { 2, 5, new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 1029.98m, 1, 1, 1 },
+                    { 3, 4, new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12500m, 0, 2, 3 },
+                    { 4, 6, new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 299.98m, 1, 2, 2 },
+                    { 5, 4, new DateTime(2025, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 11800m, 0, 3, 3 },
+                    { 6, 5, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 499.98m, 1, 3, 1 },
+                    { 7, 4, new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 13000m, 0, 1, 3 },
+                    { 8, 6, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 229.98m, 1, 4, 2 },
+                    { 9, 4, new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12200m, 0, 2, 3 },
+                    { 10, 5, new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 399.98m, 1, 5, 3 },
+                    { 11, 4, new DateTime(2025, 6, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12800m, 0, 3, 3 },
+                    { 12, 5, new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 999.99m, 1, 1, 1 },
+                    { 13, 4, new DateTime(2025, 7, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 13500m, 0, 4, 3 },
+                    { 14, 6, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 389.96m, 1, 2, 1 },
+                    { 15, 4, new DateTime(2025, 8, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12600m, 0, 5, 3 },
+                    { 16, 6, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 229.98m, 1, 3, 2 },
+                    { 17, 4, new DateTime(2025, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 13200m, 0, 1, 3 },
+                    { 18, 5, new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 399.98m, 1, 4, 1 },
+                    { 19, 4, new DateTime(2025, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12400m, 0, 2, 3 },
+                    { 20, 5, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 349.98m, 1, 5, 3 }
                 });
 
             migrationBuilder.InsertData(
                 table: "TransactionItems",
-                columns: new[] { "Id", "CreatedDate", "Price", "ProductId", "Quantity", "Total", "TransactionId" },
+                columns: new[] { "Id", "CreatedDate", "IsDeleted", "Price", "ProductId", "Quantity", "Total", "TransactionId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 999.99m, 1, 1, 999.99m, 2 },
-                    { 2, new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 29.99m, 5, 1, 29.99m, 2 },
-                    { 3, new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 149.99m, 3, 2, 299.98m, 4 },
-                    { 4, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 199.99m, 2, 1, 199.99m, 6 },
-                    { 5, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 299.99m, 6, 1, 299.99m, 6 },
-                    { 6, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), 79.99m, 4, 1, 79.99m, 8 },
-                    { 7, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), 149.99m, 7, 1, 149.99m, 8 },
-                    { 8, new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 199.99m, 8, 2, 399.98m, 10 },
-                    { 9, new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 999.99m, 1, 1, 999.99m, 12 },
-                    { 10, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 29.99m, 5, 3, 89.97m, 14 },
-                    { 11, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 299.99m, 6, 1, 299.99m, 14 },
-                    { 12, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 149.99m, 3, 1, 149.99m, 16 },
-                    { 13, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 79.99m, 4, 1, 79.99m, 16 },
-                    { 14, new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 199.99m, 2, 2, 399.98m, 18 },
-                    { 15, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 149.99m, 7, 1, 149.99m, 20 },
-                    { 16, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 199.99m, 8, 1, 199.99m, 20 }
+                    { 1, new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 999.99m, 1, 1, 999.99m, 2 },
+                    { 2, new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 29.99m, 5, 1, 29.99m, 2 },
+                    { 3, new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 3, 2, 299.98m, 4 },
+                    { 4, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 2, 1, 199.99m, 6 },
+                    { 5, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 299.99m, 6, 1, 299.99m, 6 },
+                    { 6, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 79.99m, 4, 1, 79.99m, 8 },
+                    { 7, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 7, 1, 149.99m, 8 },
+                    { 8, new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 8, 2, 399.98m, 10 },
+                    { 9, new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 999.99m, 1, 1, 999.99m, 12 },
+                    { 10, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 29.99m, 5, 3, 89.97m, 14 },
+                    { 11, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 299.99m, 6, 1, 299.99m, 14 },
+                    { 12, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 3, 1, 149.99m, 16 },
+                    { 13, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 79.99m, 4, 1, 79.99m, 16 },
+                    { 14, new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 2, 2, 399.98m, 18 },
+                    { 15, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 7, 1, 149.99m, 20 },
+                    { 16, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 8, 1, 199.99m, 20 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -306,7 +312,7 @@ namespace SIM.Infrastructure.Migrations
                 name: "Transactions");
 
             migrationBuilder.DropTable(
-                name: "TransactionCategory");
+                name: "TransactionCategories");
 
             migrationBuilder.DropTable(
                 name: "Users");
