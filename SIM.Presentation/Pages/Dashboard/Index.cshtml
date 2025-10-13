@@ -13,17 +13,23 @@
     <div class="flex gap-4">
         <div class="flex-1 p-4 gap-4 border rounded-lg shadow-sm bg-gray-800 border-gray-700">
             <h5 class="text-sm text-gray-400">Total Income in Month</h5>
-            <div class="flex justify-between items-center py-8">
+            <div class="flex items-center py-8 @(Model.MonthlyIncomeGrowthPercentage is not null ? "justify-between" : "justify-start")">
                 <p class="text-3xl text-white font-bold">$@Model.CurrentIncomeOutcomeInMonth.Income</p>
-                <p class="text-sm @(Model.MonthlyIncomeGrowthPercentage >= 0 ? "text-green-400" : "text-red-400")">@Model.MonthlyIncomeGrowthPercentage% vs last month</p>
+                @if (Model.MonthlyIncomeGrowthPercentage is not null)
+                {
+                    <p class="text-sm @(Model.MonthlyIncomeGrowthPercentage >= 0 ? "text-green-400" : "text-red-400")">@Model.MonthlyIncomeGrowthPercentage% vs last month</p>
+                }
             </div>
         </div>
 
         <div class="flex-1 p-4 gap-4 border rounded-lg shadow-sm bg-gray-800 border-gray-700">
             <h5 class="text-sm text-gray-400">Total Expense in Month</h5>
-            <div class="flex justify-between items-center py-8">
+            <div class="flex items-center py-8 @(Model.MonthlyExpenseGrowthPercentage is not null ? "justify-between" : "justify-start")">
                 <p class="text-3xl text-white font-bold">$@Model.CurrentIncomeOutcomeInMonth.Expense</p>
-                <p class="text-sm @(Model.MonthlyExpenseGrowthPercentage >= 0 ? "text-green-400" : "text-red-400")">@Model.MonthlyExpenseGrowthPercentage% vs last month</p>
+                @if (Model.MonthlyExpenseGrowthPercentage is not null)
+                {
+                    <p class="text-sm @(Model.MonthlyExpenseGrowthPercentage >= 0 ? "text-green-400" : "text-red-400")">@Model.MonthlyExpenseGrowthPercentage% vs last month</p>
+                }
             </div>
         </div>
     </div>

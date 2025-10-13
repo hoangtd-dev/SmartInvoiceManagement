@@ -10,11 +10,7 @@ namespace SIM.Infrastructure.MockData
         {
             // TODO: Update PasswordHash
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, FirstName = "John", PasswordHash = "abc@123", LastName = "Doe", Email = "john.doe@email.com", Phone = "123-456-7890", Address = "123 Main St", CreatedDate = new DateTime(2024, 1, 1) },
-                new User { Id = 2, FirstName = "Jane", PasswordHash = "abc@123", LastName = "Smith", Email = "jane.smith@email.com", Phone = "123-456-7891", Address = "456 Oak Ave", CreatedDate = new DateTime(2024, 1, 1) },
-                new User { Id = 3, FirstName = "Bob", PasswordHash = "abc@123", LastName = "Johnson", Email = "bob.johnson@email.com", Phone = "123-456-7892", Address = "789 Pine Rd", CreatedDate = new DateTime(2024, 1, 1) },
-                new User { Id = 4, FirstName = "Alice", PasswordHash = "abc@123", LastName = "Brown", Email = "alice.brown@email.com", Phone = "123-456-7893", Address = "321 Elm St", CreatedDate = new DateTime(2024, 1, 1) },
-                new User { Id = 5, FirstName = "Charlie", PasswordHash = "abc@123", LastName = "Wilson", Email = "charlie.wilson@email.com", Phone = "123-456-7894", Address = "654 Maple Dr", CreatedDate = new DateTime(2024, 1, 1) }
+                new User { Id = 1, FirstName = "Edward", PasswordHash = "100000.xoOaNrEukE+6bc1KUCkD+Q==.CP+sKGB54pKQ+qDs5yh1XMjrEOc2kJKniMlVGh17W7o=", LastName = "Tran", Email = "admin@gmail.com", Phone = "123-456-7890", Address = "123 Main St", CreatedDate = new DateTime(2024, 1, 1) }
             );
 
             modelBuilder.Entity<Vendor>().HasData(
@@ -58,40 +54,40 @@ namespace SIM.Infrastructure.MockData
                 new Transaction { Id = 2, CreatedDate = new DateTime(2025, 1, 10), TotalAmount = product1 + product5, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 5, VendorId = 1 },
 
                 // February 2025
-                new Transaction { Id = 3, CreatedDate = new DateTime(2025, 2, 1), TotalAmount = 12500, TransactionType = TransactionTypeEnum.Income, UserId = 2, CategoryId = 4, VendorId = 3 },
-                new Transaction { Id = 4, CreatedDate = new DateTime(2025, 2, 15), TotalAmount = product3 * 2, TransactionType = TransactionTypeEnum.Expense, UserId = 2, CategoryId = 6, VendorId = 2 },
+                new Transaction { Id = 3, CreatedDate = new DateTime(2025, 2, 1), TotalAmount = 12500, TransactionType = TransactionTypeEnum.Income, UserId = 1, CategoryId = 4, VendorId = 3 },
+                new Transaction { Id = 4, CreatedDate = new DateTime(2025, 2, 15), TotalAmount = product3 * 2, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 6, VendorId = 2 },
 
                 // March 2025
-                new Transaction { Id = 5, CreatedDate = new DateTime(2025, 3, 5), TotalAmount = 11800, TransactionType = TransactionTypeEnum.Income, UserId = 3, CategoryId = 4, VendorId = 3 },
-                new Transaction { Id = 6, CreatedDate = new DateTime(2025, 3, 20), TotalAmount = product2 + product6, TransactionType = TransactionTypeEnum.Expense, UserId = 3, CategoryId = 5, VendorId = 1 },
+                new Transaction { Id = 5, CreatedDate = new DateTime(2025, 3, 5), TotalAmount = 11800, TransactionType = TransactionTypeEnum.Income, UserId = 1, CategoryId = 4, VendorId = 3 },
+                new Transaction { Id = 6, CreatedDate = new DateTime(2025, 3, 20), TotalAmount = product2 + product6, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 5, VendorId = 1 },
 
                 // April 2025
                 new Transaction { Id = 7, CreatedDate = new DateTime(2025, 4, 3), TotalAmount = 13000, TransactionType = TransactionTypeEnum.Income, UserId = 1, CategoryId = 4, VendorId = 3 },
-                new Transaction { Id = 8, CreatedDate = new DateTime(2025, 4, 18), TotalAmount = product4 + product7, TransactionType = TransactionTypeEnum.Expense, UserId = 4, CategoryId = 6, VendorId = 2 },
+                new Transaction { Id = 8, CreatedDate = new DateTime(2025, 4, 18), TotalAmount = product4 + product7, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 6, VendorId = 2 },
 
                 // May 2025
-                new Transaction { Id = 9, CreatedDate = new DateTime(2025, 5, 7), TotalAmount = 12200, TransactionType = TransactionTypeEnum.Income, UserId = 2, CategoryId = 4, VendorId = 3 },
-                new Transaction { Id = 10, CreatedDate = new DateTime(2025, 5, 22), TotalAmount = product8 * 2, TransactionType = TransactionTypeEnum.Expense, UserId = 5, CategoryId = 5, VendorId = 3 },
+                new Transaction { Id = 9, CreatedDate = new DateTime(2025, 5, 7), TotalAmount = 12200, TransactionType = TransactionTypeEnum.Income, UserId = 1, CategoryId = 4, VendorId = 3 },
+                new Transaction { Id = 10, CreatedDate = new DateTime(2025, 5, 22), TotalAmount = product8 * 2, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 5, VendorId = 3 },
 
                 // June 2025
-                new Transaction { Id = 11, CreatedDate = new DateTime(2025, 6, 4), TotalAmount = 12800, TransactionType = TransactionTypeEnum.Income, UserId = 3, CategoryId = 4, VendorId = 3 },
+                new Transaction { Id = 11, CreatedDate = new DateTime(2025, 6, 4), TotalAmount = 12800, TransactionType = TransactionTypeEnum.Income, UserId = 1, CategoryId = 4, VendorId = 3 },
                 new Transaction { Id = 12, CreatedDate = new DateTime(2025, 6, 19), TotalAmount = product1, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 5, VendorId = 1 },
 
                 // July 2025
-                new Transaction { Id = 13, CreatedDate = new DateTime(2025, 7, 6), TotalAmount = 13500, TransactionType = TransactionTypeEnum.Income, UserId = 4, CategoryId = 4, VendorId = 3 },
-                new Transaction { Id = 14, CreatedDate = new DateTime(2025, 7, 25), TotalAmount = product5 * 3 + product6, TransactionType = TransactionTypeEnum.Expense, UserId = 2, CategoryId = 6, VendorId = 1 },
+                new Transaction { Id = 13, CreatedDate = new DateTime(2025, 7, 6), TotalAmount = 13500, TransactionType = TransactionTypeEnum.Income, UserId = 1, CategoryId = 4, VendorId = 3 },
+                new Transaction { Id = 14, CreatedDate = new DateTime(2025, 7, 25), TotalAmount = product5 * 3 + product6, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 6, VendorId = 1 },
 
                 // August 2025
-                new Transaction { Id = 15, CreatedDate = new DateTime(2025, 8, 2), TotalAmount = 12600, TransactionType = TransactionTypeEnum.Income, UserId = 5, CategoryId = 4, VendorId = 3 },
-                new Transaction { Id = 16, CreatedDate = new DateTime(2025, 8, 16), TotalAmount = product3 + product4, TransactionType = TransactionTypeEnum.Expense, UserId = 3, CategoryId = 6, VendorId = 2 },
+                new Transaction { Id = 15, CreatedDate = new DateTime(2025, 8, 2), TotalAmount = 12600, TransactionType = TransactionTypeEnum.Income, UserId = 1, CategoryId = 4, VendorId = 3 },
+                new Transaction { Id = 16, CreatedDate = new DateTime(2025, 8, 16), TotalAmount = product3 + product4, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 6, VendorId = 2 },
 
                 // September 2025
                 new Transaction { Id = 17, CreatedDate = new DateTime(2025, 9, 8), TotalAmount = 13200, TransactionType = TransactionTypeEnum.Income, UserId = 1, CategoryId = 4, VendorId = 3 },
-                new Transaction { Id = 18, CreatedDate = new DateTime(2025, 9, 21), TotalAmount = product2 * 2, TransactionType = TransactionTypeEnum.Expense, UserId = 4, CategoryId = 5, VendorId = 1 },
+                new Transaction { Id = 18, CreatedDate = new DateTime(2025, 9, 21), TotalAmount = product2 * 2, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 5, VendorId = 1 },
 
                 // October 2025
-                new Transaction { Id = 19, CreatedDate = new DateTime(2025, 10, 1), TotalAmount = 12400, TransactionType = TransactionTypeEnum.Income, UserId = 2, CategoryId = 4, VendorId = 3 },
-                new Transaction { Id = 20, CreatedDate = new DateTime(2025, 10, 28), TotalAmount = product7 + product8, TransactionType = TransactionTypeEnum.Expense, UserId = 5, CategoryId = 5, VendorId = 3 }
+                new Transaction { Id = 19, CreatedDate = new DateTime(2025, 10, 1), TotalAmount = 12400, TransactionType = TransactionTypeEnum.Income, UserId = 1, CategoryId = 4, VendorId = 3 },
+                new Transaction { Id = 20, CreatedDate = new DateTime(2025, 10, 28), TotalAmount = product7 + product8, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 5, VendorId = 3 }
             );
 
             modelBuilder.Entity<TransactionItem>().HasData(

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SIM.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitalCreate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -177,14 +177,7 @@ namespace SIM.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Address", "CreatedDate", "Email", "FirstName", "IsDeleted", "LastName", "PasswordHash", "Phone" },
-                values: new object[,]
-                {
-                    { 1, "123 Main St", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "john.doe@email.com", "John", false, "Doe", "abc@123", "123-456-7890" },
-                    { 2, "456 Oak Ave", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jane.smith@email.com", "Jane", false, "Smith", "abc@123", "123-456-7891" },
-                    { 3, "789 Pine Rd", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "bob.johnson@email.com", "Bob", false, "Johnson", "abc@123", "123-456-7892" },
-                    { 4, "321 Elm St", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "alice.brown@email.com", "Alice", false, "Brown", "abc@123", "123-456-7893" },
-                    { 5, "654 Maple Dr", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "charlie.wilson@email.com", "Charlie", false, "Wilson", "abc@123", "123-456-7894" }
-                });
+                values: new object[] { 1, "123 Main St", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@gmail.com", "Edward", false, "Tran", "100000.xoOaNrEukE+6bc1KUCkD+Q==.CP+sKGB54pKQ+qDs5yh1XMjrEOc2kJKniMlVGh17W7o=", "123-456-7890" });
 
             migrationBuilder.InsertData(
                 table: "Vendors",
@@ -218,24 +211,24 @@ namespace SIM.Infrastructure.Migrations
                 {
                     { 1, 4, new DateTime(2025, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12000m, 0, 1, 3 },
                     { 2, 5, new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 1029.98m, 1, 1, 1 },
-                    { 3, 4, new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12500m, 0, 2, 3 },
-                    { 4, 6, new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 299.98m, 1, 2, 2 },
-                    { 5, 4, new DateTime(2025, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 11800m, 0, 3, 3 },
-                    { 6, 5, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 499.98m, 1, 3, 1 },
+                    { 3, 4, new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12500m, 0, 1, 3 },
+                    { 4, 6, new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 299.98m, 1, 1, 2 },
+                    { 5, 4, new DateTime(2025, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 11800m, 0, 1, 3 },
+                    { 6, 5, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 499.98m, 1, 1, 1 },
                     { 7, 4, new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 13000m, 0, 1, 3 },
-                    { 8, 6, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 229.98m, 1, 4, 2 },
-                    { 9, 4, new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12200m, 0, 2, 3 },
-                    { 10, 5, new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 399.98m, 1, 5, 3 },
-                    { 11, 4, new DateTime(2025, 6, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12800m, 0, 3, 3 },
+                    { 8, 6, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 229.98m, 1, 1, 2 },
+                    { 9, 4, new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12200m, 0, 1, 3 },
+                    { 10, 5, new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 399.98m, 1, 1, 3 },
+                    { 11, 4, new DateTime(2025, 6, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12800m, 0, 1, 3 },
                     { 12, 5, new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 999.99m, 1, 1, 1 },
-                    { 13, 4, new DateTime(2025, 7, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 13500m, 0, 4, 3 },
-                    { 14, 6, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 389.96m, 1, 2, 1 },
-                    { 15, 4, new DateTime(2025, 8, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12600m, 0, 5, 3 },
-                    { 16, 6, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 229.98m, 1, 3, 2 },
+                    { 13, 4, new DateTime(2025, 7, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 13500m, 0, 1, 3 },
+                    { 14, 6, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 389.96m, 1, 1, 1 },
+                    { 15, 4, new DateTime(2025, 8, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12600m, 0, 1, 3 },
+                    { 16, 6, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 229.98m, 1, 1, 2 },
                     { 17, 4, new DateTime(2025, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 13200m, 0, 1, 3 },
-                    { 18, 5, new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 399.98m, 1, 4, 1 },
-                    { 19, 4, new DateTime(2025, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12400m, 0, 2, 3 },
-                    { 20, 5, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 349.98m, 1, 5, 3 }
+                    { 18, 5, new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 399.98m, 1, 1, 1 },
+                    { 19, 4, new DateTime(2025, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12400m, 0, 1, 3 },
+                    { 20, 5, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 349.98m, 1, 1, 3 }
                 });
 
             migrationBuilder.InsertData(

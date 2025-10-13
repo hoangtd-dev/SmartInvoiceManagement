@@ -1,30 +1,31 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc;
 using SIM.Core.DTOs.Requests;
 using SIM.Core.DTOs.Responses;
 using SIM.Core.Enums;
 using SIM.Core.Exceptions;
 using SIM.Core.Interfaces.Services;
+using SIM.Presentation.Pages.Base;
 
 namespace SIM.Presentation.Pages.Account
 {
-    public class AccountModel : PageModel
+    public class AccountModel : BasePageModel
     {
         [BindProperty]
         public UserModel UserInfo { get; set; }
 
         private readonly IUserService _userService;
-        public AccountModel(IUserService userService)
+        public AccountModel(IUserService userService) : base()
         {
             _userService = userService;
         }
         public async Task<IActionResult> OnGetAsync()
         {
+            if (!IsAuthenticated) return RedirectToPage("/Login"); 
+
             try
             {
-                var userId = 1; // TODO: Update when Authen finish
-                UserInfo = await _userService.GetUserById(userId);
+                UserInfo = await _userService.GetUserById(CurrentUserId);
             }
             catch (NotFoundException ex)
             {
@@ -51,7 +52,7 @@ namespace SIM.Presentation.Pages.Account
             {
                 var updateUser = new UpdateUserRequest
                 {
-                    Id = 1, // TODO: Update when Authen finish
+                    Id = CurrentUserId,
                     Address = UserInfo.Address,
                     Phone = UserInfo.Phone,
                     Email = UserInfo.Email,

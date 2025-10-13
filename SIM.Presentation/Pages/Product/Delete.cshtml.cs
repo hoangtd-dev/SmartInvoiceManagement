@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using SIM.Core.Enums;
 using SIM.Core.Exceptions;
 using SIM.Core.Interfaces.Services;
+using SIM.Presentation.Pages.Base;
 
 namespace SIM.Presentation.Pages.Product
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : BasePageModel
     {
         [BindProperty(SupportsGet = true)]
         public int? Id { get; set; }
@@ -17,6 +17,8 @@ namespace SIM.Presentation.Pages.Product
         }
         public async Task<IActionResult> OnGetAsync()
         {
+            if (!IsAuthenticated) return RedirectToPage("/Login");
+
             try
             {
                 await _productService.DeleteProduct(Id.Value);
