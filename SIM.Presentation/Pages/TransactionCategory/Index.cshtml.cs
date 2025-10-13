@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc;
 using SIM.Core.Interfaces.Services;
+using SIM.Presentation.Pages.Base;
 
 namespace SIM.Presentation.Pages.TransactionCategory
 {
-    public class TransactionCategoryModel : PageModel
+    public class TransactionCategoryModel : BasePageModel
     {
         public ICollection<Core.DTOs.Responses.TransactionCategoryModel> TransactionCategories { get; set; }
         private readonly ITransactionCategoryService _transactionCategoryService;
@@ -11,9 +12,12 @@ namespace SIM.Presentation.Pages.TransactionCategory
         {
             _transactionCategoryService = transactionCategoryService;
         }
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            if (!IsAuthenticated) return RedirectToPage("/Login");
+
             TransactionCategories = await _transactionCategoryService.GetTransactionCategories();
+            return Page();
         }
     }
 }

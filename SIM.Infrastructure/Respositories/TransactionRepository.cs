@@ -25,14 +25,13 @@ namespace SIM.Infrastructure.Respositories
 
         public async Task<ICollection<Transaction>> GetAllAsync()
         {
-            // TODO: Get transactions of current user Id
             return await _appDbContext.Transactions.ToListAsync();
         }
 
-        public async Task<ICollection<Transaction>> GetLatestTransactionsAsync(int take)
+        public async Task<ICollection<Transaction>> GetLatestTransactionsOfCurrentUserAsync(int userId, int take = 5)
         {
-            // TODO: Get transactions of current user Id
             return await _appDbContext.Transactions
+                .Where(x => x.UserId == userId)
                 .Include(x => x.Category)
                 .Include(x => x.Vendor)
                 .OrderByDescending(x => x.CreatedDate)
@@ -50,13 +49,12 @@ namespace SIM.Infrastructure.Respositories
             throw new NotImplementedException();
         }
 
-        public async Task<ICollection<Transaction>> GetIncomeExpenseInMonthAsync(int month, int year)
+        public async Task<ICollection<Transaction>> GetIncomeExpenseOfCurrentUserInMonthAsync(int userId, int month, int year)
         {
             var (startDate, endDate) = DateHelpers.GetStartAndEndDateOfMonth(month, year);
 
-            // TODO: Get transactions of current user Id
             return await _appDbContext.Transactions
-                .Where(x => x.CreatedDate >= startDate && x.CreatedDate <= endDate)
+                .Where(x => x.UserId == userId && x.CreatedDate >= startDate && x.CreatedDate <= endDate)
                 .ToListAsync();
         }
     }

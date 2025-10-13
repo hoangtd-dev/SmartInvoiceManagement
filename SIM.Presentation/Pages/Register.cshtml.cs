@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using SIM.Core.Interfaces.Services;
+using SIM.Presentation.Pages.Base;
 
-namespace SIM.Presentation.Pages.Account
+namespace SIM.Presentation.Pages
 {
-    public class RegisterModel : PageModel
+    public class RegisterModel : BasePageModel
     {
         [BindProperty]
 
@@ -16,8 +16,11 @@ namespace SIM.Presentation.Pages.Account
             _authService = authService;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (IsAuthenticated) return RedirectToPage("/Dashboard/Index");
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -36,7 +39,7 @@ namespace SIM.Presentation.Pages.Account
                 }
 
                 await _authService.RegisterAsync(Input.FirstName!, Input.LastName!, Input.Email!, Input.Password!);
-                return RedirectToPage("/Account/Login");
+                return RedirectToPage("/Login");
             }
             catch (ArgumentException ex)
             {

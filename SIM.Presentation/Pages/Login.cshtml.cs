@@ -2,12 +2,12 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using SIM.Core.Interfaces.Services;
+using SIM.Presentation.Pages.Base;
 
-namespace SIM.Presentation.Pages.Account
+namespace SIM.Presentation.Pages
 {
-    public class LoginModel : PageModel
+    public class LoginModel : BasePageModel
     {
         [BindProperty]
         public LoginInputModel Input { get; set; }
@@ -18,8 +18,11 @@ namespace SIM.Presentation.Pages.Account
             _authService = authService;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (IsAuthenticated) return RedirectToPage("/Dashboard/Index");
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -39,7 +42,6 @@ namespace SIM.Presentation.Pages.Account
 
                 var user = await _authService.LoginAsync(Input.Email!, Input.Password!);
 
-                // create claims and sign in
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -56,7 +58,6 @@ namespace SIM.Presentation.Pages.Account
             }
             catch (ArgumentException ex)
             {
-                // Map domain error codes from service
                 switch (ex.Message)
                 {
                     case "EmailOrPasswordInvalid":
