@@ -39,7 +39,6 @@ namespace SIM.Core.Services
             }
             catch (Exception ex)
             {
-                // Wrap other exceptions as internal error
                 throw new Exception("InternalError", ex);
             }
         }

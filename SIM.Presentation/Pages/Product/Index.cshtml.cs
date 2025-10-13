@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc;
 using SIM.Core.Interfaces.Services;
+using SIM.Presentation.Pages.Base;
 
 namespace SIM.Presentation.Pages.Product
 {
-    public class ProductModel : PageModel
+    public class ProductModel : BasePageModel
     {
         public ICollection<Core.DTOs.Responses.ProductModel> Products { get; set; }
         private readonly IProductService _productService;
@@ -11,9 +12,12 @@ namespace SIM.Presentation.Pages.Product
         {
             _productService = productService;
         }
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            if (!IsAuthenticated) return RedirectToPage("/Login");
+
             Products = await _productService.GetProducts();
+            return Page();
         }
     }
 }

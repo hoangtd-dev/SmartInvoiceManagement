@@ -34,9 +34,9 @@ namespace SIM.Core.Services
             return new TransactionModel();
         }
 
-        public async Task<ICollection<TransactionModel>> GetLastestTransactions(int take)
+        public async Task<ICollection<TransactionModel>> GetLastestTransactionsOfCurrentUser(int userId, int take)
         {
-            var transactions = await _transactionRepository.GetLatestTransactionsAsync(take);
+            var transactions = await _transactionRepository.GetLatestTransactionsOfCurrentUserAsync(userId, take);
 
             return transactions.Select(transaction => new TransactionModel
             {
@@ -66,9 +66,9 @@ namespace SIM.Core.Services
             await _transactionRepository.UpdateAsync(new Transaction());
         }
 
-        public async Task<IncomeExpenseModel> GetIncomeExpensesInMonth(int month, int year)
+        public async Task<IncomeExpenseModel> GetIncomeExpensesOfCurrentUserInMonth(int userId, int month, int year)
         {
-            var transactions = await _transactionRepository.GetIncomeExpenseInMonthAsync(month, year);
+            var transactions = await _transactionRepository.GetIncomeExpenseOfCurrentUserInMonthAsync(userId, month, year);
 
             var totalIncome = transactions.Where(t => t.TransactionType == TransactionTypeEnum.Income).Sum(transaction => transaction.TotalAmount);
             var totalExpense = transactions.Where(t => t.TransactionType == TransactionTypeEnum.Expense).Sum(transaction => transaction.TotalAmount);

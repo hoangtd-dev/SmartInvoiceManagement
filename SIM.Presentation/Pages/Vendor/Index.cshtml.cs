@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc;
 using SIM.Core.Interfaces.Services;
+using SIM.Presentation.Pages.Base;
 
 namespace SIM.Presentation.Pages.Vendor
 {
-    public class VendorModel : PageModel
+    public class VendorModel : BasePageModel
     {
         public ICollection<Core.DTOs.Responses.VendorModel> Vendors { get; set; }
         private readonly IVendorService _vendorService;
@@ -11,9 +12,12 @@ namespace SIM.Presentation.Pages.Vendor
         {
             _vendorService = vendorService;
         }
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            if (!IsAuthenticated) return RedirectToPage("/Login");
+
             Vendors = await _vendorService.GetVendors();
+            return Page();
         }
     }
 }

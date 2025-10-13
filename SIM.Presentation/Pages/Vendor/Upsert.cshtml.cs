@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using SIM.Core.DTOs.Requests;
 using SIM.Core.Enums;
 using SIM.Core.Exceptions;
 using SIM.Core.Interfaces.Services;
+using SIM.Presentation.Pages.Base;
 
 namespace SIM.Presentation.Pages.Vendor
 {
-    public class UpsertModel : PageModel
+    public class UpsertModel : BasePageModel
     {
         [BindProperty(SupportsGet = true)]
         public int? Id { get; set; }
@@ -22,6 +22,8 @@ namespace SIM.Presentation.Pages.Vendor
         }
         public async Task<IActionResult> OnGetAsync()
         {
+            if (!IsAuthenticated) return RedirectToPage("/Login");
+
             if (Id.HasValue)
             {
                 try

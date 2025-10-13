@@ -9,8 +9,7 @@ namespace SIM.Presentation.Pages
 
         public IActionResult OnGet()
         {
-            // If the user is not authenticated, send them to the public welcome page.
-            if (!User!.Identity!.IsAuthenticated)
+            if (!User.Identity!.IsAuthenticated)
             {
                return RedirectToPage("/Welcome");
             }

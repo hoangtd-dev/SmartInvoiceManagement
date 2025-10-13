@@ -12,8 +12,8 @@ using SIM.Infrastructure;
 namespace SIM.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251011062945_InitalCreate")]
-    partial class InitalCreate
+    [Migration("20251013100153_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,7 +235,7 @@ namespace SIM.Infrastructure.Migrations
                             IsDeleted = false,
                             TotalAmount = 12500m,
                             TransactionType = 0,
-                            UserId = 2,
+                            UserId = 1,
                             VendorId = 3
                         },
                         new
@@ -246,7 +246,7 @@ namespace SIM.Infrastructure.Migrations
                             IsDeleted = false,
                             TotalAmount = 299.98m,
                             TransactionType = 1,
-                            UserId = 2,
+                            UserId = 1,
                             VendorId = 2
                         },
                         new
@@ -257,7 +257,7 @@ namespace SIM.Infrastructure.Migrations
                             IsDeleted = false,
                             TotalAmount = 11800m,
                             TransactionType = 0,
-                            UserId = 3,
+                            UserId = 1,
                             VendorId = 3
                         },
                         new
@@ -268,7 +268,7 @@ namespace SIM.Infrastructure.Migrations
                             IsDeleted = false,
                             TotalAmount = 499.98m,
                             TransactionType = 1,
-                            UserId = 3,
+                            UserId = 1,
                             VendorId = 1
                         },
                         new
@@ -290,7 +290,7 @@ namespace SIM.Infrastructure.Migrations
                             IsDeleted = false,
                             TotalAmount = 229.98m,
                             TransactionType = 1,
-                            UserId = 4,
+                            UserId = 1,
                             VendorId = 2
                         },
                         new
@@ -301,7 +301,7 @@ namespace SIM.Infrastructure.Migrations
                             IsDeleted = false,
                             TotalAmount = 12200m,
                             TransactionType = 0,
-                            UserId = 2,
+                            UserId = 1,
                             VendorId = 3
                         },
                         new
@@ -312,7 +312,7 @@ namespace SIM.Infrastructure.Migrations
                             IsDeleted = false,
                             TotalAmount = 399.98m,
                             TransactionType = 1,
-                            UserId = 5,
+                            UserId = 1,
                             VendorId = 3
                         },
                         new
@@ -323,7 +323,7 @@ namespace SIM.Infrastructure.Migrations
                             IsDeleted = false,
                             TotalAmount = 12800m,
                             TransactionType = 0,
-                            UserId = 3,
+                            UserId = 1,
                             VendorId = 3
                         },
                         new
@@ -345,7 +345,7 @@ namespace SIM.Infrastructure.Migrations
                             IsDeleted = false,
                             TotalAmount = 13500m,
                             TransactionType = 0,
-                            UserId = 4,
+                            UserId = 1,
                             VendorId = 3
                         },
                         new
@@ -356,7 +356,7 @@ namespace SIM.Infrastructure.Migrations
                             IsDeleted = false,
                             TotalAmount = 389.96m,
                             TransactionType = 1,
-                            UserId = 2,
+                            UserId = 1,
                             VendorId = 1
                         },
                         new
@@ -367,7 +367,7 @@ namespace SIM.Infrastructure.Migrations
                             IsDeleted = false,
                             TotalAmount = 12600m,
                             TransactionType = 0,
-                            UserId = 5,
+                            UserId = 1,
                             VendorId = 3
                         },
                         new
@@ -378,7 +378,7 @@ namespace SIM.Infrastructure.Migrations
                             IsDeleted = false,
                             TotalAmount = 229.98m,
                             TransactionType = 1,
-                            UserId = 3,
+                            UserId = 1,
                             VendorId = 2
                         },
                         new
@@ -400,7 +400,7 @@ namespace SIM.Infrastructure.Migrations
                             IsDeleted = false,
                             TotalAmount = 399.98m,
                             TransactionType = 1,
-                            UserId = 4,
+                            UserId = 1,
                             VendorId = 1
                         },
                         new
@@ -411,7 +411,7 @@ namespace SIM.Infrastructure.Migrations
                             IsDeleted = false,
                             TotalAmount = 12400m,
                             TransactionType = 0,
-                            UserId = 2,
+                            UserId = 1,
                             VendorId = 3
                         },
                         new
@@ -422,7 +422,7 @@ namespace SIM.Infrastructure.Migrations
                             IsDeleted = false,
                             TotalAmount = 349.98m,
                             TransactionType = 1,
-                            UserId = 5,
+                            UserId = 1,
                             VendorId = 3
                         });
                 });
@@ -767,60 +767,12 @@ namespace SIM.Infrastructure.Migrations
                             Id = 1,
                             Address = "123 Main St",
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "john.doe@email.com",
-                            FirstName = "John",
+                            Email = "admin@gmail.com",
+                            FirstName = "Edward",
                             IsDeleted = false,
-                            LastName = "Doe",
-                            PasswordHash = "abc@123",
+                            LastName = "Tran",
+                            PasswordHash = "100000.xoOaNrEukE+6bc1KUCkD+Q==.CP+sKGB54pKQ+qDs5yh1XMjrEOc2kJKniMlVGh17W7o=",
                             Phone = "123-456-7890"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "456 Oak Ave",
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "jane.smith@email.com",
-                            FirstName = "Jane",
-                            IsDeleted = false,
-                            LastName = "Smith",
-                            PasswordHash = "abc@123",
-                            Phone = "123-456-7891"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Address = "789 Pine Rd",
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "bob.johnson@email.com",
-                            FirstName = "Bob",
-                            IsDeleted = false,
-                            LastName = "Johnson",
-                            PasswordHash = "abc@123",
-                            Phone = "123-456-7892"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Address = "321 Elm St",
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "alice.brown@email.com",
-                            FirstName = "Alice",
-                            IsDeleted = false,
-                            LastName = "Brown",
-                            PasswordHash = "abc@123",
-                            Phone = "123-456-7893"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Address = "654 Maple Dr",
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "charlie.wilson@email.com",
-                            FirstName = "Charlie",
-                            IsDeleted = false,
-                            LastName = "Wilson",
-                            PasswordHash = "abc@123",
-                            Phone = "123-456-7894"
                         });
                 });
 
