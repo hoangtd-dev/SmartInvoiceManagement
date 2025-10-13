@@ -7,7 +7,7 @@ using SIM.Core.Interfaces.Services;
 
 namespace SIM.Presentation.Pages.TransactionCategory
 {
-    public class SaveModel : PageModel
+    public class UpsertModel : PageModel
     {
         [BindProperty(SupportsGet = true)]
         public int? Id { get; set; }
@@ -16,7 +16,7 @@ namespace SIM.Presentation.Pages.TransactionCategory
 
         private readonly ITransactionCategoryService _transactionCategoryService;
 
-        public SaveModel(ITransactionCategoryService transactionCategoryService)
+        public UpsertModel(ITransactionCategoryService transactionCategoryService)
         {
             _transactionCategoryService = transactionCategoryService;
         }

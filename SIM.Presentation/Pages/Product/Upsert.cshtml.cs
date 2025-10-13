@@ -8,7 +8,7 @@ using SIM.Core.Interfaces.Services;
 
 namespace SIM.Presentation.Pages.Product
 {
-    public class SaveModel : PageModel
+    public class UpsertModel : PageModel
     {
         [BindProperty(SupportsGet = true)]
         public int? Id { get; set; }
@@ -19,7 +19,7 @@ namespace SIM.Presentation.Pages.Product
         private readonly IProductService _productService;
         private readonly IVendorService _vendorService;
 
-        public SaveModel(IProductService productService, IVendorService vendorService)
+        public UpsertModel(IProductService productService, IVendorService vendorService)
         {
             _productService = productService;
             _vendorService = vendorService;

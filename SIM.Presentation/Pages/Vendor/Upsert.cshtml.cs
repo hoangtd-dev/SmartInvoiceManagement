@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using SIM.Core.DTOs.Requests;
 using SIM.Core.Enums;
 using SIM.Core.Exceptions;
@@ -8,7 +7,7 @@ using SIM.Core.Interfaces.Services;
 
 namespace SIM.Presentation.Pages.Vendor
 {
-    public class SaveModel : PageModel
+    public class UpsertModel : PageModel
     {
         [BindProperty(SupportsGet = true)]
         public int? Id { get; set; }
@@ -17,7 +16,7 @@ namespace SIM.Presentation.Pages.Vendor
 
         private readonly IVendorService _vendorService;
 
-        public SaveModel(IVendorService vendorService)
+        public UpsertModel(IVendorService vendorService)
         {
             _vendorService = vendorService;
         }

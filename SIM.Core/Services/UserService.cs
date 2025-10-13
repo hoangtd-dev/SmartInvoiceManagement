@@ -17,7 +17,7 @@ namespace SIM.Core.Services
         {
             var user = await _userRepository.GetByIdAsync(id);
 
-            if (user is null) throw new NotFoundException($"Product with id:{id} is not found !!!");
+            if (user is null) throw new NotFoundException($"User with id:{id} is not found !!!");
 
             return new UserModel {
                 Id = id,
@@ -51,7 +51,7 @@ namespace SIM.Core.Services
         {
             var user = await _userRepository.GetByIdAsync(updatedUser.Id);
 
-            if (user is null) throw new NotFoundException($"Product with id:{updatedUser.Id} is not found !!!");
+            if (user is null) throw new NotFoundException($"User with id:{updatedUser.Id} is not found !!!");
 
             user.FirstName = updatedUser.Firstname;
             user.LastName = updatedUser.Lastname;

@@ -63,7 +63,7 @@ namespace SIM.Core.Services
         {
             var category = await _transactionCategoryRepository.GetByIdAsync(updatedCategory.Id);
 
-            if (category is null) throw new NotFoundException($"Category with id:{category.Id} is not found !!!");
+            if (category is null) throw new NotFoundException($"Category with id:{updatedCategory.Id} is not found !!!");
 
             category.Name = updatedCategory.Name;
             category.Description = updatedCategory.Description;
