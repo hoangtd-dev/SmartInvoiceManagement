@@ -13,7 +13,6 @@ namespace SIM.Core.DTOs.Responses
         public DateTime StartDate { get; set; }
         [Required]
         public DateTime EndDate { get; set; }
-        [Required]
         public int CategoryId { get; set; }
         public TransactionCategoryModel Category { get; set; }
     }
