@@ -8,7 +8,6 @@ namespace SIM.Infrastructure.Configurations
         {
             UserConfigureTable(modelBuilder);
             VendorConfigureTable(modelBuilder);
-            ProductConfigureTable(modelBuilder);
             TransactionCategoryConfigureTable(modelBuilder);
             TransactionConfigureTable(modelBuilder);
             TransactionItemConfigureTable(modelBuilder);

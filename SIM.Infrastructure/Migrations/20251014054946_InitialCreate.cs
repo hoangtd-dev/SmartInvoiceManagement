@@ -100,32 +100,6 @@ namespace SIM.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    StockQuantity = table.Column<int>(type: "int", nullable: false),
-                    ImageBase64 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VendorId = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Products_Vendors_VendorId",
-                        column: x => x.VendorId,
-                        principalTable: "Vendors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new
                 {
@@ -172,19 +146,12 @@ namespace SIM.Infrastructure.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TransactionId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TransactionItems", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TransactionItems_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TransactionItems_Transactions_TransactionId",
                         column: x => x.TransactionId,
@@ -241,21 +208,6 @@ namespace SIM.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Products",
-                columns: new[] { "Id", "CreatedDate", "Description", "ImageBase64", "IsDeleted", "Price", "ProductName", "StockQuantity", "VendorId" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "High-performance laptop", "", false, 999.99m, "Laptop", 50, 1 },
-                    { 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "24-inch LED monitor", "", false, 199.99m, "Monitor", 100, 1 },
-                    { 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ergonomic office chair", "", false, 149.99m, "Office Chair", 75, 2 },
-                    { 4, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Standing desk", "", false, 79.99m, "Desk", 30, 2 },
-                    { 5, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mechanical keyboard", "", false, 29.99m, "Keyboard", 200, 1 },
-                    { 6, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Wireless mouse", "", false, 299.99m, "Mouse", 150, 1 },
-                    { 7, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "HD webcam", "", false, 149.99m, "Webcam", 80, 3 },
-                    { 8, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Noise-cancelling headset", "", false, 199.99m, "Headset", 60, 3 }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Transactions",
                 columns: new[] { "Id", "CategoryId", "CreatedDate", "IsDeleted", "TotalAmount", "TransactionType", "UserId", "VendorId" },
                 values: new object[,]
@@ -284,25 +236,25 @@ namespace SIM.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "TransactionItems",
-                columns: new[] { "Id", "CreatedDate", "IsDeleted", "Price", "ProductId", "Quantity", "Total", "TransactionId" },
+                columns: new[] { "Id", "CreatedDate", "IsDeleted", "Price", "Quantity", "Total", "TransactionId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 999.99m, 1, 1, 999.99m, 2 },
-                    { 2, new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 29.99m, 5, 1, 29.99m, 2 },
-                    { 3, new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 3, 2, 299.98m, 4 },
-                    { 4, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 2, 1, 199.99m, 6 },
-                    { 5, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 299.99m, 6, 1, 299.99m, 6 },
-                    { 6, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 79.99m, 4, 1, 79.99m, 8 },
-                    { 7, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 7, 1, 149.99m, 8 },
-                    { 8, new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 8, 2, 399.98m, 10 },
-                    { 9, new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 999.99m, 1, 1, 999.99m, 12 },
-                    { 10, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 29.99m, 5, 3, 89.97m, 14 },
-                    { 11, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 299.99m, 6, 1, 299.99m, 14 },
-                    { 12, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 3, 1, 149.99m, 16 },
-                    { 13, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 79.99m, 4, 1, 79.99m, 16 },
-                    { 14, new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 2, 2, 399.98m, 18 },
-                    { 15, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 7, 1, 149.99m, 20 },
-                    { 16, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 8, 1, 199.99m, 20 }
+                    { 1, new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 999.99m, 1, 999.99m, 2 },
+                    { 2, new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 29.99m, 2, 29.99m, 2 },
+                    { 3, new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 2, 299.98m, 4 },
+                    { 4, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 1, 199.99m, 6 },
+                    { 5, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 299.99m, 1, 299.99m, 6 },
+                    { 6, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 79.99m, 1, 79.99m, 8 },
+                    { 7, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 1, 149.99m, 8 },
+                    { 8, new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 2, 399.98m, 10 },
+                    { 9, new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 999.99m, 1, 999.99m, 12 },
+                    { 10, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 29.99m, 3, 89.97m, 14 },
+                    { 11, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 299.99m, 1, 299.99m, 14 },
+                    { 12, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 1, 149.99m, 16 },
+                    { 13, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 79.99m, 1, 79.99m, 16 },
+                    { 14, new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 2, 399.98m, 18 },
+                    { 15, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 1, 149.99m, 20 },
+                    { 16, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 1, 199.99m, 20 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -314,16 +266,6 @@ namespace SIM.Infrastructure.Migrations
                 name: "IX_Budgets_UserId",
                 table: "Budgets",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_VendorId",
-                table: "Products",
-                column: "VendorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TransactionItems_ProductId",
-                table: "TransactionItems",
-                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionItems_TransactionId",
@@ -361,9 +303,6 @@ namespace SIM.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "TransactionItems");
-
-            migrationBuilder.DropTable(
-                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Transactions");

@@ -12,7 +12,7 @@ using SIM.Infrastructure;
 namespace SIM.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251014031351_InitialCreate")]
+    [Migration("20251014054946_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -209,146 +209,6 @@ namespace SIM.Infrastructure.Migrations
                             Status = 0,
                             TotalAmount = 1250.00m,
                             UserId = 1
-                        });
-                });
-
-            modelBuilder.Entity("SIM.Core.Entities.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("ImageBase64")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int>("StockQuantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VendorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VendorId");
-
-                    b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "High-performance laptop",
-                            ImageBase64 = "",
-                            IsDeleted = false,
-                            Price = 999.99m,
-                            ProductName = "Laptop",
-                            StockQuantity = 50,
-                            VendorId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "24-inch LED monitor",
-                            ImageBase64 = "",
-                            IsDeleted = false,
-                            Price = 199.99m,
-                            ProductName = "Monitor",
-                            StockQuantity = 100,
-                            VendorId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Ergonomic office chair",
-                            ImageBase64 = "",
-                            IsDeleted = false,
-                            Price = 149.99m,
-                            ProductName = "Office Chair",
-                            StockQuantity = 75,
-                            VendorId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Standing desk",
-                            ImageBase64 = "",
-                            IsDeleted = false,
-                            Price = 79.99m,
-                            ProductName = "Desk",
-                            StockQuantity = 30,
-                            VendorId = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Mechanical keyboard",
-                            ImageBase64 = "",
-                            IsDeleted = false,
-                            Price = 29.99m,
-                            ProductName = "Keyboard",
-                            StockQuantity = 200,
-                            VendorId = 1
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Wireless mouse",
-                            ImageBase64 = "",
-                            IsDeleted = false,
-                            Price = 299.99m,
-                            ProductName = "Mouse",
-                            StockQuantity = 150,
-                            VendorId = 1
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "HD webcam",
-                            ImageBase64 = "",
-                            IsDeleted = false,
-                            Price = 149.99m,
-                            ProductName = "Webcam",
-                            StockQuantity = 80,
-                            VendorId = 3
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Noise-cancelling headset",
-                            ImageBase64 = "",
-                            IsDeleted = false,
-                            Price = 199.99m,
-                            ProductName = "Headset",
-                            StockQuantity = 60,
-                            VendorId = 3
                         });
                 });
 
@@ -701,9 +561,6 @@ namespace SIM.Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -714,8 +571,6 @@ namespace SIM.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.HasIndex("TransactionId");
 
@@ -728,7 +583,6 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 999.99m,
-                            ProductId = 1,
                             Quantity = 1,
                             Total = 999.99m,
                             TransactionId = 2
@@ -736,11 +590,10 @@ namespace SIM.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 29.99m,
-                            ProductId = 5,
-                            Quantity = 1,
+                            Quantity = 2,
                             Total = 29.99m,
                             TransactionId = 2
                         },
@@ -750,7 +603,6 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 149.99m,
-                            ProductId = 3,
                             Quantity = 2,
                             Total = 299.98m,
                             TransactionId = 4
@@ -761,7 +613,6 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 199.99m,
-                            ProductId = 2,
                             Quantity = 1,
                             Total = 199.99m,
                             TransactionId = 6
@@ -772,7 +623,6 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 299.99m,
-                            ProductId = 6,
                             Quantity = 1,
                             Total = 299.99m,
                             TransactionId = 6
@@ -783,7 +633,6 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 79.99m,
-                            ProductId = 4,
                             Quantity = 1,
                             Total = 79.99m,
                             TransactionId = 8
@@ -794,7 +643,6 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 149.99m,
-                            ProductId = 7,
                             Quantity = 1,
                             Total = 149.99m,
                             TransactionId = 8
@@ -805,7 +653,6 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 199.99m,
-                            ProductId = 8,
                             Quantity = 2,
                             Total = 399.98m,
                             TransactionId = 10
@@ -816,7 +663,6 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 999.99m,
-                            ProductId = 1,
                             Quantity = 1,
                             Total = 999.99m,
                             TransactionId = 12
@@ -827,7 +673,6 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 29.99m,
-                            ProductId = 5,
                             Quantity = 3,
                             Total = 89.97m,
                             TransactionId = 14
@@ -838,7 +683,6 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 299.99m,
-                            ProductId = 6,
                             Quantity = 1,
                             Total = 299.99m,
                             TransactionId = 14
@@ -849,7 +693,6 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 149.99m,
-                            ProductId = 3,
                             Quantity = 1,
                             Total = 149.99m,
                             TransactionId = 16
@@ -860,7 +703,6 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 79.99m,
-                            ProductId = 4,
                             Quantity = 1,
                             Total = 79.99m,
                             TransactionId = 16
@@ -871,7 +713,6 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 199.99m,
-                            ProductId = 2,
                             Quantity = 2,
                             Total = 399.98m,
                             TransactionId = 18
@@ -882,7 +723,6 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 149.99m,
-                            ProductId = 7,
                             Quantity = 1,
                             Total = 149.99m,
                             TransactionId = 20
@@ -893,7 +733,6 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Price = 199.99m,
-                            ProductId = 8,
                             Quantity = 1,
                             Total = 199.99m,
                             TransactionId = 20
@@ -1049,17 +888,6 @@ namespace SIM.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SIM.Core.Entities.Product", b =>
-                {
-                    b.HasOne("SIM.Core.Entities.Vendor", "Vendor")
-                        .WithMany("Products")
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Vendor");
-                });
-
             modelBuilder.Entity("SIM.Core.Entities.Transaction", b =>
                 {
                     b.HasOne("SIM.Core.Entities.TransactionCategory", "Category")
@@ -1089,26 +917,13 @@ namespace SIM.Infrastructure.Migrations
 
             modelBuilder.Entity("SIM.Core.Entities.TransactionItem", b =>
                 {
-                    b.HasOne("SIM.Core.Entities.Product", "Product")
-                        .WithMany("TransactionItems")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("SIM.Core.Entities.Transaction", "Transtraction")
                         .WithMany("TransactionItems")
                         .HasForeignKey("TransactionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
-
                     b.Navigation("Transtraction");
-                });
-
-            modelBuilder.Entity("SIM.Core.Entities.Product", b =>
-                {
-                    b.Navigation("TransactionItems");
                 });
 
             modelBuilder.Entity("SIM.Core.Entities.Transaction", b =>
@@ -1132,8 +947,6 @@ namespace SIM.Infrastructure.Migrations
 
             modelBuilder.Entity("SIM.Core.Entities.Vendor", b =>
                 {
-                    b.Navigation("Products");
-
                     b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
