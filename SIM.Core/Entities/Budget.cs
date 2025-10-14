@@ -10,7 +10,7 @@ namespace SIM.Core.Entities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public BudgetStatusEnum Status { get; set; }
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public virtual TransactionCategory Category { get; set; }
         public int UserId { get; set; }
         public virtual User User { get; set; }

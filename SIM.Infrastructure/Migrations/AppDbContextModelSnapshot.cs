@@ -30,7 +30,7 @@ namespace SIM.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -1033,8 +1033,7 @@ namespace SIM.Infrastructure.Migrations
                     b.HasOne("SIM.Core.Entities.TransactionCategory", "Category")
                         .WithMany("Budgets")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SIM.Core.Entities.User", "User")
                         .WithMany("Budgets")
