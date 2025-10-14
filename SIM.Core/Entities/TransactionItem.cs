@@ -12,7 +12,5 @@ namespace SIM.Core.Entities
 
         public int TransactionId { get; set; }
         public virtual Transaction Transtraction { get; set; }
-        public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
     }
 }

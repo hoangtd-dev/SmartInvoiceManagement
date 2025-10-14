@@ -28,17 +28,6 @@ namespace SIM.Infrastructure.MockData
             var product7 = 149.99m;
             var product8 = 199.99m;
 
-            modelBuilder.Entity<Product>().HasData(
-                new Product { Id = 1, ProductName = "Laptop", Description = "High-performance laptop", Price = product1, StockQuantity = 50, VendorId = 1, CreatedDate = new DateTime(2024, 1, 1) },
-                new Product { Id = 2, ProductName = "Monitor", Description = "24-inch LED monitor", Price = product2, StockQuantity = 100, VendorId = 1, CreatedDate = new DateTime(2024, 1, 1) },
-                new Product { Id = 3, ProductName = "Office Chair", Description = "Ergonomic office chair", Price = product3, StockQuantity = 75, VendorId = 2, CreatedDate = new DateTime(2024, 1, 1) },
-                new Product { Id = 4, ProductName = "Desk", Description = "Standing desk", Price = product4, StockQuantity = 30, VendorId = 2, CreatedDate = new DateTime(2024, 1, 1) },
-                new Product { Id = 5, ProductName = "Keyboard", Description = "Mechanical keyboard", Price = product5, StockQuantity = 200, VendorId = 1, CreatedDate = new DateTime(2024, 1, 1) },
-                new Product { Id = 6, ProductName = "Mouse", Description = "Wireless mouse", Price = product6, StockQuantity = 150, VendorId = 1, CreatedDate = new DateTime(2024, 1, 1) },
-                new Product { Id = 7, ProductName = "Webcam", Description = "HD webcam", Price = product7, StockQuantity = 80, VendorId = 3, CreatedDate = new DateTime(2024, 1, 1) },
-                new Product { Id = 8, ProductName = "Headset", Description = "Noise-cancelling headset", Price = product8, StockQuantity = 60, VendorId = 3, CreatedDate = new DateTime(2024, 1, 1) }
-            );
-
             modelBuilder.Entity<TransactionCategory>().HasData(
                 new TransactionCategory { Id = 1, Name = "Food", CreatedDate = new DateTime(2024, 2, 15) },
                 new TransactionCategory { Id = 2, Name = "Transportation", CreatedDate = new DateTime(2024, 2, 15) },
@@ -92,40 +81,40 @@ namespace SIM.Infrastructure.MockData
 
             modelBuilder.Entity<TransactionItem>().HasData(
                 // January
-                new TransactionItem { Id = 1, TransactionId = 2, ProductId = 1, Quantity = 1, Price = product1, Total = product1, CreatedDate = new DateTime(2025, 1, 10) },
-                new TransactionItem { Id = 2, TransactionId = 2, ProductId = 5, Quantity = 1, Price = product5, Total = product5, CreatedDate = new DateTime(2025, 1, 10) },
+                new TransactionItem { Id = 1, TransactionId = 2, Quantity = 1, Price = product1, Total = product1, CreatedDate = new DateTime(2025, 1, 10) },
+                new TransactionItem { Id = 2, TransactionId = 2, Quantity = 2, Price = product5, Total = product5, CreatedDate = new DateTime(2025, 2, 10) },
 
                 // February
-                new TransactionItem { Id = 3, TransactionId = 4, ProductId = 3, Quantity = 2, Price = product3, Total = product3 * 2, CreatedDate = new DateTime(2025, 2, 15) },
+                new TransactionItem { Id = 3, TransactionId = 4, Quantity = 2, Price = product3, Total = product3 * 2, CreatedDate = new DateTime(2025, 2, 15) },
 
                 // March
-                new TransactionItem { Id = 4, TransactionId = 6, ProductId = 2, Quantity = 1, Price = product2, Total = product2, CreatedDate = new DateTime(2025, 3, 20) },
-                new TransactionItem { Id = 5, TransactionId = 6, ProductId = 6, Quantity = 1, Price = product6, Total = product6, CreatedDate = new DateTime(2025, 3, 20) },
+                new TransactionItem { Id = 4, TransactionId = 6, Quantity = 1, Price = product2, Total = product2, CreatedDate = new DateTime(2025, 3, 20) },
+                new TransactionItem { Id = 5, TransactionId = 6, Quantity = 1, Price = product6, Total = product6, CreatedDate = new DateTime(2025, 3, 20) },
 
                 // April
-                new TransactionItem { Id = 6, TransactionId = 8, ProductId = 4, Quantity = 1, Price = product4, Total = product4, CreatedDate = new DateTime(2025, 4, 18) },
-                new TransactionItem { Id = 7, TransactionId = 8, ProductId = 7, Quantity = 1, Price = product7, Total = product7, CreatedDate = new DateTime(2025, 4, 18) },
+                new TransactionItem { Id = 6, TransactionId = 8, Quantity = 1, Price = product4, Total = product4, CreatedDate = new DateTime(2025, 4, 18) },
+                new TransactionItem { Id = 7, TransactionId = 8, Quantity = 1, Price = product7, Total = product7, CreatedDate = new DateTime(2025, 4, 18) },
 
                 // May
-                new TransactionItem { Id = 8, TransactionId = 10, ProductId = 8, Quantity = 2, Price = product8, Total = product8 * 2, CreatedDate = new DateTime(2025, 5, 22) },
+                new TransactionItem { Id = 8, TransactionId = 10, Quantity = 2, Price = product8, Total = product8 * 2, CreatedDate = new DateTime(2025, 5, 22) },
 
                 // June
-                new TransactionItem { Id = 9, TransactionId = 12, ProductId = 1, Quantity = 1, Price = product1, Total = product1, CreatedDate = new DateTime(2025, 6, 19) },
+                new TransactionItem { Id = 9, TransactionId = 12, Quantity = 1, Price = product1, Total = product1, CreatedDate = new DateTime(2025, 6, 19) },
 
                 // July
-                new TransactionItem { Id = 10, TransactionId = 14, ProductId = 5, Quantity = 3, Price = product5, Total = product5 * 3, CreatedDate = new DateTime(2025, 7, 25) },
-                new TransactionItem { Id = 11, TransactionId = 14, ProductId = 6, Quantity = 1, Price = product6, Total = product6, CreatedDate = new DateTime(2025, 7, 25) },
+                new TransactionItem { Id = 10, TransactionId = 14, Quantity = 3, Price = product5, Total = product5 * 3, CreatedDate = new DateTime(2025, 7, 25) },
+                new TransactionItem { Id = 11, TransactionId = 14, Quantity = 1, Price = product6, Total = product6, CreatedDate = new DateTime(2025, 7, 25) },
 
                 // August
-                new TransactionItem { Id = 12, TransactionId = 16, ProductId = 3, Quantity = 1, Price = product3, Total = product3, CreatedDate = new DateTime(2025, 8, 16) },
-                new TransactionItem { Id = 13, TransactionId = 16, ProductId = 4, Quantity = 1, Price = product4, Total = product4, CreatedDate = new DateTime(2025, 8, 16) },
+                new TransactionItem { Id = 12, TransactionId = 16, Quantity = 1, Price = product3, Total = product3, CreatedDate = new DateTime(2025, 8, 16) },
+                new TransactionItem { Id = 13, TransactionId = 16, Quantity = 1, Price = product4, Total = product4, CreatedDate = new DateTime(2025, 8, 16) },
 
                 // September
-                new TransactionItem { Id = 14, TransactionId = 18, ProductId = 2, Quantity = 2, Price = product2, Total = product2 * 2, CreatedDate = new DateTime(2025, 9, 21) },
+                new TransactionItem { Id = 14, TransactionId = 18, Quantity = 2, Price = product2, Total = product2 * 2, CreatedDate = new DateTime(2025, 9, 21) },
 
                 // October
-                new TransactionItem { Id = 15, TransactionId = 20, ProductId = 7, Quantity = 1, Price = product7, Total = product7, CreatedDate = new DateTime(2025, 10, 28) },
-                new TransactionItem { Id = 16, TransactionId = 20, ProductId = 8, Quantity = 1, Price = product8, Total = product8, CreatedDate = new DateTime(2025, 10, 28) }
+                new TransactionItem { Id = 15, TransactionId = 20, Quantity = 1, Price = product7, Total = product7, CreatedDate = new DateTime(2025, 10, 28) },
+                new TransactionItem { Id = 16, TransactionId = 20, Quantity = 1, Price = product8, Total = product8, CreatedDate = new DateTime(2025, 10, 28) }
             );
 
             modelBuilder.Entity<Budget>().HasData(
