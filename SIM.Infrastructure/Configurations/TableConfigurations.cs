@@ -12,6 +12,7 @@ namespace SIM.Infrastructure.Configurations
             TransactionCategoryConfigureTable(modelBuilder);
             TransactionConfigureTable(modelBuilder);
             TransactionItemConfigureTable(modelBuilder);
+            BudgetConfigureTable(modelBuilder);
         }
     }
 }

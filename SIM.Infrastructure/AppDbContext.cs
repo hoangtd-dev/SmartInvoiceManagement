@@ -15,6 +15,7 @@ namespace SIM.Infrastructure
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<TransactionCategory> TransactionCategories { get; set; }
         public DbSet<TransactionItem> TransactionItems { get; set; }
+        public DbSet<Budget> Budgets { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

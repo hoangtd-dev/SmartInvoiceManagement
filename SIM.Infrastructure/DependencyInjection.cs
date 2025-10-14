@@ -24,6 +24,7 @@ namespace SIM.Infrastructure
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<ITransactionItemRepository, TransactionItemRepository>();
             services.AddScoped<ITransactionCategoryRepository, TransactionCategoryRepository>();
+            services.AddScoped<IBudgetRepository, BudgetRepository>();
 
             return services;
         }
