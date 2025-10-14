@@ -51,6 +51,9 @@ namespace SIM.Infrastructure.Migrations
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("TotalExpense")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -73,6 +76,7 @@ namespace SIM.Infrastructure.Migrations
                             StartDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 1,
                             TotalAmount = 500.00m,
+                            TotalExpense = 450.00m,
                             UserId = 1
                         },
                         new
@@ -85,6 +89,7 @@ namespace SIM.Infrastructure.Migrations
                             StartDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 1,
                             TotalAmount = 300.00m,
+                            TotalExpense = 0m,
                             UserId = 1
                         },
                         new
@@ -97,6 +102,7 @@ namespace SIM.Infrastructure.Migrations
                             StartDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 1,
                             TotalAmount = 1200.00m,
+                            TotalExpense = 100m,
                             UserId = 1
                         },
                         new
@@ -109,6 +115,7 @@ namespace SIM.Infrastructure.Migrations
                             StartDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 1,
                             TotalAmount = 550.00m,
+                            TotalExpense = 0m,
                             UserId = 1
                         },
                         new
@@ -121,6 +128,7 @@ namespace SIM.Infrastructure.Migrations
                             StartDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 1,
                             TotalAmount = 350.00m,
+                            TotalExpense = 0m,
                             UserId = 1
                         },
                         new
@@ -133,6 +141,7 @@ namespace SIM.Infrastructure.Migrations
                             StartDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 1,
                             TotalAmount = 1200.00m,
+                            TotalExpense = 0m,
                             UserId = 1
                         },
                         new
@@ -145,6 +154,7 @@ namespace SIM.Infrastructure.Migrations
                             StartDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 1,
                             TotalAmount = 600.00m,
+                            TotalExpense = 0m,
                             UserId = 1
                         },
                         new
@@ -157,6 +167,7 @@ namespace SIM.Infrastructure.Migrations
                             StartDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 1,
                             TotalAmount = 400.00m,
+                            TotalExpense = 0m,
                             UserId = 1
                         },
                         new
@@ -169,6 +180,7 @@ namespace SIM.Infrastructure.Migrations
                             StartDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 1,
                             TotalAmount = 1200.00m,
+                            TotalExpense = 0m,
                             UserId = 1
                         },
                         new
@@ -181,6 +193,7 @@ namespace SIM.Infrastructure.Migrations
                             StartDate = new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 0,
                             TotalAmount = 650.00m,
+                            TotalExpense = 700.00m,
                             UserId = 1
                         },
                         new
@@ -193,6 +206,7 @@ namespace SIM.Infrastructure.Migrations
                             StartDate = new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 0,
                             TotalAmount = 450.00m,
+                            TotalExpense = 100.00m,
                             UserId = 1
                         },
                         new
@@ -205,6 +219,7 @@ namespace SIM.Infrastructure.Migrations
                             StartDate = new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 0,
                             TotalAmount = 1250.00m,
+                            TotalExpense = 1100.00m,
                             UserId = 1
                         });
                 });

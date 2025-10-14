@@ -62,5 +62,24 @@ namespace SIM.Infrastructure.Respositories
             _appDbContext.Budgets.Update(entity);
             await _appDbContext.SaveChangesAsync();
         }
+
+        public async Task<Budget?> GetExistingBudgetAsync(int userId, DateTime createdDate, int? categoryId)
+        {
+            var query = _appDbContext.Budgets.AsQueryable();
+
+            if (categoryId is not null)
+            {
+                query = query.Where(x => x.CategoryId == categoryId);
+            }
+
+            return await query.FirstOrDefaultAsync(x => x.UserId == userId && x.StartDate <= createdDate && createdDate <= x.EndDate && x.Status == BudgetStatusEnum.Active);
+        }
+
+        public async Task<int> OverBudgetCount(int userId)
+        {
+            return await _appDbContext.Budgets
+                .Where(x => x.UserId == userId && x.Status == BudgetStatusEnum.Active && x.TotalExpense > x.TotalAmount)
+                .CountAsync();
+        }
     }
 }

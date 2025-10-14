@@ -7,6 +7,7 @@ namespace SIM.Core.Entities
     public class Budget : BaseEntity
     {
         public decimal TotalAmount { get; set; }
+        public decimal TotalExpense { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public BudgetStatusEnum Status { get; set; }

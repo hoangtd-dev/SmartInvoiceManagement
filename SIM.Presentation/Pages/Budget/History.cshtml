@@ -1,36 +1,21 @@
 ﻿@page
 @using SIM.Core.DTOs.Common
-@model SIM.Presentation.Pages.Budget.BudgetModel
+@model SIM.Presentation.Pages.Budget.HistoryModel
 @{
     ViewData["Title"] = ViewData["ActivePage"] = "Budget";
 }
 
 <div class="flex justify-between mb-4">
-    <h1 class="text-lg font-bold">Budgets</h1>
+    <h1 class="text-lg font-bold">Budgets History</h1>
     <div class="flex gap-2">
-        <a asp-page="/Budget/History" class="border font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-500">History</a>
-        <a asp-page="/Budget/Upsert" class="border font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-blue-500 text-blue-500 hover:text-white hover:bg-blue-500">+ Create Budget</a>
+        <a asp-page="/Budget/Index" class="border font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-blue-500 text-blue-500 hover:text-white hover:bg-blue-500">Back To Active Budgets</a>
     </div>
 </div>
 
 @foreach (var budget in Model.Budgets)
 {
     <div class="p-8 bg-gray-800 shadow-sm rounded-lg mb-4">
-        <div class="flex justify-between items-center mb-2">
-            <p class="text-4xl">$@budget.TotalExpense</p>
-            <div class="flex gap-2">
-                <a href="/Budget/Upsert/@budget.Id">
-                    <span class="material-symbols-outlined font-medium text-lg text-blue-500">
-                        edit_square
-                    </span>
-                </a>
-                <a href="/Budget/Delete/@budget.Id">
-                    <span class="material-symbols-outlined font-medium text-lg text-red-500">
-                        delete
-                    </span>
-                </a>
-            </div>
-        </div>
+        <p class="text-4xl mb-2">$@budget.TotalExpense</p>
 
         <div class="my-4">
             <div class="flex justify-between mb-1">

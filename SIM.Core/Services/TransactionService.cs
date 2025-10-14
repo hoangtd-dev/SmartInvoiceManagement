@@ -3,6 +3,7 @@ using SIM.Core.DTOs.Requests;
 using SIM.Core.DTOs.Responses;
 using SIM.Core.Entities;
 using SIM.Core.Enums;
+using SIM.Core.Helpers;
 using SIM.Core.Interfaces.Repositories;
 using SIM.Core.Interfaces.Services;
 
@@ -68,7 +69,9 @@ namespace SIM.Core.Services
 
         public async Task<IncomeExpenseModel> GetIncomeExpensesOfCurrentUserInMonth(int userId, int month, int year)
         {
-            var transactions = await _transactionRepository.GetIncomeExpenseOfCurrentUserInMonthAsync(userId, month, year);
+            var (startDate, endDate) = DateHelpers.GetStartAndEndDateOfMonth(month, year);
+
+            var transactions = await _transactionRepository.GetIncomeExpenseOfCurrentUserInMonthAsync(userId, startDate, endDate);
 
             var totalIncome = transactions.Where(t => t.TransactionType == TransactionTypeEnum.Income).Sum(transaction => transaction.TotalAmount);
             var totalExpense = transactions.Where(t => t.TransactionType == TransactionTypeEnum.Expense).Sum(transaction => transaction.TotalAmount);

@@ -48,6 +48,14 @@ namespace SIM.Presentation.Pages.Budget
                     TempData["ToastMessage"] = "System Error !!!";
                 }
             }
+            else {
+                Budget = new Core.DTOs.Responses.BudgetModel 
+                { 
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.AddDays(1),
+                };
+            }
+        
             return Page();
         }
 

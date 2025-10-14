@@ -9,6 +9,7 @@ namespace SIM.Core.DTOs.Responses
         public int Id { get; set; }
         [Required]
         public decimal TotalAmount { get; set; }
+        public decimal TotalExpense { get; set; }
         [Required]
         public DateTime StartDate { get; set; }
         [Required]

@@ -49,10 +49,8 @@ namespace SIM.Infrastructure.Respositories
             throw new NotImplementedException();
         }
 
-        public async Task<ICollection<Transaction>> GetIncomeExpenseOfCurrentUserInMonthAsync(int userId, int month, int year)
+        public async Task<ICollection<Transaction>> GetIncomeExpenseOfCurrentUserInMonthAsync(int userId, DateTime startDate, DateTime endDate)
         {
-            var (startDate, endDate) = DateHelpers.GetStartAndEndDateOfMonth(month, year);
-
             return await _appDbContext.Transactions
                 .Where(x => x.UserId == userId && x.CreatedDate >= startDate && x.CreatedDate <= endDate)
                 .ToListAsync();

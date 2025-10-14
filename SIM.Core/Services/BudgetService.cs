@@ -29,6 +29,14 @@ namespace SIM.Core.Services
             await _budgetRepository.AddAsync(newBudget);
         }
 
+        public async Task<bool> CheckOverBudget(int userId, DateTime createdDate, decimal totalAmount, int? categoryId)
+        {
+            var budget = await _budgetRepository.GetExistingBudgetAsync(userId, createdDate, categoryId);
+            if (budget == null) throw new NotFoundException($"Budget is not found !!!");
+
+            return (totalAmount + budget.TotalExpense) > budget.TotalAmount;
+        }
+
         public async Task DeleteBudget(int id)
         {
             var budget = await _budgetRepository.GetByIdAsync(id);
@@ -46,6 +54,7 @@ namespace SIM.Core.Services
             {
                 Id = budget.Id,
                 TotalAmount = budget.TotalAmount,
+                TotalExpense = budget.TotalExpense,
                 StartDate = budget.StartDate,
                 EndDate = budget.EndDate,
                 CategoryId = budget.Category.Id,
@@ -85,6 +94,7 @@ namespace SIM.Core.Services
             return budgets.Select(budget => new BudgetModel {
                 Id = budget.Id,
                 TotalAmount = budget.TotalAmount,
+                TotalExpense = budget.TotalExpense,
                 StartDate = budget.StartDate,
                 EndDate = budget.EndDate,
                 CategoryId = budget.Category.Id,
@@ -94,6 +104,11 @@ namespace SIM.Core.Services
                     Name = budget.Category.Name,
                 }
             }).ToList();
+        }
+
+        public Task<int> OverBudgetCount(int userId)
+        {
+            return _budgetRepository.OverBudgetCount(userId);
         }
 
         public async Task UpdateBudget(UpdateBudgetRequest updatedBudget)
