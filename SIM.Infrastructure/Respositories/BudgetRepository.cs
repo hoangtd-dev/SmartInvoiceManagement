@@ -75,19 +75,19 @@ namespace SIM.Infrastructure.Respositories
                 query = query.Where(x => x.CategoryId == categoryId);
             }
 
-            return await query.FirstOrDefaultAsync(x => x.UserId == userId && x.StartDate <= createdDate && createdDate <= x.EndDate && x.Status == BudgetStatusEnum.Active);
+            return await query.FirstOrDefaultAsync(x => x.UserId == userId && x.StartDate <= createdDate && createdDate <= x.EndDate && x.Status == BudgetStatusEnum.Active && !x.IsDeleted);
         }
 
         public async Task<int> OverBudgetCount(int userId)
         {
             return await _appDbContext.Budgets
-                .Where(x => x.UserId == userId && x.Status == BudgetStatusEnum.Active && x.TotalExpense > x.TotalAmount)
+                .Where(x => x.UserId == userId && x.Status == BudgetStatusEnum.Active && x.TotalExpense > x.TotalAmount && !x.IsDeleted)
                 .CountAsync();
         }
 
         public async Task<bool> HasActiveBudgetAsync(int userId, int? categoryId)
         {
-            return await _appDbContext.Budgets.AnyAsync(x => x.UserId == userId && x.CategoryId == categoryId && x.Status == BudgetStatusEnum.Active);
+            return await _appDbContext.Budgets.AnyAsync(x => x.UserId == userId && x.CategoryId == categoryId && x.Status == BudgetStatusEnum.Active && !x.IsDeleted);
         }
     }
 }

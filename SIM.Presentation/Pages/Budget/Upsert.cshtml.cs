@@ -97,7 +97,6 @@ namespace SIM.Presentation.Pages.Budget
                 {
                     var budget = new UpdateBudgetRequest { 
                         Id = Id.Value,
-                        CategoryId = Budget.CategoryId,
                         StartDate = Budget.StartDate,
                         EndDate = Budget.EndDate,
                         TotalAmount = Budget.TotalAmount

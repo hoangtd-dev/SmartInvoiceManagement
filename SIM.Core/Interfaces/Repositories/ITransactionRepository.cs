@@ -6,6 +6,6 @@ namespace SIM.Core.Interfaces.Repositories
 {
     public interface ITransactionRepository : IRepositoryBase<Transaction> {
         Task<ICollection<Transaction>> GetLatestTransactionsOfCurrentUserAsync(int userId, int take);
-        Task<ICollection<Transaction>> GetIncomeExpenseOfCurrentUserInMonthAsync(int userId, DateTime startDate, DateTime endDate);
+        Task<ICollection<Transaction>> GetIncomeExpenseOfCurrentUserAsync(int userId, DateTime startDate, DateTime endDate, int? categoryId = null);
     }
 }

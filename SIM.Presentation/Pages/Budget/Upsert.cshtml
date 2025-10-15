@@ -31,12 +31,15 @@
             <input type="number" asp-for="Budget.TotalAmount" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500" placeholder="Enter your Budget stock quantity" />
             <span asp-validation-for="Budget.TotalAmount" class="text-red-400 text-sm"></span>
         </div>
-        <div>
-            <label asp-for="Budget.CategoryId" class="block mb-2 text-sm font-medium text-white"></label>
-            <select asp-for="Budget.CategoryId" asp-items="Model.Categories" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500">
-                <option value="">-- Select Category --</option>
-            </select>
-        </div>
+        @if (!Model.Id.HasValue)
+        {
+            <div>
+                <label asp-for="Budget.CategoryId" class="block mb-2 text-sm font-medium text-white"></label>
+                <select asp-for="Budget.CategoryId" asp-items="Model.Categories" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:border-blue-500">
+                    <option value="">-- Select Category --</option>
+                </select>
+            </div>
+        }
     </div>
     <div class="flex justify-end gap-2">
         <button type="submit" asp-page-handler="Back" class="text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gray-600 hover:bg-gray-700">

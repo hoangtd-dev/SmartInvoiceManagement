@@ -11,18 +11,24 @@ namespace SIM.Core.Services
     public class BudgetService : IBudgetService
     {
         private readonly IBudgetRepository _budgetRepository;
-        public BudgetService(IBudgetRepository budgetRepository)
+        private readonly ITransactionRepository _transactionRepository;
+        public BudgetService(IBudgetRepository budgetRepository, ITransactionRepository transactionRepository)
         {
             _budgetRepository = budgetRepository;
+            _transactionRepository = transactionRepository;
         }
         public async Task AddBudget(CreateBudgetRequest budget)
         {
+            var transactions = await _transactionRepository.GetIncomeExpenseOfCurrentUserAsync(budget.UserId, budget.StartDate, budget.EndDate, budget.CategoryId);
+            var totalExpense = transactions.Where(t => t.TransactionType == TransactionTypeEnum.Expense).Sum(transaction => transaction.TotalAmount);
+
             var newBudget = new Budget
             { 
                 CategoryId = budget.CategoryId,
                 StartDate = budget.StartDate,
                 EndDate = budget.EndDate,
                 TotalAmount = budget.TotalAmount,
+                TotalExpense = totalExpense,
                 UserId = budget.UserId,
                 Status = BudgetStatusEnum.Active
             };
@@ -127,7 +133,6 @@ namespace SIM.Core.Services
 
             if (budget is null) throw new NotFoundException($"Budget with id:{updatedBudget!.Id} is not found !!!");
 
-            budget.CategoryId = updatedBudget.CategoryId;
             budget.TotalAmount = updatedBudget.TotalAmount;
             budget.StartDate = updatedBudget.StartDate;
             budget.EndDate = updatedBudget.EndDate;
