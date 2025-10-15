@@ -17,11 +17,6 @@ namespace SIM.Infrastructure.Configurations
                       .WithMany(i => i.TransactionItems)
                       .HasForeignKey(ti => ti.TransactionId)
                       .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasOne(ti => ti.Product)
-                      .WithMany(p => p.TransactionItems)
-                      .HasForeignKey(ti => ti.ProductId)
-                      .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }

@@ -18,7 +18,6 @@ namespace SIM.Infrastructure
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IVendorRespository, VendorRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
