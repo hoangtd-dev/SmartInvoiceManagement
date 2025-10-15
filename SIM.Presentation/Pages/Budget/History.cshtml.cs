@@ -5,11 +5,12 @@ using SIM.Presentation.ViewModels;
 
 namespace SIM.Presentation.Pages.Budget
 {
-    public class BudgetModel : BasePageModel
+    public class HistoryModel : BasePageModel
     {
         public ICollection<BudgetViewModel> Budgets { get; set; }
         private readonly IBudgetService _budgetService;
-        public BudgetModel(IBudgetService budgetService)
+
+        public HistoryModel(IBudgetService budgetService)
         {
             _budgetService = budgetService;
         }
@@ -17,8 +18,8 @@ namespace SIM.Presentation.Pages.Budget
         {
             if (!IsAuthenticated) return RedirectToPage("/Login");
 
-            Budgets = (await _budgetService.GetActiveBudgets(CurrentUserId)).Select(x => new BudgetViewModel 
-            { 
+            Budgets = (await _budgetService.GetExpiredBudgets(CurrentUserId)).Select(x => new BudgetViewModel
+            {
                 Id = x.Id,
                 Category = x.Category,
                 CategoryId = x.CategoryId,

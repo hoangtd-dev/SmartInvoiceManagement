@@ -44,7 +44,7 @@ namespace SIM.Presentation.Pages.Dashboard
 
             foreach (var month in months)
             {
-                var incomeExpenseInMonth = await _transactionService.GetIncomeExpensesOfCurrentUserInMonth(CurrentUserId, month, year);
+                var incomeExpenseInMonth = await _transactionService.GetIncomeExpensesOfCurrentUser(CurrentUserId, month, year);
                 IncomeOutcomeInYear.Add(incomeExpenseInMonth);
             }
         }
@@ -55,8 +55,8 @@ namespace SIM.Presentation.Pages.Dashboard
             int previousMonth = DateTime.Now.AddMonths(-1).Month;
             int year = DateTime.Now.Year;
 
-            CurrentIncomeOutcomeInMonth = await _transactionService.GetIncomeExpensesOfCurrentUserInMonth(CurrentUserId, month, year);
-            var incomeOutcomeInPreviousMonth = await _transactionService.GetIncomeExpensesOfCurrentUserInMonth(CurrentUserId, previousMonth, year);
+            CurrentIncomeOutcomeInMonth = await _transactionService.GetIncomeExpensesOfCurrentUser(CurrentUserId, month, year);
+            var incomeOutcomeInPreviousMonth = await _transactionService.GetIncomeExpensesOfCurrentUser(CurrentUserId, previousMonth, year);
 
             if (incomeOutcomeInPreviousMonth.Income == 0)
             {

@@ -7,5 +7,8 @@ namespace SIM.Core.Interfaces.Repositories
     {
         Task<ICollection<Budget>> GetActiveBudgets(int userId);
         Task<ICollection<Budget>> GetExpiredBudgets(int userId);
+        Task<int> OverBudgetCount(int userId);
+        Task<bool> HasActiveBudgetAsync(int userId, int? categoryId);
+        Task<Budget?> GetExistingBudgetByCreatedDateAsync(int userId, DateTime createdDate, int? categoryId);
     }
 }

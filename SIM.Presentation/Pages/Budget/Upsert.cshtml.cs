@@ -48,6 +48,14 @@ namespace SIM.Presentation.Pages.Budget
                     TempData["ToastMessage"] = "System Error !!!";
                 }
             }
+            else {
+                Budget = new Core.DTOs.Responses.BudgetModel 
+                { 
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.AddDays(1),
+                };
+            }
+        
             return Page();
         }
 
@@ -78,14 +86,17 @@ namespace SIM.Presentation.Pages.Budget
 
         public async Task<IActionResult> OnPostSaveAsync()
         {
-            if (!ModelState.IsValid) return Page();
+            if (!ModelState.IsValid) {
+                await GetCategories();
+                return Page();
+            }
             try
+
             {
                 if (Id.HasValue)
                 {
                     var budget = new UpdateBudgetRequest { 
                         Id = Id.Value,
-                        CategoryId = Budget.CategoryId,
                         StartDate = Budget.StartDate,
                         EndDate = Budget.EndDate,
                         TotalAmount = Budget.TotalAmount
@@ -96,17 +107,27 @@ namespace SIM.Presentation.Pages.Budget
                 }
                 else
                 {
+                    await _budgetService.HasActiveBudget(CurrentUserId, Budget.CategoryId);
+
                     var budget = new CreateBudgetRequest
                     {
                         CategoryId = Budget.CategoryId,
                         StartDate = Budget.StartDate,
                         EndDate = Budget.EndDate,
-                        TotalAmount = Budget.TotalAmount
+                        TotalAmount = Budget.TotalAmount,
+                        UserId = CurrentUserId
                     };
                     await _budgetService.AddBudget(budget);
                     TempData["ToastStatus"] = ToastStatusEnum.Success;
                     TempData["ToastMessage"] = "Budget created successfully!";
                 }
+            }
+            catch (DuplicateException ex)
+            {
+                TempData["ToastStatus"] = ToastStatusEnum.Fail;
+                TempData["ToastMessage"] = ex.Message;
+                await GetCategories();
+                return Page();
             }
             catch (NotFoundException ex)
             {
