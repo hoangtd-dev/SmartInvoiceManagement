@@ -19,7 +19,7 @@
 
         <div class="my-4">
             <div class="flex justify-between mb-1">
-                <span class="text-base font-medium @(budget.Percentage >= 80 ? "text-red-500" : "text-blue-500")">@(budget.Category.Name ?? "All")</span>
+                <span class="text-base font-medium @(budget.Percentage >= 80 ? "text-red-500" : "text-blue-500")">@(budget.Category is not null ? budget.Category.Name : "All")</span>
                 <span class="text-sm font-medium @(budget.Percentage >= 80 ? "text-red-500" : "text-blue-500")">@(budget.Percentage)%</span>
             </div>
 

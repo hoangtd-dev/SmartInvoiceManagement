@@ -23,6 +23,7 @@ namespace SIM.Core.Services
                 StartDate = budget.StartDate,
                 EndDate = budget.EndDate,
                 TotalAmount = budget.TotalAmount,
+                UserId = budget.UserId,
                 Status = BudgetStatusEnum.Active
             };
 
@@ -31,7 +32,7 @@ namespace SIM.Core.Services
 
         public async Task<bool> CheckOverBudget(int userId, DateTime createdDate, decimal totalAmount, int? categoryId)
         {
-            var budget = await _budgetRepository.GetExistingBudgetAsync(userId, createdDate, categoryId);
+            var budget = await _budgetRepository.GetExistingBudgetByCreatedDateAsync(userId, createdDate, categoryId);
             if (budget == null) throw new NotFoundException($"Budget is not found !!!");
 
             return (totalAmount + budget.TotalExpense) > budget.TotalAmount;
@@ -57,12 +58,12 @@ namespace SIM.Core.Services
                 TotalExpense = budget.TotalExpense,
                 StartDate = budget.StartDate,
                 EndDate = budget.EndDate,
-                CategoryId = budget.Category.Id,
-                Category = new TransactionCategoryModel
+                CategoryId = budget.Category is not null ? budget.Category.Id : null,
+                Category = budget.Category is not null ? new TransactionCategoryModel
                 {
                     Id = budget.Category.Id,
                     Name = budget.Category.Name,
-                }
+                } : null
             }).ToList();
         }
 
@@ -78,12 +79,12 @@ namespace SIM.Core.Services
                 TotalAmount = budget.TotalAmount,
                 StartDate = budget.StartDate,
                 EndDate = budget.EndDate,
-                CategoryId = budget.Category.Id,
-                Category = new TransactionCategoryModel 
+                CategoryId = budget.Category is not null ? budget.Category.Id : null,
+                Category = budget.Category is not null ? new TransactionCategoryModel 
                 { 
                     Id = budget.Category.Id,
                     Name = budget.Category.Name,
-                }
+                } : null
             };
         }
 
@@ -97,13 +98,22 @@ namespace SIM.Core.Services
                 TotalExpense = budget.TotalExpense,
                 StartDate = budget.StartDate,
                 EndDate = budget.EndDate,
-                CategoryId = budget.Category.Id,
-                Category = new TransactionCategoryModel
+                CategoryId = budget.Category is not null ? budget.Category.Id : null,
+                Category = budget.Category is not null ? new TransactionCategoryModel
                 {
                     Id = budget.Category.Id,
                     Name = budget.Category.Name,
-                }
+                } : null
             }).ToList();
+        }
+
+        public async Task<bool> HasActiveBudget(int userId, int? categoryId)
+        {
+            var hasActiveBudget = await _budgetRepository.HasActiveBudgetAsync(userId, categoryId);
+
+            if (hasActiveBudget) throw new DuplicateException("Please update current budget with this category type or delete it to create new one !!!");
+
+            return hasActiveBudget;
         }
 
         public Task<int> OverBudgetCount(int userId)

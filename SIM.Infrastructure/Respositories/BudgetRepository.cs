@@ -30,6 +30,7 @@ namespace SIM.Infrastructure.Respositories
             return await _appDbContext.Budgets
                 .Include(x => x.Category)
                 .Where(x => !x.IsDeleted)
+                .OrderBy(x => x.Category == null ? 0 : 1)
                 .ToListAsync();
         }
 
@@ -46,6 +47,7 @@ namespace SIM.Infrastructure.Respositories
             return await _appDbContext.Budgets
                 .Include(x => x.Category)
                 .Where(x => x.UserId == userId && x.Status == BudgetStatusEnum.Expired && !x.IsDeleted)
+                .OrderBy(x => x.Category == null ? 0 : 1)
                 .ToListAsync();
         }
 
@@ -54,6 +56,7 @@ namespace SIM.Infrastructure.Respositories
             return await _appDbContext.Budgets
                 .Include(x => x.Category)
                 .Where(x => x.UserId == userId && x.Status == BudgetStatusEnum.Active && !x.IsDeleted)
+                .OrderBy(x => x.Category == null ? 0 : 1)
                 .ToListAsync();
         }
 
@@ -63,7 +66,7 @@ namespace SIM.Infrastructure.Respositories
             await _appDbContext.SaveChangesAsync();
         }
 
-        public async Task<Budget?> GetExistingBudgetAsync(int userId, DateTime createdDate, int? categoryId)
+        public async Task<Budget?> GetExistingBudgetByCreatedDateAsync(int userId, DateTime createdDate, int? categoryId)
         {
             var query = _appDbContext.Budgets.AsQueryable();
 
@@ -80,6 +83,11 @@ namespace SIM.Infrastructure.Respositories
             return await _appDbContext.Budgets
                 .Where(x => x.UserId == userId && x.Status == BudgetStatusEnum.Active && x.TotalExpense > x.TotalAmount)
                 .CountAsync();
+        }
+
+        public async Task<bool> HasActiveBudgetAsync(int userId, int? categoryId)
+        {
+            return await _appDbContext.Budgets.AnyAsync(x => x.UserId == userId && x.CategoryId == categoryId && x.Status == BudgetStatusEnum.Active);
         }
     }
 }

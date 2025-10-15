@@ -13,5 +13,6 @@ namespace SIM.Core.Interfaces.Services
         Task DeleteBudget(int id);
         Task<int> OverBudgetCount(int userId);
         Task<bool> CheckOverBudget(int userId, DateTime createdDate, decimal totalAmount, int? categoryId);
+        Task<bool> HasActiveBudget(int userId, int? categoryId);
     }
 }
