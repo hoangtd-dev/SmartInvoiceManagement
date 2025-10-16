@@ -83,10 +83,6 @@ namespace SIM.Presentation.Pages.Transactions
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!IsAuthenticated)
-                return RedirectToPage("/Login");
-
-            // Handle inline vendor creation (non-AJAX fallback)
             if (Input.VendorId == 0 && !string.IsNullOrWhiteSpace(NewVendor?.VendorName))
             {
                 var vendorReq = new CreateVendorRequest
