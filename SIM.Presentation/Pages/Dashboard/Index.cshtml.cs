@@ -36,7 +36,6 @@ namespace SIM.Presentation.Pages.Dashboard
         private async Task GetLatestTransactions()
         {
             Transactions = await _transactionService.GetLatestTransactionsOfCurrentUser(CurrentUserId, 5);
-            Console.WriteLine("Latest Transactions: " + JsonSerializer.Serialize(Transactions));
         }
 
         private async Task GetIncomeOutcomeInYear()

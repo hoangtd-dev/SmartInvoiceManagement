@@ -3,18 +3,17 @@
 @{
     ViewData["ActivePage"] = "Transactions";
 }
+@using SIM.Core.Enums
 
 <div class="max-w-3xl mx-auto p-6 bg-gray-800 rounded-lg shadow-sm border border-gray-700 text-white">
     <h2 class="text-xl font-semibold mb-4 text-white">Create Transaction</h2>
 
-    <form method="post" onsubmit="return prepareVendorInline()">
+    <form method="post" id="transactionForm">
         @Html.AntiForgeryToken()
-        <input type="hidden" asp-for="Input.TotalAmount" id="TotalAmountHidden" />
-
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium text-gray-200">Transaction Type</label>
-                <select asp-for="Input.TransactionType"
+                <select asp-for="Input.TransactionType" id="TransactionType"
                     class="mt-1 block w-full rounded bg-gray-700 border border-gray-600 text-white px-3 py-2">
                     @foreach (var t in Model.TransactionTypeOptions)
                     {
@@ -25,7 +24,7 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-200">Category</label>
-                <select asp-for="Input.CategoryId"
+                <select asp-for="Input.CategoryId" id="CategorySelect"
                     class="mt-1 block w-full rounded bg-gray-700 border border-gray-600 text-white px-3 py-2">
                     <option value="">-- Select Category --</option>
                     @foreach (var c in Model.CategoryOptions)
@@ -44,13 +43,13 @@
                         @foreach (var v in Model.VendorOptions)
                         {
                             <option value="@v.Value"
-                                selected="@(Model.Input.VendorId == int.Parse(v.Value) ? "selected" : null)">@v.Text
+                                selected="@(Model.Input.VendorId == int.Parse(v.Value) ? "selected" : null)">
+                                @v.Text
                             </option>
                         }
                     </select>
                     <button type="button" id="btnNewVendor"
-                        class="px-3 py-2 bg-green-600 text-white rounded flex items-center gap-2"
-                        onclick="toggleVendorInline()">
+                        class="px-3 py-2 bg-green-600 text-white rounded flex items-center gap-2">
                         <span class="material-symbols-outlined align-middle">store</span>
                         <span class="align-middle">New</span>
                     </button>
@@ -65,28 +64,23 @@
             </div>
         </div>
 
+        <div id="vendorInlineContainer" class="mt-3 mb-4"></div>
+
         <hr class="my-4" />
 
-        <div id="vendorInlineRow" class="mt-2 mb-4" style="display:none">
-            <div class="flex gap-2 items-center">
-                <input id="inlineVendorName" placeholder="Vendor name"
-                    class="flex-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2" />
-                <input id="inlineVendorAddress" placeholder="Address"
-                    class="flex-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2" />
-                <button type="button" class="px-3 py-2 bg-red-600 text-white rounded"
-                    onclick="cancelInlineVendor()">Cancel</button>
+        <!-- Item section (shown only if TransactionType = Expense) -->
+        <div id="expenseSection" style="display:none;">
+            <div id="itemsHeader" class="inline-flex items-center mb-2 gap-2">
+                <h2 class="text-xl font-semibold text-white">Items</h2>
+                <button type="button" class="px-3 py-2 bg-blue-600 text-white rounded flex items-center justify-center"
+                    id="btnAddItem" aria-label="Add item">
+                    <span class="material-symbols-outlined">add_shopping_cart</span>
+                </button>
             </div>
-        </div>
 
-        <div id="itemsHeader" class="inline-flex items-center mb-2 gap-2">
-            <h2 class="text-xl font-semibold text-white">Items</h2>
-            <button type="button" class="px-3 py-2 bg-blue-600 text-white rounded flex items-center justify-center"
-                onclick="addItemRow()" aria-label="Add item">
-                <span class="material-symbols-outlined">add_shopping_cart</span>
-            </button>
-        </div>
-        <div id="itemsContainer" class="space-y-2">
-            <!-- items will be added here -->
+            <div id="itemsContainer" class="space-y-2">
+                <!-- Items will be dynamically injected here -->
+            </div>
         </div>
 
         <div class="mt-6 flex justify-end gap-2">
@@ -95,192 +89,99 @@
         </div>
     </form>
 </div>
+
 <partial name="_Toast" />
 
-<script>
-    function toggleVendorInline() {
-        const row = document.getElementById('vendorInlineRow');
-        const btn = document.getElementById('btnNewVendor');
-        if (row.style.display === 'none' || row.style.display === '') {
-            // show the inline vendor row and hide the New button
-            row.style.display = 'block';
-            if (btn) btn.style.display = 'none';
-        } else {
-            // hide the inline row and show the New button
-            row.style.display = 'none';
-            if (btn) btn.style.display = 'inline-block';
-        }
-    }
+@section Scripts {
+    <script>
+        const pageBaseUrl = '@Url.Page("/Transactions/Create")';
+        let itemIndex = 0;
 
-    function cancelInlineVendor() {
-        document.getElementById('vendorInlineRow').style.display = 'none';
-        document.getElementById('inlineVendorName').value = '';
-        document.getElementById('inlineVendorAddress').value = '';
-        const btn = document.getElementById('btnNewVendor');
-        if (btn) btn.style.display = 'flex';
-    }
+        // Toggle items section visibility based on TransactionType
+        document.getElementById("TransactionType").addEventListener("change", function () {
+            const selectedType = parseInt(this.value);
+            const TransactionTypeEnum = {
+                Expense: parseInt('@((int)TransactionTypeEnum.Expense)'),
+                Income: parseInt('@((int)TransactionTypeEnum.Income)')
+            };
+            const expenseSection = document.getElementById("expenseSection");
+            const totalAmountInput = document.getElementById("TotalAmount");
 
-    let itemIndex = 0;
-    function addItemRow() {
-        const container = document.getElementById('itemsContainer');
-        const row = document.createElement('div');
-        // add an explicit class so we can find the row reliably
-        row.className = 'flex gap-2 items-center item-row';
-        row.id = 'item-' + itemIndex;
-
-        const nameInput = document.createElement('input');
-        nameInput.type = 'text';
-        nameInput.name = `Input.Items[${itemIndex}].ProductName`;
-        nameInput.placeholder = 'Item name';
-        nameInput.className = 'mt-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 flex-1';
-
-        const hiddenProd = document.createElement('input');
-        hiddenProd.type = 'hidden';
-        hiddenProd.name = `Input.Items[${itemIndex}].ProductId`;
-        hiddenProd.value = '';
-
-        const qty = document.createElement('input');
-        qty.type = 'number'; qty.min = 0;
-        qty.placeholder = 'Quantity'; qty.name = `Input.Items[${itemIndex}].Quantity`;
-        qty.className = 'mt-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 w-32';
-        qty.addEventListener('input', updateRowTotal);
-
-        const price = document.createElement('input');
-        price.type = 'number';
-        price.placeholder = 'Price'; price.name = `Input.Items[${itemIndex}].Price`;
-        price.className = 'mt-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 w-32';
-        price.addEventListener('input', updateRowTotal);
-
-        const total = document.createElement('input');
-        total.type = 'number';
-        total.placeholder = 'Total';
-        total.name = `Input.Items[${itemIndex}].Total`;
-        // mark totals with a class for easy selection
-        total.className = 'mt-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 w-32 item-total';
-        total.readOnly = true;
-
-        const remove = document.createElement('button');
-        remove.type = 'button'; remove.className = 'px-2 py-1 bg-red-600 text-white rounded flex items-center gap-1';
-        const removeIcon = document.createElement('span'); removeIcon.className = 'material-symbols-outlined'; removeIcon.textContent = 'delete';
-        remove.appendChild(removeIcon);
-        remove.addEventListener('click', () => { container.removeChild(row); computeTotalAmount(); });
-
-        row.appendChild(nameInput);
-        row.appendChild(hiddenProd);
-        row.appendChild(qty);
-        row.appendChild(price);
-        row.appendChild(total);
-        row.appendChild(remove);
-
-        container.appendChild(row);
-        itemIndex++;
-    }
-
-    function updateRowTotal(e) {
-        const row = e.target.closest('.item-row');
-        if (!row) return;
-        const qty = row.querySelector('input[name*="Quantity"]');
-        const price = row.querySelector('input[name*="Price"]');
-        const total = row.querySelector('.item-total');
-        const q = parseFloat(qty?.value || '0') || 0;
-        const p = parseFloat(price?.value || '0') || 0;
-        if (total) total.value = (q * p).toFixed(2);
-        computeTotalAmount();
-    }
-
-    function computeTotalAmount() {
-        let sum = 0;
-        document.querySelectorAll('.item-total').forEach(i => {
-            const v = parseFloat(i.value || '0');
-            if (!isNaN(v)) sum += v;
+            if (selectedType === TransactionTypeEnum.Expense) {
+                expenseSection.style.display = "block";
+            } else {
+                expenseSection.style.display = "none";
+                totalAmountInput.value = "";
+                itemIndex = 0;
+                document.getElementById("itemsContainer").innerHTML = "";
+                updateTotalAmount();
+            }
         });
-        const totalStr = sum.toFixed(2);
-        const visible = document.getElementById('TotalAmount');
-        const hidden = document.getElementById('TotalAmountHidden');
-        if (visible) visible.value = totalStr;
-        if (hidden) hidden.value = totalStr;
-    }
 
-    // copy inline vendor fields into NewVendor bound inputs before submit
-    function prepareVendorInline() {
-        // guard against missing elements to avoid throwing in the onsubmit handler
-        const nameEl = document.getElementById('inlineVendorName');
-        const addrEl = document.getElementById('inlineVendorAddress');
-        const name = nameEl ? nameEl.value : '';
-        const address = addrEl ? addrEl.value : '';
+        // Load vendor inline form
+        document.getElementById("btnNewVendor")?.addEventListener("click", function () {
+            const url = `${pageBaseUrl}?handler=VendorPartial`;
+            fetch(url, { method: 'GET', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                .then(res => res.ok ? res.text() : Promise.reject(res.status))
+                .then(html => {
+                    document.getElementById("vendorInlineContainer").innerHTML = html;
+                    this.style.display = "none";
+                })
+                .catch(err => console.error("Vendor partial failed:", err));
+        });
 
-        // create or update hidden inputs that map to NewVendor properties
-        const form = document.querySelector('form');
-        if (!form) return true;
+        // Add transaction item dynamically
+        document.getElementById("btnAddItem")?.addEventListener("click", function () {
+            const idx = itemIndex++;
+            const url = `${pageBaseUrl}?handler=ItemPartial&index=${idx}`;
+            fetch(url, { method: 'GET', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                .then(res => res.ok ? res.text() : Promise.reject(res.status))
+                .then(html => {
+                    const temp = document.createElement('div');
+                    temp.innerHTML = html;
+                    const newRow = temp.firstElementChild;
+                    document.getElementById("itemsContainer").appendChild(newRow);
+                    attachRowEvents(newRow);
+                })
+                .catch(err => console.error("Item partial failed:", err));
+        });
 
-        let nameInput = document.querySelector('input[name="NewVendor.VendorName"]');
-        if (!nameInput) {
-            nameInput = document.createElement('input');
-            nameInput.type = 'hidden';
-            nameInput.name = 'NewVendor.VendorName';
-            form.appendChild(nameInput);
-        }
-        nameInput.value = name;
+        // Attach events to a row
+        function attachRowEvents(row) {
+            const qtyInput = row.querySelector(".quantity, .item-qty");
+            const priceInput = row.querySelector(".price, .item-price");
+            const removeBtn = row.querySelector(".remove-item");
 
-        let addressInput = document.querySelector('input[name="NewVendor.Address"]');
-        if (!addressInput) {
-            addressInput = document.createElement('input');
-            addressInput.type = 'hidden';
-            addressInput.name = 'NewVendor.Address';
-            form.appendChild(addressInput);
-        }
-        addressInput.value = address;
-        return true;
-    }
+            if (qtyInput && priceInput) {
+                qtyInput.addEventListener("input", () => computeRowTotal(row));
+                priceInput.addEventListener("input", () => computeRowTotal(row));
+            }
 
-    // Utility to check whether selected category/type is Income
-    function isIncomeSelected() {
-        const typeEl = document.querySelector('select[asp-for="Input.TransactionType"]') || document.querySelector('select[name="Input.TransactionType"]');
-        const catEl = document.querySelector('select[asp-for="Input.CategoryId"]') || document.querySelector('select[name="Input.CategoryId"]');
-        const typeText = typeEl ? (typeEl.options[typeEl.selectedIndex]?.text || typeEl.value || '').toLowerCase() : '';
-        const catText = catEl ? (catEl.options[catEl.selectedIndex]?.text || catEl.value || '').toLowerCase() : '';
-        // if either has the word 'income' treat as income
-        return typeText.includes('income') || catText.includes('income');
-    }
-
-    function toggleItemsVisibility() {
-        const container = document.getElementById('itemsContainer');
-        const header = document.getElementById('itemsHeader');
-        if (!container || !header) return;
-        if (isIncomeSelected()) {
-            // hide items UI for Income
-            container.style.display = 'none';
-            header.style.display = 'none';
-        } else {
-            container.style.display = '';
-            header.style.display = 'inline-flex';
-        }
-    }
-
-    // Wire up change handlers on page load
-    document.addEventListener('DOMContentLoaded', function () {
-        // Try to find selects by name if asp-for attributes are rendered differently
-        const typeSelect = document.querySelector('select[asp-for="Input.TransactionType"]') || document.querySelector('select[name="Input.TransactionType"]');
-        const catSelect = document.querySelector('select[asp-for="Input.CategoryId"]') || document.querySelector('select[name="Input.CategoryId"]');
-        if (typeSelect) typeSelect.addEventListener('change', toggleItemsVisibility);
-        if (catSelect) catSelect.addEventListener('change', toggleItemsVisibility);
-
-        // Wire TotalAmount visible input to update hidden input while typing
-        const visibleTotal = document.getElementById('TotalAmount');
-        const hiddenTotal = document.getElementById('TotalAmountHidden');
-        if (visibleTotal && hiddenTotal) {
-            visibleTotal.addEventListener('input', function (e) {
-                // Only update hidden total when user types; don't clobber when items exist
-                const hasItems = document.querySelectorAll('.item-row').length > 0;
-                if (!hasItems) {
-                    // normalize to two decimals if numeric
-                    const v = parseFloat(visibleTotal.value);
-                    hiddenTotal.value = isNaN(v) ? '' : v.toFixed(2);
-                }
-            });
+            if (removeBtn) {
+                removeBtn.addEventListener("click", () => {
+                    row.remove();
+                    updateTotalAmount();
+                });
+            }
         }
 
-        // initial toggle on load
-        toggleItemsVisibility();
-    });
-</script>
+        // Compute total for a row
+        function computeRowTotal(row) {
+            const qty = parseFloat(row.querySelector(".quantity, .item-qty").value) || 0;
+            const price = parseFloat(row.querySelector(".price, .item-price").value) || 0;
+            const totalField = row.querySelector(".item-total");
+            totalField.value = (qty * price).toFixed(2);
+            updateTotalAmount();
+        }
+
+        // Update total of all items
+        function updateTotalAmount() {
+            const total = Array.from(document.querySelectorAll(".item-total"))
+                .reduce((sum, input) => sum + (parseFloat(input.value) || 0), 0);
+            document.getElementById("TotalAmount").value = total.toFixed(2);
+        }
+
+        // Initialize existing items (if any) on page load
+        document.querySelectorAll("#itemsContainer > .item-row").forEach(row => attachRowEvents(row));
+    </script>
+}

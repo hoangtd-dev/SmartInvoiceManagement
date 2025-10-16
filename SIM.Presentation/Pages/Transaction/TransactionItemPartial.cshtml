@@ -1,0 +1,19 @@
+@model SIM.Core.DTOs.Requests.TransactionItemInputModel
+
+<div class="flex gap-2 items-center item-row" data-index="@Model.Index">
+    <input type="text" name="Input.Items[@Model.Index].ItemName" placeholder="Item name"
+        class="mt-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 flex-1" />
+
+    <input type="number" name="Input.Items[@Model.Index].Quantity" placeholder="Quantity" min="0" step="1"
+        class="mt-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 w-28 item-qty" />
+
+    <input type="number" name="Input.Items[@Model.Index].Price" placeholder="Price" min="0" step="0.01"
+        class="mt-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 w-28 item-price" />
+
+    <input type="number" name="Input.Items[@Model.Index].Total" placeholder="Total" readonly
+        class="mt-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 w-28 item-total" />
+
+    <button type="button" class="px-2 py-1 bg-red-600 text-white rounded flex items-center gap-1 remove-item">
+        <span class="material-symbols-outlined">delete</span>
+    </button>
+</div>

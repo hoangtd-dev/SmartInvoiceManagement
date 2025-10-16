@@ -14,19 +14,23 @@ namespace SIM.Presentation.Pages.Transactions
         private readonly ITransactionItemService _transactionItemService;
         private readonly ITransactionService _transactionService;
 
-        public CreateModel(IVendorService vendorService, ITransactionCategoryService transactionCategoryService, ITransactionItemService transactionItemService, ITransactionService transactionService)
+        public CreateModel(
+            IVendorService vendorService,
+            ITransactionCategoryService transactionCategoryService,
+            ITransactionItemService transactionItemService,
+            ITransactionService transactionService)
         {
             _vendorService = vendorService;
             _transactionCategoryService = transactionCategoryService;
             _transactionItemService = transactionItemService;
             _transactionService = transactionService;
-
         }
-        [BindProperty]
-        public TransactionInput Input { get; set; } = new TransactionInput();
 
         [BindProperty]
-        public VendorInput NewVendor { get; set; } = new VendorInput();
+        public TransactionInputModel Input { get; set; } = new TransactionInputModel();
+
+        [BindProperty]
+        public VendorInputModel NewVendor { get; set; } = new VendorInputModel();
 
         public IEnumerable<SelectListItem> TransactionTypeOptions { get; set; } = Enumerable.Empty<SelectListItem>();
         public IEnumerable<SelectListItem> CategoryOptions { get; set; } = Enumerable.Empty<SelectListItem>();
@@ -34,22 +38,29 @@ namespace SIM.Presentation.Pages.Transactions
 
         public async Task OnGetAsync(int? newVendorId)
         {
+            if (!IsAuthenticated) RedirectToPage("/Login");
+
             await LoadOptionsAsync();
 
             if (newVendorId.HasValue)
-            {
                 Input.VendorId = newVendorId.Value;
-            }
         }
 
-        public async Task<IActionResult> OnPostCreateVendorAsync()
+        public IActionResult OnGetVendorPartial()
+        {
+            return Partial("VendorInlinePartial", new VendorInputModel());
+        }
+
+        // Returns a transaction item row partial
+        public IActionResult OnGetItemPartial(int index)
+        {
+            return Partial("TransactionItemPartial", new TransactionItemInputModel { Index = index });
+        }
+
+        public async Task<IActionResult> OnPostCreateVendorAjaxAsync()
         {
             if (string.IsNullOrWhiteSpace(NewVendor.VendorName))
-            {
-                ModelState.AddModelError("NewVendor.VendorName", "Vendor name is required");
-                await LoadOptionsAsync();
-                return Page();
-            }
+                return BadRequest("Vendor name is required");
 
             var vendorReq = new CreateVendorRequest
             {
@@ -61,15 +72,21 @@ namespace SIM.Presentation.Pages.Transactions
 
             var created = await _vendorService.AddVendor(vendorReq);
 
-            return RedirectToPage("/Transactions/Create", new { newVendorId = created.Id });
+            return new JsonResult(new { success = true, id = created.Id, name = created.Name });
+        }
+
+        public async Task<IActionResult> OnGetVendorOptionsAsync()
+        {
+            var vendors = await _vendorService.GetVendors();
+            return new JsonResult(vendors.Select(v => new { v.Id, v.Name }));
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!IsAuthenticated)
-            {
                 return RedirectToPage("/Login");
-            }
+
+            // Handle inline vendor creation (non-AJAX fallback)
             if (Input.VendorId == 0 && !string.IsNullOrWhiteSpace(NewVendor?.VendorName))
             {
                 var vendorReq = new CreateVendorRequest
@@ -96,12 +113,6 @@ namespace SIM.Presentation.Pages.Transactions
                 };
 
                 var createdTransaction = await _transactionService.CreateTransaction(createTxReq);
-                if (createdTransaction == null)
-                {
-                    ModelState.AddModelError(string.Empty, "Unable to create transaction.");
-                    await LoadOptionsAsync();
-                    return Page();
-                }
 
                 if (Input.Items?.Any() == true)
                 {
@@ -118,6 +129,7 @@ namespace SIM.Presentation.Pages.Transactions
                         await _transactionItemService.CreateTransactionItem(req);
                     }
                 }
+
                 TempData["ToastMessage"] = "Transaction created successfully.";
                 TempData["ToastStatus"] = ToastStatusEnum.Success;
                 return RedirectToPage("/Transaction/Index");
@@ -135,14 +147,26 @@ namespace SIM.Presentation.Pages.Transactions
         {
             TransactionTypeOptions = Enum.GetValues(typeof(TransactionTypeEnum))
                 .Cast<TransactionTypeEnum>()
-                .Select(e => new SelectListItem { Value = ((int)e).ToString(), Text = e.ToString() })
+                .Select(e => new SelectListItem
+                {
+                    Value = ((int)e).ToString(),
+                    Text = e.ToString()
+                })
                 .ToList();
 
             var cats = await _transactionCategoryService.GetTransactionCategories();
-            CategoryOptions = cats.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).ToList();
+            CategoryOptions = cats.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            }).ToList();
 
             var vendors = await _vendorService.GetVendors();
-            VendorOptions = vendors.Select(v => new SelectListItem { Value = v.Id.ToString(), Text = v.Name }).ToList();
+            VendorOptions = vendors.Select(v => new SelectListItem
+            {
+                Value = v.Id.ToString(),
+                Text = v.Name
+            }).ToList();
         }
     }
 }

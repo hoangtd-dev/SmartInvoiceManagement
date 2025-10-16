@@ -10,9 +10,6 @@ namespace SIM.Core.DTOs.Requests
         public int CategoryId { get; set; }
         public decimal TotalAmount { get; set; }
         public TransactionTypeEnum TransactionType { get; set; }
-
-        public TransactionCategory? Category { get; set; }
-
     }
     public class UpdateTransactionRequest : CreateTransactionRequest
     {

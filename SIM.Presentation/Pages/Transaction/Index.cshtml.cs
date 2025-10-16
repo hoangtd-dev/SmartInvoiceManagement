@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using SIM.Core.Interfaces.Services;
 using SIM.Presentation.Pages.Base;
@@ -20,7 +19,6 @@ namespace SIM.Presentation.Pages.Transactions
             if (!IsAuthenticated) return RedirectToPage("/Login");
 
             Transactions = await _transactionService.GetTransactions();
-            Console.WriteLine(JsonSerializer.Serialize(Transactions));
             return Page();
         }
     }

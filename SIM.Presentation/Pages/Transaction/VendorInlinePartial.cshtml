@@ -1,0 +1,12 @@
+@model SIM.Core.DTOs.Requests.VendorInputModel
+
+<div id="vendorInlineRow" class="mt-2 mb-4 flex gap-2 items-center">
+    <input asp-for="VendorName" placeholder="Vendor name"
+        class="flex-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2" />
+    <input asp-for="Address" placeholder="Address"
+        class="flex-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2" />
+    <button type="button" class="px-3 py-2 bg-red-600 text-white rounded"
+        onclick="removePartial('vendorInlineRow'); document.getElementById('btnNewVendor').style.display='flex';">
+        Cancel
+    </button>
+</div>

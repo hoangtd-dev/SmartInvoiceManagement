@@ -1,10 +1,13 @@
 using SIM.Core.Enums;
 
-public class TransactionInput
+namespace SIM.Core.DTOs.Requests
 {
-    public TransactionTypeEnum TransactionType { get; set; }
-    public decimal TotalAmount { get; set; }
-    public int CategoryId { get; set; }
-    public int VendorId { get; set; }
-    public List<TransactionItemInput> Items { get; set; } = new List<TransactionItemInput>();
+    public class TransactionInputModel
+    {
+        public TransactionTypeEnum TransactionType { get; set; }
+        public decimal TotalAmount { get; set; }
+        public int CategoryId { get; set; }
+        public int VendorId { get; set; }
+        public List<TransactionItemInputModel> Items { get; set; } = new List<TransactionItemInputModel>();
+    }
 }

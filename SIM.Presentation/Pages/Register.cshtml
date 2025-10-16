@@ -4,7 +4,6 @@
     ViewData["Title"] = "Register";
     var hasGlobalErrors = ViewData.ModelState.ContainsKey(string.Empty) &&
     ViewData.ModelState[string.Empty].Errors.Count > 0;
-    Console.WriteLine("Has Global Errors: " + hasGlobalErrors);
 }
 
 <div class="flex items-center justify-center min-h-[50vh] bg-gray-900 text-white">
