@@ -1,4 +1,18 @@
-﻿<!DOCTYPE html>
+﻿@using SIM.Core.Interfaces.Services
+@using System.Security.Claims
+@inject IBudgetService budgetService
+
+@{
+    var userId = (User?.Identity?.IsAuthenticated ?? false) ? int.Parse(User.Claims.SingleOrDefault(x => x.Type ==
+    ClaimTypes.NameIdentifier)!.Value) : 0;
+
+    var overBudgetCount = 0;
+    if (userId > 0)
+    {
+        overBudgetCount = await budgetService.OverBudgetCount(userId);
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -54,11 +68,17 @@
                 </li>
                 <li>
                     <a asp-page="/Budget/Index"
-                        class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Budget" ? "bg-gray-700" : "")">
+                        class="relative flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Budget" ? "bg-gray-700" : "")">
                         <span class="material-symbols-outlined">
                             account_balance_wallet
                         </span>
                         <span class="ms-3">Budget</span>
+                        @if (overBudgetCount > 0)
+                        {
+                            <span
+                                class="absolute top-50% right-0 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full bg-red-900 text-red-300">@overBudgetCount</span>
+                        }
+
                     </a>
                 </li>
                 <li>
