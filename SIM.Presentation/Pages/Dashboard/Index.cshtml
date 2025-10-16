@@ -16,16 +16,11 @@
             <div
                 class="flex items-center py-8 @(Model.MonthlyIncomeGrowthPercentage is not null ? "justify-between" : "justify-start")">
                 <p class="text-3xl text-white font-bold">$@Model.CurrentIncomeOutcomeInMonth.Income</p>
-                <<<<<<< HEAD <p
-                    class="text-sm @(Model.MonthlyIncomeGrowthPercentage >= 0 ? "text-green-400" : "text-red-400")">
-                    @Model.MonthlyIncomeGrowthPercentage% vs last month</p>
-                    =======
-                    @if (Model.MonthlyIncomeGrowthPercentage is not null)
-                    {
-                        <p class="text-sm @(Model.MonthlyIncomeGrowthPercentage >= 0 ? "text-green-400" : "text-red-400")">
-                            @Model.MonthlyIncomeGrowthPercentage% vs last month</p>
-                    }
-                    >>>>>>> 6f49162b7ba330bd5c201630b079540f2d9c9804
+                @if (Model.MonthlyIncomeGrowthPercentage is not null)
+                {
+                    <p class="text-sm @(Model.MonthlyIncomeGrowthPercentage >= 0 ? "text-green-400" : "text-red-400")">
+                        @Model.MonthlyIncomeGrowthPercentage% vs last month</p>
+                }
             </div>
         </div>
 

@@ -1,23 +1,29 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Smart Transaction Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="theme-color" content="#0f172a" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
 </head>
+
 <body class="min-h-screen bg-gray-900 text-gray-100 antialiased">
     <header class="bg-gradient-to-r from-gray-800 via-gray-900 to-black shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
-                    <a asp-page="/Index" class="text-lg font-semibold text-white hover:text-gray-200">Smart Invoice Management</a>
+                    <a asp-page="/Index" class="text-lg font-semibold text-white hover:text-gray-200">Smart Invoice
+                        Management</a>
                 </div>
                 <div class="flex items-center space-x-3">
-                    <a asp-page="/Login" class="px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-700 text-white text-sm">Login</a>
-                    <a asp-page="/Register" class="px-4 py-2 rounded-md border border-gray-600 text-gray-200 hover:bg-gray-800 text-sm">Register</a>
+                    <a asp-page="/Login"
+                        class="px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-700 text-white text-sm">Login</a>
+                    <a asp-page="/Register"
+                        class="px-4 py-2 rounded-md border border-gray-600 text-gray-200 hover:bg-gray-800 text-sm">Register</a>
                 </div>
             </div>
         </div>
@@ -35,4 +41,5 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

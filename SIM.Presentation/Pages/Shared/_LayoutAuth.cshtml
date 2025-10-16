@@ -7,8 +7,7 @@
     <title>@ViewData["Title"] - Smart Transaction Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=account_balance_wallet,account_box,cancel,category,check_circle,dashboard,delete,edit_square,store" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
 <body>
@@ -27,6 +26,15 @@
                     </a>
                 </li>
                 <li>
+                    <a asp-page="/Transaction/Index"
+                        class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Transaction Category" ? "bg-gray-700" : "")">
+                        <span class="material-symbols-outlined">
+                            receipt_long
+                        </span>
+                        <span class="ms-3">Transaction</span>
+                    </a>
+                </li>
+                <li>
                     <a asp-page="/TransactionCategory/Index"
                         class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Transaction Category" ? "bg-gray-700" : "")">
                         <span class="material-symbols-outlined">
@@ -36,26 +44,13 @@
                     </a>
                 </li>
                 <li>
-                    <<<<<<< HEAD <a asp-page="/Product/Index"
-                        class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Product" ? "bg-gray-700" : "")">
-                        <span class="material-symbols-outlined">
-                            inventory_2
-                        </span>
-                        <span class="ms-3">Product</span>
-                        </a>
-                </li>
-                <li>
                     <a asp-page="/Vendor/Index"
                         class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Vendor" ? "bg-gray-700" : "")">
-                        =======
-                        <a asp-page="/Vendor/Index"
-                            class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Vendor" ? "bg-gray-700" : "")">
-                            >>>>>>> ed48ede4940ebd62dfc3bd92ca90e497b8959c40
-                            <span class="material-symbols-outlined">
-                                store
-                            </span>
-                            <span class="ms-3">Vendor</span>
-                        </a>
+                        <span class="material-symbols-outlined">
+                            store
+                        </span>
+                        <span class="ms-3">Vendor</span>
+                    </a>
                 </li>
                 <li>
                     <a asp-page="/Budget/Index"

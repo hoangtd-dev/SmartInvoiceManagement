@@ -2,9 +2,9 @@
 using SIM.Core.Entities;
 using SIM.Core.Interfaces.Repositories;
 
-namespace SIM.Infrastructure.Respositories
+namespace SIM.Infrastructure.Repositories
 {
-    public class VendorRepository : IVendorRespository
+    public class VendorRepository : IVendorRepository
     {
         private readonly AppDbContext _appDbContext;
         public VendorRepository(AppDbContext appDbContext)

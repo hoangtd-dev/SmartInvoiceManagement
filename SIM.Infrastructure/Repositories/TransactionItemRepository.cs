@@ -1,18 +1,20 @@
 ﻿using SIM.Core.Entities;
 using SIM.Core.Interfaces.Repositories;
 
-namespace SIM.Infrastructure.Respositories
+namespace SIM.Infrastructure.Repositories
 {
     public class TransactionItemRepository : ITransactionItemRepository
     {
         private readonly AppDbContext _appDbContext;
-        public TransactionItemRepository(AppDbContext appDbContext) 
-        { 
+        public TransactionItemRepository(AppDbContext appDbContext)
+        {
             _appDbContext = appDbContext;
         }
-        public Task<TransactionItem> AddAsync(TransactionItem entity)
+        public async Task<TransactionItem> AddAsync(TransactionItem entity)
         {
-            throw new NotImplementedException();
+            var transactionItem = await _appDbContext.TransactionItems.AddAsync(entity);
+            await _appDbContext.SaveChangesAsync();
+            return transactionItem.Entity;
         }
 
         public Task DeleteAsync(TransactionItem entity)

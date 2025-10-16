@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SIM.Core.Entities;
 using SIM.Core.Interfaces.Repositories;
 
-namespace SIM.Infrastructure.Respositories
+namespace SIM.Infrastructure.Repositories
 {
     public class TransactionCategoryRepository : ITransactionCategoryRepository
     {

@@ -6,7 +6,7 @@ namespace SIM.Core.Interfaces.Services
 {
     public interface ITransactionService
     {
-        Task CreateTransaction(CreateTransactionRequest Transaction);
+        Task<TransactionModel> CreateTransaction(CreateTransactionRequest Transaction);
         Task UpdateTransaction(UpdateTransactionRequest Transaction);
         Task DeleteTransaction(int id);
         Task<TransactionModel> GetTransactionById(int id);

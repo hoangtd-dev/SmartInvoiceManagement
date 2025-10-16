@@ -9,22 +9,31 @@ namespace SIM.Core.Services
 {
     public class VendorService : IVendorService
     {
-        private readonly IVendorRespository _vendorRepository;
-        public VendorService(IVendorRespository vendorRespository)
+        private readonly IVendorRepository _vendorRepository;
+        public VendorService(IVendorRepository vendorRespository)
         {
             _vendorRepository = vendorRespository;
         }
 
-        public async Task AddVendor(CreateVendorRequest vendor)
+        public async Task<VendorModel> AddVendor(CreateVendorRequest vendor)
         {
-            var newVendor = new Vendor 
-            { 
+            var newVendor = new Vendor
+            {
                 ContactPhone = vendor.ContactPhone,
                 ContactEmail = vendor.ContactEmail,
                 Address = vendor.Address,
                 VendorName = vendor.VendorName,
             };
             await _vendorRepository.AddAsync(newVendor);
+
+            return new VendorModel
+            {
+                Id = newVendor.Id,
+                Name = newVendor.VendorName,
+                ContactEmail = newVendor.ContactEmail,
+                ContactPhone = newVendor.ContactPhone,
+                Address = newVendor.Address
+            };
         }
 
         public async Task DeleteVendor(int id)
@@ -41,12 +50,12 @@ namespace SIM.Core.Services
 
             if (vendor is null) throw new NotFoundException($"Vendor with id:{id} is not found !!!");
 
-            return new VendorModel 
-            { 
+            return new VendorModel
+            {
                 Id = vendor.Id,
                 Address = vendor.Address,
                 ContactEmail = vendor.ContactEmail,
-                ContactPhone = vendor.ContactPhone, 
+                ContactPhone = vendor.ContactPhone,
                 Name = vendor.VendorName
             };
         }
@@ -55,7 +64,8 @@ namespace SIM.Core.Services
         {
             var vendors = await _vendorRepository.GetAllAsync();
 
-            return vendors.Select(v => new VendorModel { 
+            return vendors.Select(v => new VendorModel
+            {
                 Id = v.Id,
                 Name = v.VendorName,
                 ContactEmail = v.ContactEmail,

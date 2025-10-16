@@ -3,7 +3,7 @@ using SIM.Core.Entities;
 using SIM.Core.Helpers;
 using SIM.Core.Interfaces.Repositories;
 
-namespace SIM.Infrastructure.Respositories
+namespace SIM.Infrastructure.Repositories
 {
     public class TransactionRepository : ITransactionRepository
     {
@@ -12,9 +12,11 @@ namespace SIM.Infrastructure.Respositories
         {
             _appDbContext = appDbContext;
         }
-        public Task<Transaction> AddAsync(Transaction entity)
+        public async Task<Transaction> AddAsync(Transaction entity)
         {
-            throw new NotImplementedException();
+            var transaction = await _appDbContext.Transactions.AddAsync(entity);
+            await _appDbContext.SaveChangesAsync();
+            return transaction.Entity;
         }
 
         public async Task DeleteAsync(Transaction entity)
@@ -25,7 +27,7 @@ namespace SIM.Infrastructure.Respositories
 
         public async Task<ICollection<Transaction>> GetAllAsync()
         {
-            return await _appDbContext.Transactions.ToListAsync();
+            return await _appDbContext.Transactions.OrderByDescending(x => x.CreatedDate).ToListAsync();
         }
 
         public async Task<ICollection<Transaction>> GetLatestTransactionsOfCurrentUserAsync(int userId, int take = 5)

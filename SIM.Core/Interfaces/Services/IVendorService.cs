@@ -7,7 +7,7 @@ namespace SIM.Core.Interfaces.Services
     {
         Task<ICollection<VendorModel>> GetVendors();
         Task<VendorModel> GetVendorById(int id);
-        Task AddVendor(CreateVendorRequest vendor);
+        Task<VendorModel> AddVendor(CreateVendorRequest vendor);
         Task UpdateVendor(UpdateVendorRequest vendor);
         Task DeleteVendor(int id);
     }

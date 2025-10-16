@@ -1,22 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using SIM.Core.Entities;
+using SIM.Core.DTOs.Requests;
 using SIM.Core.Enums;
-using SIM.Infrastructure;
+using SIM.Core.Interfaces.Services;
+using SIM.Presentation.Pages.Base;
 
 namespace SIM.Presentation.Pages.Transactions
 {
-    public class CreateModel : PageModel
+    public class CreateModel : BasePageModel
     {
-        private readonly AppDbContext _db;
+        private readonly IVendorService _vendorService;
+        private readonly ITransactionCategoryService _transactionCategoryService;
+        private readonly ITransactionItemService _transactionItemService;
+        private readonly ITransactionService _transactionService;
 
-        public CreateModel(AppDbContext db)
+        public CreateModel(IVendorService vendorService, ITransactionCategoryService transactionCategoryService, ITransactionItemService transactionItemService, ITransactionService transactionService)
         {
-            _db = db;
-        }
+            _vendorService = vendorService;
+            _transactionCategoryService = transactionCategoryService;
+            _transactionItemService = transactionItemService;
+            _transactionService = transactionService;
 
+        }
         [BindProperty]
         public TransactionInput Input { get; set; } = new TransactionInput();
 
@@ -26,7 +31,6 @@ namespace SIM.Presentation.Pages.Transactions
         public IEnumerable<SelectListItem> TransactionTypeOptions { get; set; } = Enumerable.Empty<SelectListItem>();
         public IEnumerable<SelectListItem> CategoryOptions { get; set; } = Enumerable.Empty<SelectListItem>();
         public IEnumerable<SelectListItem> VendorOptions { get; set; } = Enumerable.Empty<SelectListItem>();
-        public IEnumerable<SelectListItem> ProductOptions { get; set; } = Enumerable.Empty<SelectListItem>();
 
         public async Task OnGetAsync(int? newVendorId)
         {
@@ -47,67 +51,84 @@ namespace SIM.Presentation.Pages.Transactions
                 return Page();
             }
 
-            var vendor = new Vendor
+            var vendorReq = new CreateVendorRequest
             {
                 VendorName = NewVendor.VendorName,
                 ContactEmail = NewVendor.ContactEmail,
                 ContactPhone = NewVendor.ContactPhone,
-                Address = NewVendor.Address,
-                CreatedDate = DateTime.UtcNow
+                Address = NewVendor.Address
             };
 
-            _db.Vendors.Add(vendor);
-            await _db.SaveChangesAsync();
+            var created = await _vendorService.AddVendor(vendorReq);
 
-            // Redirect and preselect the newly created vendor
-            return RedirectToPage("/Transactions/Create", new { newVendorId = vendor.Id });
+            return RedirectToPage("/Transactions/Create", new { newVendorId = created.Id });
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (!IsAuthenticated)
             {
+                return RedirectToPage("/Login");
+            }
+            if (Input.VendorId == 0 && !string.IsNullOrWhiteSpace(NewVendor?.VendorName))
+            {
+                var vendorReq = new CreateVendorRequest
+                {
+                    VendorName = NewVendor.VendorName,
+                    Address = NewVendor.Address,
+                    ContactEmail = NewVendor.ContactEmail,
+                    ContactPhone = NewVendor.ContactPhone
+                };
+
+                var createdVendor = await _vendorService.AddVendor(vendorReq);
+                if (createdVendor != null) Input.VendorId = createdVendor.Id;
+            }
+
+            try
+            {
+                var createTxReq = new CreateTransactionRequest
+                {
+                    UserId = CurrentUserId,
+                    VendorId = Input.VendorId,
+                    CategoryId = Input.CategoryId,
+                    TotalAmount = Input.TotalAmount,
+                    TransactionType = Input.TransactionType
+                };
+
+                var createdTransaction = await _transactionService.CreateTransaction(createTxReq);
+                if (createdTransaction == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Unable to create transaction.");
+                    await LoadOptionsAsync();
+                    return Page();
+                }
+
+                if (Input.Items?.Any() == true)
+                {
+                    foreach (var item in Input.Items)
+                    {
+                        var req = new CreateTransactionItemRequest
+                        {
+                            TransactionId = createdTransaction.Id,
+                            Quantity = item.Quantity,
+                            Price = item.Price,
+                            Total = item.Total
+                        };
+
+                        await _transactionItemService.CreateTransactionItem(req);
+                    }
+                }
+                TempData["ToastMessage"] = "Transaction created successfully.";
+                TempData["ToastStatus"] = ToastStatusEnum.Success;
+                return RedirectToPage("/Transaction/Index");
+            }
+            catch (Exception e)
+            {
+                TempData["ToastMessage"] = $"Failed to create transaction: {e.Message}";
+                TempData["ToastStatus"] = ToastStatusEnum.Fail;
                 await LoadOptionsAsync();
                 return Page();
             }
-
-            // Temporary: get user id from authentication. Replace with real auth later.
-            var userId = 1;
-
-            var transaction = new Core.Entities.Transaction
-            {
-                TransactionType = Input.TransactionType,
-                CategoryId = Input.CategoryId,
-                VendorId = Input.VendorId,
-                TotalAmount = Input.TotalAmount,
-                UserId = userId,
-                CreatedDate = DateTime.UtcNow
-            };
-
-            _db.Transactions.Add(transaction);
-            await _db.SaveChangesAsync(); // get transaction.Id
-
-            if (Input.Items?.Any() == true)
-            {
-                foreach (var item in Input.Items)
-                {
-                    var txItem = new TransactionItem
-                    {
-                        TransactionId = transaction.Id,
-                        ProductId = item.ProductId,
-                        Quantity = item.Quantity,
-                        Price = item.Price,
-                        Total = item.Total
-                    };
-
-                    _db.TransactionItems.Add(txItem);
-                }
-
-                await _db.SaveChangesAsync();
-            }
-
-            // After create go back to dashboard or transactions list
-            return RedirectToPage("/Dashboard/Index");
         }
 
         private async Task LoadOptionsAsync()
@@ -117,39 +138,11 @@ namespace SIM.Presentation.Pages.Transactions
                 .Select(e => new SelectListItem { Value = ((int)e).ToString(), Text = e.ToString() })
                 .ToList();
 
-            var cats = await _db.Set<TransactionCategory>().AsNoTracking().ToListAsync();
+            var cats = await _transactionCategoryService.GetTransactionCategories();
             CategoryOptions = cats.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).ToList();
 
-            var vendors = await _db.Vendors.AsNoTracking().ToListAsync();
-            VendorOptions = vendors.Select(v => new SelectListItem { Value = v.Id.ToString(), Text = v.VendorName }).ToList();
-
-            var products = await _db.Products.AsNoTracking().ToListAsync();
-            ProductOptions = products.Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.ProductName }).ToList();
-        }
-
-        public class TransactionInput
-        {
-            public TransactionTypeEnum TransactionType { get; set; }
-            public decimal TotalAmount { get; set; }
-            public int CategoryId { get; set; }
-            public int VendorId { get; set; }
-            public List<TransactionItemInput> Items { get; set; } = new List<TransactionItemInput>();
-        }
-
-        public class TransactionItemInput
-        {
-            public int ProductId { get; set; }
-            public int Quantity { get; set; }
-            public decimal Price { get; set; }
-            public decimal Total { get; set; }
-        }
-
-        public class VendorInput
-        {
-            public string VendorName { get; set; }
-            public string ContactEmail { get; set; }
-            public string ContactPhone { get; set; }
-            public string Address { get; set; }
+            var vendors = await _vendorService.GetVendors();
+            VendorOptions = vendors.Select(v => new SelectListItem { Value = v.Id.ToString(), Text = v.Name }).ToList();
         }
     }
 }
