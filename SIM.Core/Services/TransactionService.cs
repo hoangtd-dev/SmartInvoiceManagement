@@ -36,30 +36,15 @@ namespace SIM.Core.Services
                 CreatedDate = DateTime.UtcNow
             };
 
-            await _transactionRepository.AddAsync(newTransaction);
-
-            // fetch related names using repositories (if provided ids exist)
-            string? vendorName = null;
-            string? categoryName = null;
-            if (newTransaction.VendorId > 0)
-            {
-                var v = await _vendorRepository.GetByIdAsync(newTransaction.VendorId);
-                vendorName = v?.VendorName;
-            }
-            if (newTransaction.CategoryId > 0)
-            {
-                var c = await _transactionCategoryRepository.GetByIdAsync(newTransaction.CategoryId);
-                categoryName = c?.Name;
-            }
-
+            var createdTransaction = await _transactionRepository.AddAsync(newTransaction);
             return new TransactionModel
             {
-                Id = newTransaction.Id,
-                Type = newTransaction.TransactionType,
-                TotalAmount = newTransaction.TotalAmount,
-                CreateDate = newTransaction.CreatedDate,
-                CategoryName = categoryName,
-                VendorName = vendorName
+                Id = createdTransaction.Id,
+                Type = createdTransaction.TransactionType,
+                TotalAmount = createdTransaction.TotalAmount,
+                CreateDate = createdTransaction.CreatedDate,
+                CategoryName = createdTransaction.Category is not null ? createdTransaction.Category.Name : null,
+                VendorName = createdTransaction.Vendor is not null ? createdTransaction.Vendor.VendorName : null
             };
         }
 
@@ -75,99 +60,45 @@ namespace SIM.Core.Services
         {
             var transaction = await _transactionRepository.GetByIdAsync(id);
 
-            if (transaction is null) throw new NotFoundException($"Transaction with id:{id} is not found !!!");
-
-            // fetch related names via repositories
-            string? vendorName = null;
-            string? categoryName = null;
-            if (transaction.VendorId > 0)
-            {
-                var v = await _vendorRepository.GetByIdAsync(transaction.VendorId);
-                vendorName = v?.VendorName;
-            }
-            if (transaction.CategoryId > 0)
-            {
-                var c = await _transactionCategoryRepository.GetByIdAsync(transaction.CategoryId);
-                categoryName = c?.Name;
-            }
-
             return new TransactionModel
             {
                 Id = transaction.Id,
                 Type = transaction.TransactionType,
                 TotalAmount = transaction.TotalAmount,
                 CreateDate = transaction.CreatedDate,
-                CategoryName = categoryName,
-                VendorName = vendorName
+                CategoryName = transaction.Category is not null ? transaction.Category.Name : null,
+                VendorName = transaction.Vendor is not null ? transaction.Vendor.VendorName : null
             };
         }
 
-        public async Task<ICollection<TransactionModel>> GetLastestTransactionsOfCurrentUser(int userId, int take)
+        public async Task<ICollection<TransactionModel>> GetLatestTransactionsOfCurrentUser(int userId, int take)
         {
             var transactions = await _transactionRepository.GetLatestTransactionsOfCurrentUserAsync(userId, take);
 
-            var result = new List<TransactionModel>();
-            foreach (var transaction in transactions)
+            return transactions.Select(transaction => new TransactionModel
             {
-                string? vendorName = null;
-                string? categoryName = null;
-                if (transaction.VendorId > 0)
-                {
-                    var v = await _vendorRepository.GetByIdAsync(transaction.VendorId);
-                    vendorName = v?.VendorName;
-                }
-                if (transaction.CategoryId > 0)
-                {
-                    var c = await _transactionCategoryRepository.GetByIdAsync(transaction.CategoryId);
-                    categoryName = c?.Name;
-                }
-
-                result.Add(new TransactionModel
-                {
-                    Id = transaction.Id,
-                    Type = transaction.TransactionType,
-                    TotalAmount = transaction.TotalAmount,
-                    CreateDate = transaction.CreatedDate,
-                    CategoryName = categoryName,
-                    VendorName = vendorName
-                });
-            }
-
-            return result;
+                Id = transaction.Id,
+                Type = transaction.TransactionType,
+                TotalAmount = transaction.TotalAmount,
+                CreateDate = transaction.CreatedDate,
+                CategoryName = transaction.Category is not null ? transaction.Category.Name : null,
+                VendorName = transaction.Vendor is not null ? transaction.Vendor.VendorName : null
+            }).ToList();
         }
 
         public async Task<ICollection<TransactionModel>> GetTransactions()
         {
             var transactions = await _transactionRepository.GetAllAsync();
 
-            var result = new List<TransactionModel>();
-            foreach (var transaction in transactions)
+            return transactions.Select(transaction => new TransactionModel
             {
-                string? vendorName = null;
-                string? categoryName = null;
-                if (transaction.VendorId > 0)
-                {
-                    var v = await _vendorRepository.GetByIdAsync(transaction.VendorId);
-                    vendorName = v?.VendorName;
-                }
-                if (transaction.CategoryId > 0)
-                {
-                    var c = await _transactionCategoryRepository.GetByIdAsync(transaction.CategoryId);
-                    categoryName = c?.Name;
-                }
-
-                result.Add(new TransactionModel
-                {
-                    Id = transaction.Id,
-                    Type = transaction.TransactionType,
-                    TotalAmount = transaction.TotalAmount,
-                    CreateDate = transaction.CreatedDate,
-                    CategoryName = categoryName,
-                    VendorName = vendorName
-                });
-            }
-
-            return result;
+                Id = transaction.Id,
+                Type = transaction.TransactionType,
+                TotalAmount = transaction.TotalAmount,
+                CreateDate = transaction.CreatedDate,
+                CategoryName = transaction.Category is not null ? transaction.Category.Name : null,
+                VendorName = transaction.Vendor is not null ? transaction.Vendor.VendorName : null
+            }).ToList();
         }
 
         public async Task UpdateTransaction(UpdateTransactionRequest transaction)

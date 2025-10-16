@@ -27,7 +27,11 @@ namespace SIM.Infrastructure.Repositories
 
         public async Task<ICollection<Transaction>> GetAllAsync()
         {
-            return await _appDbContext.Transactions.OrderByDescending(x => x.CreatedDate).ToListAsync();
+            return await _appDbContext.Transactions
+                .Include(x => x.Category)
+                .Include(x => x.Vendor)
+                .OrderByDescending(x => x.CreatedDate)
+                .ToListAsync();
         }
 
         public async Task<ICollection<Transaction>> GetLatestTransactionsOfCurrentUserAsync(int userId, int take = 5)
