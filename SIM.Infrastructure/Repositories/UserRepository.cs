@@ -2,7 +2,7 @@
 using SIM.Core.Entities;
 using SIM.Core.Interfaces.Repositories;
 
-namespace SIM.Infrastructure.Respositories
+namespace SIM.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -15,7 +15,8 @@ namespace SIM.Infrastructure.Respositories
         {
             var entry = await _appDbContext.Users.AddAsync(entity);
             await _appDbContext.SaveChangesAsync();
-            return entry.Entity;        }
+            return entry.Entity;
+        }
 
         public async Task DeleteAsync(User entity)
         {
@@ -32,7 +33,7 @@ namespace SIM.Infrastructure.Respositories
         {
             return await _appDbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
-        
+
         public async Task<User?> GetByEmailAsync(string email)
         {
             return await _appDbContext.Users.FirstOrDefaultAsync(x => x.Email == email);

@@ -1,0 +1,173 @@
+@page
+@model SIM.Presentation.Pages.Transactions.CreateModel
+@{
+    ViewData["ActivePage"] = "Transactions";
+}
+@using SIM.Core.Enums
+
+<div class="max-w-3xl mx-auto p-6 bg-gray-800 rounded-lg shadow-sm border border-gray-700 text-white">
+    <h2 class="text-xl font-semibold mb-4 text-white">Create Transaction</h2>
+
+    <form method="post" id="transactionForm">
+        @Html.AntiForgeryToken()
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-200">Transaction Type</label>
+                <select asp-for="Input.TransactionType" asp-items="Model.TransactionTypeOptions" id="TransactionType"
+                    class="mt-1 block w-full rounded bg-gray-700 border border-gray-600 text-white px-3 py-2">
+                    <option value="">-- Select Transaction Type --</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-200">Category</label>
+                <select asp-for="Input.CategoryId" asp-items="Model.CategoryOptions" id="CategorySelect"
+                    class="mt-1 block w-full rounded bg-gray-700 border border-gray-600 text-white px-3 py-2">
+                    <option value="">-- Select Category --</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-200">Vendor</label>
+                <div class="flex gap-2">
+                    <select asp-for="Input.VendorId" asp-items="Model.VendorOptions"
+                        class="mt-1 block w-full rounded bg-gray-700 border border-gray-600 text-white px-3 py-2">
+                        <option value="">-- Select Vendor --</option>
+                    </select>
+                    <button type="button" id="btnNewVendor"
+                        class="px-3 py-2 bg-green-600 text-white rounded flex items-center gap-2">
+                        <span class="material-symbols-outlined align-middle">store</span>
+                        <span class="align-middle">New</span>
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-200">Total Amount</label>
+                <input asp-for="Input.TotalAmount"
+                    class="mt-1 block w-full rounded bg-gray-700 border border-gray-600 text-white px-3 py-2"
+                    id="TotalAmount" />
+            </div>
+        </div>
+
+        <div id="vendorInlineContainer" class="mt-3 mb-4"></div>
+
+        <hr class="my-4" />
+
+        <!-- Item section (shown only if TransactionType = Expense) -->
+        <div id="expenseSection" style="display:none;">
+            <div id="itemsHeader" class="inline-flex items-center mb-2 gap-2">
+                <h2 class="text-xl font-semibold text-white">Items</h2>
+                <button type="button" class="px-3 py-2 bg-blue-600 text-white rounded flex items-center justify-center"
+                    id="btnAddItem" aria-label="Add item">
+                    <span class="material-symbols-outlined">add_shopping_cart</span>
+                </button>
+            </div>
+
+            <div id="itemsContainer" class="space-y-2">
+                <!-- Items will be dynamically injected here -->
+            </div>
+        </div>
+
+        <div class="mt-6 flex justify-end gap-2">
+            <a asp-page="/Dashboard/Index" class="px-4 py-2 border border-gray-600 rounded text-white">Cancel</a>
+            <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded">Create</button>
+        </div>
+    </form>
+</div>
+
+<partial name="_Toast" />
+
+@section Scripts {
+    <script>
+        const pageBaseUrl = '@Url.Page("/Transactions/Create")';
+        let itemIndex = 0;
+
+        // Toggle items section visibility based on TransactionType
+        document.getElementById("TransactionType").addEventListener("change", function () {
+            const selectedType = parseInt(this.value);
+            const TransactionTypeEnum = {
+                Expense: parseInt('@((int)TransactionTypeEnum.Expense)'),
+                Income: parseInt('@((int)TransactionTypeEnum.Income)')
+            };
+            const expenseSection = document.getElementById("expenseSection");
+            const totalAmountInput = document.getElementById("TotalAmount");
+
+            if (selectedType === TransactionTypeEnum.Expense) {
+                expenseSection.style.display = "block";
+            } else {
+                expenseSection.style.display = "none";
+                totalAmountInput.value = "";
+                itemIndex = 0;
+                document.getElementById("itemsContainer").innerHTML = "";
+                updateTotalAmount();
+            }
+        });
+
+        // Load vendor inline form
+        document.getElementById("btnNewVendor")?.addEventListener("click", function () {
+            const url = `${pageBaseUrl}?handler=VendorPartial`;
+            fetch(url, { method: 'GET', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                .then(res => res.ok ? res.text() : Promise.reject(res.status))
+                .then(html => {
+                    document.getElementById("vendorInlineContainer").innerHTML = html;
+                    this.style.display = "none";
+                })
+                .catch(err => console.error("Vendor partial failed:", err));
+        });
+
+        // Add transaction item dynamically
+        document.getElementById("btnAddItem")?.addEventListener("click", function () {
+            const idx = itemIndex++;
+            const url = `${pageBaseUrl}?handler=ItemPartial&index=${idx}`;
+            fetch(url, { method: 'GET', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                .then(res => res.ok ? res.text() : Promise.reject(res.status))
+                .then(html => {
+                    const temp = document.createElement('div');
+                    temp.innerHTML = html;
+                    const newRow = temp.firstElementChild;
+                    document.getElementById("itemsContainer").appendChild(newRow);
+                    attachRowEvents(newRow);
+                })
+                .catch(err => console.error("Item partial failed:", err));
+        });
+
+        // Attach events to a row
+        function attachRowEvents(row) {
+            const qtyInput = row.querySelector(".quantity, .item-qty");
+            const priceInput = row.querySelector(".price, .item-price");
+            const removeBtn = row.querySelector(".remove-item");
+
+            if (qtyInput && priceInput) {
+                qtyInput.addEventListener("input", () => computeRowTotal(row));
+                priceInput.addEventListener("input", () => computeRowTotal(row));
+            }
+
+            if (removeBtn) {
+                removeBtn.addEventListener("click", () => {
+                    row.remove();
+                    updateTotalAmount();
+                });
+            }
+        }
+
+        // Compute total for a row
+        function computeRowTotal(row) {
+            const qty = parseFloat(row.querySelector(".quantity, .item-qty").value) || 0;
+            const price = parseFloat(row.querySelector(".price, .item-price").value) || 0;
+            const totalField = row.querySelector(".item-total");
+            totalField.value = (qty * price).toFixed(2);
+            updateTotalAmount();
+        }
+
+        // Update total of all items
+        function updateTotalAmount() {
+            const total = Array.from(document.querySelectorAll(".item-total"))
+                .reduce((sum, input) => sum + (parseFloat(input.value) || 0), 0);
+            document.getElementById("TotalAmount").value = total.toFixed(2);
+        }
+
+        // Initialize existing items (if any) on page load
+        document.querySelectorAll("#itemsContainer > .item-row").forEach(row => attachRowEvents(row));
+    </script>
+}

@@ -3,7 +3,7 @@ using SIM.Core.Entities;
 using SIM.Core.Enums;
 using SIM.Core.Interfaces.Repositories;
 
-namespace SIM.Infrastructure.Respositories
+namespace SIM.Infrastructure.Repositories
 {
     internal class BudgetRepository : IBudgetRepository
     {

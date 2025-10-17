@@ -3,5 +3,5 @@ using SIM.Core.Interfaces.Repositories.Base;
 
 namespace SIM.Core.Interfaces.Repositories
 {
-    public interface IVendorRespository : IRepositoryBase<Vendor> { }
+    public interface IVendorRepository : IRepositoryBase<Vendor> { }
 }

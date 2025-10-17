@@ -22,7 +22,7 @@ namespace SIM.UnitTest
                 new TransactionModel { Id = 2, TotalAmount = 100m, Type = TransactionTypeEnum.Expense }
             };
 
-            mockTransactionService.Setup(service => service.GetLastestTransactionsOfCurrentUser(1, 5))
+            mockTransactionService.Setup(service => service.GetLatestTransactionsOfCurrentUser(1, 5))
                 .ReturnsAsync(latestTransactions);
 
             var incomeExpense = new IncomeExpenseModel { Expense = 100, Income = 200, Month = 1, Year = 2025 };
@@ -44,7 +44,7 @@ namespace SIM.UnitTest
 
             await dashboardModel.OnGetAsync();
 
-            mockTransactionService.Verify(service => service.GetLastestTransactionsOfCurrentUser(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+            mockTransactionService.Verify(service => service.GetLatestTransactionsOfCurrentUser(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
             mockTransactionService.Verify(service => service.GetIncomeExpensesOfCurrentUserInMonth(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Exactly(14));
 
             Assert.NotNull(dashboardModel.Transactions);

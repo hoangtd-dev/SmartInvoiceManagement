@@ -18,6 +18,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IVendorService, VendorService>();
 builder.Services.AddScoped<ITransactionCategoryService, TransactionCategoryService>();
+builder.Services.AddScoped<ITransactionItemService, TransactionItemService>();
 builder.Services.AddScoped<IBudgetService, BudgetService>();
 
 // Configure cookie authentication so SignInAsync/SignOutAsync work and

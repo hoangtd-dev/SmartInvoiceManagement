@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using SIM.Core.DTOs.Responses;
 using SIM.Core.Interfaces.Services;
@@ -34,7 +35,7 @@ namespace SIM.Presentation.Pages.Dashboard
 
         private async Task GetLatestTransactions()
         {
-            Transactions = await _transactionService.GetLastestTransactionsOfCurrentUser(CurrentUserId, 5);
+            Transactions = await _transactionService.GetLatestTransactionsOfCurrentUser(CurrentUserId, 5);
         }
 
         private async Task GetIncomeOutcomeInYear()
@@ -63,7 +64,7 @@ namespace SIM.Presentation.Pages.Dashboard
                 MonthlyIncomeGrowthPercentage = null;
             }
             else
-            {             
+            {
                 MonthlyIncomeGrowthPercentage = Math.Round(((CurrentIncomeOutcomeInMonth.Income / incomeOutcomeInPreviousMonth.Income) - 1) * 100, 1);
             }
 
@@ -72,7 +73,7 @@ namespace SIM.Presentation.Pages.Dashboard
                 MonthlyExpenseGrowthPercentage = null;
             }
             else
-            { 
+            {
                 MonthlyExpenseGrowthPercentage = Math.Round(((CurrentIncomeOutcomeInMonth.Expense / incomeOutcomeInPreviousMonth.Expense) - 1) * 100, 1);
             }
         }
