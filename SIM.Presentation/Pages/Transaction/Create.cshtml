@@ -13,40 +13,26 @@
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium text-gray-200">Transaction Type</label>
-                <select asp-for="Input.TransactionType" id="TransactionType"
+                <select asp-for="Input.TransactionType" asp-items="Model.TransactionTypeOptions" id="TransactionType"
                     class="mt-1 block w-full rounded bg-gray-700 border border-gray-600 text-white px-3 py-2">
-                    @foreach (var t in Model.TransactionTypeOptions)
-                    {
-                        <option value="@t.Value">@t.Text</option>
-                    }
+                    <option value="">-- Select Transaction Type --</option>
                 </select>
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-200">Category</label>
-                <select asp-for="Input.CategoryId" id="CategorySelect"
+                <select asp-for="Input.CategoryId" asp-items="Model.CategoryOptions" id="CategorySelect"
                     class="mt-1 block w-full rounded bg-gray-700 border border-gray-600 text-white px-3 py-2">
                     <option value="">-- Select Category --</option>
-                    @foreach (var c in Model.CategoryOptions)
-                    {
-                        <option value="@c.Value">@c.Text</option>
-                    }
                 </select>
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-200">Vendor</label>
                 <div class="flex gap-2">
-                    <select asp-for="Input.VendorId"
+                    <select asp-for="Input.VendorId" asp-items="Model.VendorOptions"
                         class="mt-1 block w-full rounded bg-gray-700 border border-gray-600 text-white px-3 py-2">
                         <option value="">-- Select Vendor --</option>
-                        @foreach (var v in Model.VendorOptions)
-                        {
-                            <option value="@v.Value"
-                                selected="@(Model.Input.VendorId == int.Parse(v.Value) ? "selected" : null)">
-                                @v.Text
-                            </option>
-                        }
                     </select>
                     <button type="button" id="btnNewVendor"
                         class="px-3 py-2 bg-green-600 text-white rounded flex items-center gap-2">
