@@ -12,8 +12,8 @@ using SIM.Infrastructure;
 namespace SIM.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251017225929_InitiateCreate")]
-    partial class InitiateCreate
+    [Migration("20251018220537_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -406,7 +406,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 7, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             TotalAmount = 13500m,
-                            TransactionType = 0,
+                            TransactionType = 1,
                             UserId = 1,
                             VendorId = 3
                         },
@@ -428,7 +428,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 8, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             TotalAmount = 12600m,
-                            TransactionType = 0,
+                            TransactionType = 1,
                             UserId = 1,
                             VendorId = 3
                         },
@@ -450,7 +450,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             TotalAmount = 13200m,
-                            TransactionType = 0,
+                            TransactionType = 1,
                             UserId = 1,
                             VendorId = 3
                         },
@@ -908,9 +908,8 @@ namespace SIM.Infrastructure.Migrations
             modelBuilder.Entity("SIM.Core.Entities.Budget", b =>
                 {
                     b.HasOne("SIM.Core.Entities.TransactionCategory", "Category")
-                        .WithMany("Budgets")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("SIM.Core.Entities.User", "User")
                         .WithMany("Budgets")
@@ -926,7 +925,7 @@ namespace SIM.Infrastructure.Migrations
             modelBuilder.Entity("SIM.Core.Entities.Transaction", b =>
                 {
                     b.HasOne("SIM.Core.Entities.TransactionCategory", "Category")
-                        .WithMany("Transactions")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -938,9 +937,9 @@ namespace SIM.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("SIM.Core.Entities.Vendor", "Vendor")
-                        .WithMany("Transactions")
+                        .WithMany()
                         .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -966,22 +965,10 @@ namespace SIM.Infrastructure.Migrations
                     b.Navigation("TransactionItems");
                 });
 
-            modelBuilder.Entity("SIM.Core.Entities.TransactionCategory", b =>
-                {
-                    b.Navigation("Budgets");
-
-                    b.Navigation("Transactions");
-                });
-
             modelBuilder.Entity("SIM.Core.Entities.User", b =>
                 {
                     b.Navigation("Budgets");
 
-                    b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("SIM.Core.Entities.Vendor", b =>
-                {
                     b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618

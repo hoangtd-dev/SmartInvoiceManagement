@@ -7,8 +7,8 @@
     ViewData["Title"] = ViewData["ActivePage"] = "Dashboard";
 }
 <div class="flex flex-col gap-4">
-    @* Waiting for authen *@
-    <h1 class="text-4xl font-bold">Welcome Edward !!</h1>
+    <h1 class="text-4xl font-bold">Welcome @(Model.CurrentUserName)</h1>
+    <partial name="_BudgetWarning" model="Model.OverBudgetCount" />
 
     <div class="flex gap-4">
         <div class="flex-1 p-4 gap-4 border rounded-lg shadow-sm bg-gray-800 border-gray-700">

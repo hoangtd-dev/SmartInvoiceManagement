@@ -63,15 +63,15 @@ namespace SIM.Infrastructure.MockData
                 new Transaction { Id = 12, CreatedDate = new DateTime(2025, 6, 19), TotalAmount = product1, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 5, VendorId = 1 },
 
                 // July 2025
-                new Transaction { Id = 13, CreatedDate = new DateTime(2025, 7, 6), TotalAmount = 13500, TransactionType = TransactionTypeEnum.Income, UserId = 1, CategoryId = 1, VendorId = 3 },
+                new Transaction { Id = 13, CreatedDate = new DateTime(2025, 7, 6), TotalAmount = 13500, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 1, VendorId = 3 },
                 new Transaction { Id = 14, CreatedDate = new DateTime(2025, 7, 25), TotalAmount = product5 * 3 + product6, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 6, VendorId = 1 },
 
                 // August 2025
-                new Transaction { Id = 15, CreatedDate = new DateTime(2025, 8, 2), TotalAmount = 12600, TransactionType = TransactionTypeEnum.Income, UserId = 1, CategoryId = 3, VendorId = 3 },
+                new Transaction { Id = 15, CreatedDate = new DateTime(2025, 8, 2), TotalAmount = 12600, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 3, VendorId = 3 },
                 new Transaction { Id = 16, CreatedDate = new DateTime(2025, 8, 16), TotalAmount = product3 + product4, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 6, VendorId = 2 },
 
                 // September 2025
-                new Transaction { Id = 17, CreatedDate = new DateTime(2025, 9, 8), TotalAmount = 13200, TransactionType = TransactionTypeEnum.Income, UserId = 1, CategoryId = 3, VendorId = 3 },
+                new Transaction { Id = 17, CreatedDate = new DateTime(2025, 9, 8), TotalAmount = 13200, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 3, VendorId = 3 },
                 new Transaction { Id = 18, CreatedDate = new DateTime(2025, 9, 21), TotalAmount = product2 * 2, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 5, VendorId = 1 },
 
                 // October 2025

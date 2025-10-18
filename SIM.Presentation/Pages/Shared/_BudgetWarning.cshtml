@@ -1,0 +1,17 @@
+@model int
+
+@if (Model > 0)
+{
+    <div id="budget-warning"
+        class="flex justify-between items-center p-4 mb-4 text-yellow-200 bg-yellow-700 border border-yellow-500 rounded-lg shadow-md">
+        <div>
+            ⚠️ There are <strong>@Model</strong> budgets over.
+            Please go to the <a href="/Budgets" class="underline hover:text-white font-semibold">Budget section</a> to take
+            action.
+        </div>
+        <button type="button" onclick="document.getElementById('budget-warning').style.display='none'"
+            class="text-yellow-200 hover:text-white ml-4 font-bold text-lg leading-none">
+            ✕
+        </button>
+    </div>
+}
