@@ -14,11 +14,6 @@ namespace SIM.Infrastructure.Configurations
                 entity.Property(e => e.EndDate).IsRequired();
                 entity.Property(e => e.Status).IsRequired();
 
-                // entity.HasOne(t => t.Category)
-                //     .WithMany(c => c.Budgets)
-                //     .HasForeignKey(t => t.CategoryId)
-                //     .OnDelete(DeleteBehavior.Cascade);
-
                 entity.HasOne(t => t.User)
                     .WithMany(c => c.Budgets)
                     .HasForeignKey(t => t.UserId)

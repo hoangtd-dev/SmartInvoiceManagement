@@ -12,20 +12,10 @@ namespace SIM.Infrastructure.Configurations
                 entity.Property(e => e.TotalAmount).HasColumnType("decimal(18,2)").IsRequired();
                 entity.Property(e => e.TransactionType).IsRequired();
 
-                // entity.HasOne(t => t.Category)
-                //     .WithMany(c => c.Transactions)
-                //     .HasForeignKey(t => t.CategoryId)
-                //     .OnDelete(DeleteBehavior.Cascade);
-
                 entity.HasOne(i => i.User)
                       .WithMany(c => c.Transactions)
                       .HasForeignKey(i => i.UserId)
                       .OnDelete(DeleteBehavior.Restrict);
-
-                // entity.HasOne(i => i.Vendor)
-                //       .WithMany(c => c.Transactions)
-                //       .HasForeignKey(i => i.VendorId)
-                //       .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }
