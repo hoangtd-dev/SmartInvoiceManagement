@@ -7,8 +7,5 @@ namespace SIM.Core.Entities
     {
         public string Name { get; set; }
         public string Description { get; set; }
-
-        public virtual ICollection<Transaction> Transactions { get; set; }
-        public virtual ICollection<Budget> Budgets { get; set; }
     }
 }

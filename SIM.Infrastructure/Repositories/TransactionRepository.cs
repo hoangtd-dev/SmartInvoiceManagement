@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SIM.Core.Entities;
-using SIM.Core.Helpers;
 using SIM.Core.Interfaces.Repositories;
 
 namespace SIM.Infrastructure.Repositories
@@ -30,6 +29,7 @@ namespace SIM.Infrastructure.Repositories
             return await _appDbContext.Transactions
                 .Include(x => x.Category)
                 .Include(x => x.Vendor)
+                .Where(x => !x.IsDeleted)
                 .OrderByDescending(x => x.CreatedDate)
                 .ToListAsync();
         }
@@ -38,6 +38,7 @@ namespace SIM.Infrastructure.Repositories
         {
             return await _appDbContext.Transactions
                 .Where(x => x.UserId == userId)
+                .Where(x => !x.IsDeleted)
                 .Include(x => x.Category)
                 .Include(x => x.Vendor)
                 .OrderByDescending(x => x.CreatedDate)
@@ -45,14 +46,19 @@ namespace SIM.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public Task<Transaction?> GetByIdAsync(int id)
+        public async Task<Transaction?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _appDbContext.Transactions
+                .Where(x => !x.IsDeleted)
+                .Include(x => x.Category)
+                .Include(x => x.Vendor)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task UpdateAsync(Transaction entity)
+        public async Task UpdateAsync(Transaction entity)
         {
-            throw new NotImplementedException();
+            _appDbContext.Transactions.Update(entity);
+            await _appDbContext.SaveChangesAsync();
         }
 
         public async Task<ICollection<Transaction>> GetIncomeExpenseOfCurrentUserAsync(int userId, DateTime startDate, DateTime endDate, int? categoryId)
@@ -66,6 +72,7 @@ namespace SIM.Infrastructure.Repositories
 
             return await query
                 .Where(x => x.UserId == userId && x.CreatedDate >= startDate && x.CreatedDate <= endDate)
+                .Where(x => !x.IsDeleted)
                 .ToListAsync();
         }
     }

@@ -12,7 +12,7 @@ using SIM.Infrastructure;
 namespace SIM.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251014070217_InitialCreate")]
+    [Migration("20251018220537_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -406,7 +406,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 7, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             TotalAmount = 13500m,
-                            TransactionType = 0,
+                            TransactionType = 1,
                             UserId = 1,
                             VendorId = 3
                         },
@@ -428,7 +428,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 8, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             TotalAmount = 12600m,
-                            TransactionType = 0,
+                            TransactionType = 1,
                             UserId = 1,
                             VendorId = 3
                         },
@@ -450,7 +450,7 @@ namespace SIM.Infrastructure.Migrations
                             CreatedDate = new DateTime(2025, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             TotalAmount = 13200m,
-                            TransactionType = 0,
+                            TransactionType = 1,
                             UserId = 1,
                             VendorId = 3
                         },
@@ -573,6 +573,10 @@ namespace SIM.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ItemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -597,6 +601,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 1,
                             CreatedDate = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Laptop",
                             Price = 999.99m,
                             Quantity = 1,
                             Total = 999.99m,
@@ -607,6 +612,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 2,
                             CreatedDate = new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Charger",
                             Price = 29.99m,
                             Quantity = 2,
                             Total = 29.99m,
@@ -617,6 +623,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 3,
                             CreatedDate = new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Printer",
                             Price = 149.99m,
                             Quantity = 2,
                             Total = 299.98m,
@@ -627,6 +634,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 4,
                             CreatedDate = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Grinder Machine",
                             Price = 199.99m,
                             Quantity = 1,
                             Total = 199.99m,
@@ -637,6 +645,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 5,
                             CreatedDate = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Vacuum Machine",
                             Price = 299.99m,
                             Quantity = 1,
                             Total = 299.99m,
@@ -647,6 +656,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 6,
                             CreatedDate = new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Notebook Pack",
                             Price = 79.99m,
                             Quantity = 1,
                             Total = 79.99m,
@@ -657,6 +667,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 7,
                             CreatedDate = new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Desk Organizer",
                             Price = 149.99m,
                             Quantity = 1,
                             Total = 149.99m,
@@ -667,6 +678,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 8,
                             CreatedDate = new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Wireless Headset",
                             Price = 199.99m,
                             Quantity = 2,
                             Total = 399.98m,
@@ -677,6 +689,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 9,
                             CreatedDate = new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Laptop Pro",
                             Price = 999.99m,
                             Quantity = 1,
                             Total = 999.99m,
@@ -687,6 +700,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 10,
                             CreatedDate = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Office Chair",
                             Price = 29.99m,
                             Quantity = 3,
                             Total = 89.97m,
@@ -697,6 +711,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 11,
                             CreatedDate = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Filing Cabinet",
                             Price = 299.99m,
                             Quantity = 1,
                             Total = 299.99m,
@@ -707,6 +722,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 12,
                             CreatedDate = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Paper Cutter",
                             Price = 149.99m,
                             Quantity = 1,
                             Total = 149.99m,
@@ -717,6 +733,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 13,
                             CreatedDate = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Marker Set",
                             Price = 79.99m,
                             Quantity = 1,
                             Total = 79.99m,
@@ -727,6 +744,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 14,
                             CreatedDate = new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Smartphone",
                             Price = 199.99m,
                             Quantity = 2,
                             Total = 399.98m,
@@ -737,6 +755,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 15,
                             CreatedDate = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Wireless Keyboard",
                             Price = 149.99m,
                             Quantity = 1,
                             Total = 149.99m,
@@ -747,6 +766,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 16,
                             CreatedDate = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Bluetooth Mouse",
                             Price = 199.99m,
                             Quantity = 1,
                             Total = 199.99m,
@@ -888,9 +908,8 @@ namespace SIM.Infrastructure.Migrations
             modelBuilder.Entity("SIM.Core.Entities.Budget", b =>
                 {
                     b.HasOne("SIM.Core.Entities.TransactionCategory", "Category")
-                        .WithMany("Budgets")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("SIM.Core.Entities.User", "User")
                         .WithMany("Budgets")
@@ -906,7 +925,7 @@ namespace SIM.Infrastructure.Migrations
             modelBuilder.Entity("SIM.Core.Entities.Transaction", b =>
                 {
                     b.HasOne("SIM.Core.Entities.TransactionCategory", "Category")
-                        .WithMany("Transactions")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -918,9 +937,9 @@ namespace SIM.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("SIM.Core.Entities.Vendor", "Vendor")
-                        .WithMany("Transactions")
+                        .WithMany()
                         .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -946,22 +965,10 @@ namespace SIM.Infrastructure.Migrations
                     b.Navigation("TransactionItems");
                 });
 
-            modelBuilder.Entity("SIM.Core.Entities.TransactionCategory", b =>
-                {
-                    b.Navigation("Budgets");
-
-                    b.Navigation("Transactions");
-                });
-
             modelBuilder.Entity("SIM.Core.Entities.User", b =>
                 {
                     b.Navigation("Budgets");
 
-                    b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("SIM.Core.Entities.Vendor", b =>
-                {
                     b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618

@@ -5,26 +5,16 @@ namespace SIM.Infrastructure.Configurations
 {
     partial class TableConfigurations
     {
-        static void TransactionConfigureTable(ModelBuilder modelBuilder) 
+        static void TransactionConfigureTable(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Transaction>(entity =>
             {
                 entity.Property(e => e.TotalAmount).HasColumnType("decimal(18,2)").IsRequired();
                 entity.Property(e => e.TransactionType).IsRequired();
 
-                entity.HasOne(t => t.Category)
-                    .WithMany(c => c.Transactions)
-                    .HasForeignKey(t => t.CategoryId)
-                    .OnDelete(DeleteBehavior.Cascade);
-
                 entity.HasOne(i => i.User)
                       .WithMany(c => c.Transactions)
                       .HasForeignKey(i => i.UserId)
-                      .OnDelete(DeleteBehavior.Restrict);
-                
-                entity.HasOne(i => i.Vendor)
-                      .WithMany(c => c.Transactions)
-                      .HasForeignKey(i => i.VendorId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
         }
