@@ -73,9 +73,6 @@ namespace SIM.Presentation.Pages.Transactions
                         }).ToList()
                     };
                 }
-                {
-                    WriteIndented = true
-                }));
                 await LoadOptionsAsync();
 
             }
@@ -86,7 +83,7 @@ namespace SIM.Presentation.Pages.Transactions
                 TempData["ToastMessage"] = ex.Message;
                 return RedirectToPage("/Transaction/Index");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 TempData["ToastStatus"] = ToastStatusEnum.Fail;
                 TempData["ToastMessage"] = "System Error !!!";
@@ -128,10 +125,6 @@ namespace SIM.Presentation.Pages.Transactions
                     Transaction.VendorId = (await _vendorService.AddVendor(vendorReq)).Id;
                 }
 
-
-                {
-                    WriteIndented = true
-                }));
                 if (IsEditMode)
                 {
                     // Update Transaction
@@ -193,10 +186,9 @@ namespace SIM.Presentation.Pages.Transactions
                         TotalAmount = Transaction.TotalAmount,
                         TransactionType = Transaction.TransactionType
                     };
-
                     var createdTx = await _transactionService.CreateTransaction(createReq);
 
-                    if (Transaction.Items?.Any() == true)
+                    if (Transaction.Items.Count > 0)
                     {
                         foreach (var item in Transaction.Items)
                         {
@@ -214,7 +206,6 @@ namespace SIM.Presentation.Pages.Transactions
                     TempData["ToastMessage"] = "Transaction created successfully.";
                     TempData["ToastStatus"] = ToastStatusEnum.Success;
                 }
-
                 return RedirectToPage("./Index");
             }
             catch (Exception ex)
@@ -233,7 +224,7 @@ namespace SIM.Presentation.Pages.Transactions
                 {
                     Value = ((int)e).ToString(),
                     Text = e.ToString(),
-                    Selected = Transaction?.TransactionType == e
+                    Selected = IsEditMode ? (Transaction?.TransactionType) == e : false
                 }).ToList();
 
 
@@ -242,7 +233,7 @@ namespace SIM.Presentation.Pages.Transactions
             {
                 Value = c.Id.ToString(),
                 Text = c.Name,
-                Selected = Transaction?.Category.Id == c.Id
+                Selected = IsEditMode ? Transaction?.Category.Id == c.Id : false
             }).ToList();
 
             var vendors = await _vendorService.GetVendors();
@@ -250,7 +241,7 @@ namespace SIM.Presentation.Pages.Transactions
             {
                 Value = v.Id.ToString(),
                 Text = v.Name,
-                Selected = Transaction?.Vendor.Id == v.Id
+                Selected = IsEditMode ? Transaction?.Vendor.Id == v.Id : false
             }).ToList();
         }
     }

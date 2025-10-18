@@ -49,13 +49,11 @@ namespace SIM.Core.Services
                 CreateDate = createdTransaction.CreatedDate,
                 Category = new TransactionCategoryModel
                 {
-                    Id = createdTransaction.Category.Id,
-                    Name = createdTransaction.Category.Name
+                    Id = createdTransaction.CategoryId,
                 },
                 Vendor = new VendorModel
                 {
-                    Id = createdTransaction.Vendor.Id,
-                    Name = createdTransaction.Vendor.VendorName
+                    Id = createdTransaction.VendorId,
                 }
             };
         }
