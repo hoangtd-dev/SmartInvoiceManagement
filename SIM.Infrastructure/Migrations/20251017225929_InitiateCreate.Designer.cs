@@ -12,8 +12,8 @@ using SIM.Infrastructure;
 namespace SIM.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251014070217_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251017225929_InitiateCreate")]
+    partial class InitiateCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -573,6 +573,10 @@ namespace SIM.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ItemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -597,6 +601,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 1,
                             CreatedDate = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Laptop",
                             Price = 999.99m,
                             Quantity = 1,
                             Total = 999.99m,
@@ -607,6 +612,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 2,
                             CreatedDate = new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Charger",
                             Price = 29.99m,
                             Quantity = 2,
                             Total = 29.99m,
@@ -617,6 +623,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 3,
                             CreatedDate = new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Printer",
                             Price = 149.99m,
                             Quantity = 2,
                             Total = 299.98m,
@@ -627,6 +634,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 4,
                             CreatedDate = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Grinder Machine",
                             Price = 199.99m,
                             Quantity = 1,
                             Total = 199.99m,
@@ -637,6 +645,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 5,
                             CreatedDate = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Vacuum Machine",
                             Price = 299.99m,
                             Quantity = 1,
                             Total = 299.99m,
@@ -647,6 +656,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 6,
                             CreatedDate = new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Notebook Pack",
                             Price = 79.99m,
                             Quantity = 1,
                             Total = 79.99m,
@@ -657,6 +667,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 7,
                             CreatedDate = new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Desk Organizer",
                             Price = 149.99m,
                             Quantity = 1,
                             Total = 149.99m,
@@ -667,6 +678,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 8,
                             CreatedDate = new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Wireless Headset",
                             Price = 199.99m,
                             Quantity = 2,
                             Total = 399.98m,
@@ -677,6 +689,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 9,
                             CreatedDate = new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Laptop Pro",
                             Price = 999.99m,
                             Quantity = 1,
                             Total = 999.99m,
@@ -687,6 +700,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 10,
                             CreatedDate = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Office Chair",
                             Price = 29.99m,
                             Quantity = 3,
                             Total = 89.97m,
@@ -697,6 +711,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 11,
                             CreatedDate = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Filing Cabinet",
                             Price = 299.99m,
                             Quantity = 1,
                             Total = 299.99m,
@@ -707,6 +722,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 12,
                             CreatedDate = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Paper Cutter",
                             Price = 149.99m,
                             Quantity = 1,
                             Total = 149.99m,
@@ -717,6 +733,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 13,
                             CreatedDate = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Marker Set",
                             Price = 79.99m,
                             Quantity = 1,
                             Total = 79.99m,
@@ -727,6 +744,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 14,
                             CreatedDate = new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Smartphone",
                             Price = 199.99m,
                             Quantity = 2,
                             Total = 399.98m,
@@ -737,6 +755,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 15,
                             CreatedDate = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Wireless Keyboard",
                             Price = 149.99m,
                             Quantity = 1,
                             Total = 149.99m,
@@ -747,6 +766,7 @@ namespace SIM.Infrastructure.Migrations
                             Id = 16,
                             CreatedDate = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ItemName = "Bluetooth Mouse",
                             Price = 199.99m,
                             Quantity = 1,
                             Total = 199.99m,

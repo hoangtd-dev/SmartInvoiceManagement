@@ -58,11 +58,11 @@
                     Cells = new List<TableCell>
                 {
                 new TableCell { Value = t.CreateDate.ToString("dd/MM/yyyy") },
-                new TableCell { Value = t.VendorName },
-                new TableCell { Value = t.CategoryName },
+                new TableCell { Value = t.Vendor.Name },
+                new TableCell { Value = t.Category.Name },
                 new TableCell {
-                Value = (t.Type == TransactionTypeEnum.Expense ? "-" : "+") + $"${t.TotalAmount}",
-                CssClass = t.Type == TransactionTypeEnum.Expense ? "text-red-400" : "text-green-400"
+                Value = (t.TransactionType == TransactionTypeEnum.Expense ? "-" : "+") + $"${t.TotalAmount}",
+                CssClass = t.TransactionType == TransactionTypeEnum.Expense ? "text-red-400" : "text-green-400"
                 }}
                 }).ToList()
                 })

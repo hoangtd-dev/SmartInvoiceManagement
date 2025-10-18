@@ -1,5 +1,4 @@
 ﻿
-using System.Text.Json;
 using SIM.Core.DTOs.Requests;
 using SIM.Core.DTOs.Responses;
 using SIM.Core.Entities;
@@ -16,13 +15,17 @@ namespace SIM.Core.Services
         private readonly ITransactionRepository _transactionRepository;
         private readonly IVendorRepository _vendorRepository;
         private readonly ITransactionCategoryRepository _transactionCategoryRepository;
-        public TransactionService(ITransactionRepository transactionRepository,
+        private readonly ITransactionItemRepository _transactionItemRepository;
+        public TransactionService(
+            ITransactionRepository transactionRepository,
             IVendorRepository vendorRepository,
-            ITransactionCategoryRepository transactionCategoryRepository)
+            ITransactionCategoryRepository transactionCategoryRepository,
+            ITransactionItemRepository transactionItemRepository)
         {
             _transactionRepository = transactionRepository;
             _vendorRepository = vendorRepository;
             _transactionCategoryRepository = transactionCategoryRepository;
+            _transactionItemRepository = transactionItemRepository;
         }
 
         public async Task<TransactionModel> CreateTransaction(CreateTransactionRequest transaction)
@@ -41,11 +44,19 @@ namespace SIM.Core.Services
             return new TransactionModel
             {
                 Id = createdTransaction.Id,
-                Type = createdTransaction.TransactionType,
+                TransactionType = createdTransaction.TransactionType,
                 TotalAmount = createdTransaction.TotalAmount,
                 CreateDate = createdTransaction.CreatedDate,
-                CategoryName = createdTransaction.Category is not null ? createdTransaction.Category.Name : null,
-                VendorName = createdTransaction.Vendor is not null ? createdTransaction.Vendor.VendorName : null
+                Category = new TransactionCategoryModel
+                {
+                    Id = createdTransaction.Category.Id,
+                    Name = createdTransaction.Category.Name
+                },
+                Vendor = new VendorModel
+                {
+                    Id = createdTransaction.Vendor.Id,
+                    Name = createdTransaction.Vendor.VendorName
+                }
             };
         }
 
@@ -60,15 +71,34 @@ namespace SIM.Core.Services
         public async Task<TransactionModel> GetTransactionById(int id)
         {
             var transaction = await _transactionRepository.GetByIdAsync(id);
+            var listItems = await _transactionItemRepository.GetByTransactionIdAsync(id);
 
             return new TransactionModel
             {
                 Id = transaction.Id,
-                Type = transaction.TransactionType,
+                TransactionType = transaction.TransactionType,
                 TotalAmount = transaction.TotalAmount,
                 CreateDate = transaction.CreatedDate,
-                CategoryName = transaction.Category is not null ? transaction.Category.Name : null,
-                VendorName = transaction.Vendor is not null ? transaction.Vendor.VendorName : null
+                CategoryId = transaction.CategoryId,
+                VendorId = transaction.VendorId,
+                Category = new TransactionCategoryModel
+                {
+                    Id = transaction.Category.Id,
+                    Name = transaction.Category.Name
+                },
+                Vendor = new VendorModel
+                {
+                    Id = transaction.Vendor.Id,
+                    Name = transaction.Vendor.VendorName
+                },
+                Items = listItems.Select(item => new TransactionItemModel
+                {
+                    Id = item.Id,
+                    ItemName = item.ItemName,
+                    Total = item.Total,
+                    Quantity = item.Quantity,
+                    Price = item.Price
+                }).ToList()
             };
         }
 
@@ -79,11 +109,19 @@ namespace SIM.Core.Services
             return transactions.Select(transaction => new TransactionModel
             {
                 Id = transaction.Id,
-                Type = transaction.TransactionType,
+                TransactionType = transaction.TransactionType,
                 TotalAmount = transaction.TotalAmount,
                 CreateDate = transaction.CreatedDate,
-                CategoryName = transaction.Category is not null ? transaction.Category.Name : null,
-                VendorName = transaction.Vendor is not null ? transaction.Vendor.VendorName : null
+                Category = new TransactionCategoryModel
+                {
+                    Id = transaction.Category.Id,
+                    Name = transaction.Category.Name
+                },
+                Vendor = new VendorModel
+                {
+                    Id = transaction.Vendor.Id,
+                    Name = transaction.Vendor.VendorName
+                }
             }).ToList();
         }
 
@@ -94,11 +132,19 @@ namespace SIM.Core.Services
             return transactions.Select(transaction => new TransactionModel
             {
                 Id = transaction.Id,
-                Type = transaction.TransactionType,
+                TransactionType = transaction.TransactionType,
                 TotalAmount = transaction.TotalAmount,
                 CreateDate = transaction.CreatedDate,
-                CategoryName = transaction.Category is not null ? transaction.Category.Name : null,
-                VendorName = transaction.Vendor is not null ? transaction.Vendor.VendorName : null
+                Category = new TransactionCategoryModel
+                {
+                    Id = transaction.Category.Id,
+                    Name = transaction.Category.Name
+                },
+                Vendor = new VendorModel
+                {
+                    Id = transaction.Vendor.Id,
+                    Name = transaction.Vendor.VendorName
+                }
             }).ToList();
         }
 

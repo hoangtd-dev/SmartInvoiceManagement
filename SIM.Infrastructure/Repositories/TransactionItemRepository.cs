@@ -1,4 +1,5 @@
-﻿using SIM.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SIM.Core.Entities;
 using SIM.Core.Interfaces.Repositories;
 
 namespace SIM.Infrastructure.Repositories
@@ -27,14 +28,25 @@ namespace SIM.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<TransactionItem?> GetByIdAsync(int id)
+        public async Task<TransactionItem?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _appDbContext.TransactionItems
+                .Where(x => !x.IsDeleted)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task UpdateAsync(TransactionItem entity)
+        public async Task<ICollection<TransactionItem>> GetByTransactionIdAsync(int transactionId)
         {
-            throw new NotImplementedException();
+            return await _appDbContext.TransactionItems
+                .Where(x => !x.IsDeleted)
+                .Where(x => x.TransactionId == transactionId)
+                .ToListAsync();
+        }
+
+        public async Task UpdateAsync(TransactionItem entity)
+        {
+            _appDbContext.TransactionItems.Update(entity);
+            await _appDbContext.SaveChangesAsync();
         }
     }
 }
