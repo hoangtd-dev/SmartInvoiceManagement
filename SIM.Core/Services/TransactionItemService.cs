@@ -21,6 +21,7 @@ namespace SIM.Core.Services
             {
                 TransactionId = item.TransactionId,
                 Quantity = item.Quantity,
+                ItemName = item.ItemName,
                 Price = item.Price,
                 Total = item.Total,
                 CreatedDate = DateTime.UtcNow
@@ -71,6 +72,7 @@ namespace SIM.Core.Services
             if (existing is null) throw new NotFoundException($"TransactionItem with id:{item.Id} is not found !!!");
 
             existing.Quantity = item.Quantity;
+            existing.ItemName = item.ItemName;
             existing.Price = item.Price;
             existing.Total = item.Total;
 
