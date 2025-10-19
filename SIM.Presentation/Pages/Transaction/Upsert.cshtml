@@ -77,7 +77,18 @@
                 </button>
             </div>
 
-            <div id="itemsContainer" class="space-y-2">
+            @if (Model.Transaction.Items != null && Model.Transaction.Items.Count > 0)
+            {
+                <div id="itemsHeaderRow" class="flex gap-2 mb-1 text-gray-300 text-sm font-medium">
+                    <div class="flex-1">Item Name</div>
+                    <div class="w-28">Quantity</div>
+                    <div class="w-28">Price</div>
+                    <div class="w-28">Total</div>
+                    <div class="w-10"></div>
+                </div>
+            }
+
+            <div id="itemsContainer" class=" space-y-2">
                 @if (Model.Transaction.Items.Count > 0 && Model.Transaction.Items.Any())
                 {
                     var i = 0;
@@ -158,6 +169,22 @@
             fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
                 .then(res => res.text())
                 .then(html => {
+                    const itemsContainer = document.getElementById("itemsContainer");
+
+                    // ✅ If header does not exist yet, add it
+                    if (!document.getElementById("itemsHeaderRow")) {
+                        const headerRow = document.createElement("div");
+                        headerRow.id = "itemsHeaderRow";
+                        headerRow.className = "flex gap-2 mb-1 text-gray-300 text-sm font-medium";
+                        headerRow.innerHTML = `
+                                <div class="flex-1">Item Name</div>
+                                <div class="w-28">Quantity</div>
+                                <div class="w-28">Price</div>
+                                <div class="w-28">Total</div>
+                                <div class="w-10"></div>
+                            `;
+                        itemsContainer.parentNode.insertBefore(headerRow, itemsContainer);
+                    }
                     const temp = document.createElement('div');
                     temp.innerHTML = html;
                     const newRow = temp.firstElementChild;
@@ -171,7 +198,10 @@
             const qty = row.querySelector(".item-qty");
             const price = row.querySelector(".item-price");
             const remove = row.querySelector(".remove-item");
-
+            if (document.querySelectorAll("#itemsContainer .item-row").length === 0) {
+                const headerRow = document.getElementById("itemsHeaderRow");
+                if (headerRow) headerRow.remove();
+            }
             if (qty && price) {
                 qty.addEventListener("input", () => computeRowTotal(row));
                 price.addEventListener("input", () => computeRowTotal(row));
@@ -179,6 +209,10 @@
             if (remove) {
                 remove.addEventListener("click", () => {
                     row.remove();
+                    if (document.querySelectorAll("#itemsContainer .item-row").length === 0) {
+                        const headerRow = document.getElementById("itemsHeaderRow");
+                        if (headerRow) headerRow.remove();
+                    }
                     updateTotalAmount();
                 });
             }
