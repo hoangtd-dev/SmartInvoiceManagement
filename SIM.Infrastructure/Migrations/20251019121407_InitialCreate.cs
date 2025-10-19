@@ -90,7 +90,8 @@ namespace SIM.Infrastructure.Migrations
                         name: "FK_Budgets_TransactionCategories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "TransactionCategories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Budgets_Users_UserId",
                         column: x => x.UserId,
@@ -133,7 +134,7 @@ namespace SIM.Infrastructure.Migrations
                         column: x => x.VendorId,
                         principalTable: "Vendors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

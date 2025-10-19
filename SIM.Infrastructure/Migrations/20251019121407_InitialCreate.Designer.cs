@@ -12,7 +12,7 @@ using SIM.Infrastructure;
 namespace SIM.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251018220537_InitialCreate")]
+    [Migration("20251019121407_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -908,8 +908,9 @@ namespace SIM.Infrastructure.Migrations
             modelBuilder.Entity("SIM.Core.Entities.Budget", b =>
                 {
                     b.HasOne("SIM.Core.Entities.TransactionCategory", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .WithMany("Budgets")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SIM.Core.Entities.User", "User")
                         .WithMany("Budgets")
@@ -925,7 +926,7 @@ namespace SIM.Infrastructure.Migrations
             modelBuilder.Entity("SIM.Core.Entities.Transaction", b =>
                 {
                     b.HasOne("SIM.Core.Entities.TransactionCategory", "Category")
-                        .WithMany()
+                        .WithMany("Transactions")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -937,9 +938,9 @@ namespace SIM.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("SIM.Core.Entities.Vendor", "Vendor")
-                        .WithMany()
+                        .WithMany("Transactions")
                         .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -965,10 +966,22 @@ namespace SIM.Infrastructure.Migrations
                     b.Navigation("TransactionItems");
                 });
 
+            modelBuilder.Entity("SIM.Core.Entities.TransactionCategory", b =>
+                {
+                    b.Navigation("Budgets");
+
+                    b.Navigation("Transactions");
+                });
+
             modelBuilder.Entity("SIM.Core.Entities.User", b =>
                 {
                     b.Navigation("Budgets");
 
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("SIM.Core.Entities.Vendor", b =>
+                {
                     b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618

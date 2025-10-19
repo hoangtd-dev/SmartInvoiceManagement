@@ -10,6 +10,7 @@
     if (userId > 0)
     {
         overBudgetCount = await budgetService.OverBudgetCount(userId);
+        await budgetService.UpdateBudgetToExpire(userId);
     }
 }
 <!DOCTYPE html>

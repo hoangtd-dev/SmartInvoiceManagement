@@ -155,5 +155,10 @@ namespace SIM.Core.Services
 
             await _budgetRepository.UpdateAsync(budget);
         }
+
+        public async Task UpdateBudgetToExpire(int userId)
+        {
+            await _budgetRepository.UpdateBudgetToExpire(userId);
+        }
     }
 }
