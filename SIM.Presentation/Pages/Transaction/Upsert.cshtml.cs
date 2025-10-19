@@ -111,17 +111,16 @@ namespace SIM.Presentation.Pages.Transactions
                     return Page();
 
                 // Handle vendor creation if new
-                if (Transaction.VendorId.HasValue && !string.IsNullOrWhiteSpace(NewVendor?.VendorName))
+                if (!Transaction.VendorId.HasValue && !string.IsNullOrWhiteSpace(NewVendor?.VendorName))
                 {
                     var vendorReq = new CreateVendorRequest
                     {
                         VendorName = NewVendor.VendorName,
                         Address = NewVendor.Address,
-                        ContactEmail = NewVendor.ContactEmail,
-                        ContactPhone = NewVendor.ContactPhone
                     };
 
-                    Transaction.VendorId = (await _vendorService.AddVendor(vendorReq)).Id;
+                    var vendor = await _vendorService.AddVendor(vendorReq);
+                    Transaction.VendorId = vendor.Id;
                 }
 
                 if (IsEditMode)
@@ -198,6 +197,7 @@ namespace SIM.Presentation.Pages.Transactions
                             {
                                 TransactionId = createdTx.Id,
                                 Quantity = item.Quantity,
+                                ItemName = item.ItemName,
                                 Price = item.Price,
                                 Total = item.Total
                             };
