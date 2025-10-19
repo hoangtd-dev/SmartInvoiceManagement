@@ -92,7 +92,7 @@
         </div>
 
         <div class="mt-6 flex justify-end gap-2">
-            <a asp-page="/Dashboard/Index" class="px-4 py-2 border border-gray-600 rounded text-white">Cancel</a>
+            <a asp-page="/Transaction/Index" class="px-4 py-2 border border-gray-600 rounded text-white">Cancel</a>
             <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded">
                 @(isEditMode ? "Update" : "Create")
             </button>
@@ -127,6 +127,18 @@
                 updateTotalAmount();
             }
         });
+
+        function removeVendorInline() {
+            const vendorRow = document.getElementById("vendorInlineRow");
+            if (vendorRow) {
+                vendorRow.remove();
+            }
+
+            const newVendorButton = document.getElementById("btnNewVendor");
+            if (newVendorButton) {
+                newVendorButton.style.display = "inline-flex";
+            }
+        }
 
         // Load new vendor partial
         document.getElementById("btnNewVendor")?.addEventListener("click", function () {

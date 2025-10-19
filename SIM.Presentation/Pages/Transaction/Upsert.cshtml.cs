@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SIM.Core.DTOs.Requests;
@@ -152,6 +151,7 @@ namespace SIM.Presentation.Pages.Transactions
                                     Id = item.Id.Value,
                                     TransactionId = Transaction.Id,
                                     Quantity = item.Quantity,
+                                    ItemName = item.ItemName,
                                     Price = item.Price,
                                     Total = item.Total
                                 };
@@ -164,6 +164,7 @@ namespace SIM.Presentation.Pages.Transactions
                                 {
                                     TransactionId = Transaction.Id,
                                     Quantity = item.Quantity,
+                                    ItemName = item.ItemName,
                                     Price = item.Price,
                                     Total = item.Total
                                 };

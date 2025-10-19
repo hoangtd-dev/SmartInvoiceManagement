@@ -8,6 +8,9 @@ namespace SIM.Core.DTOs.Requests
         public int TransactionId { get; set; }
 
         [Required]
+        public string ItemName { get; set; }
+
+        [Required]
         public int Quantity { get; set; }
 
         [Required]
