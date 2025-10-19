@@ -5,7 +5,7 @@ namespace SIM.Infrastructure.Configurations
 {
     partial class TableConfigurations
     {
-        static void TransactionConfigureTable(ModelBuilder modelBuilder) 
+        static void TransactionConfigureTable(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Transaction>(entity =>
             {
@@ -21,7 +21,7 @@ namespace SIM.Infrastructure.Configurations
                       .WithMany(c => c.Transactions)
                       .HasForeignKey(i => i.UserId)
                       .OnDelete(DeleteBehavior.Restrict);
-                
+
                 entity.HasOne(i => i.Vendor)
                       .WithMany(c => c.Transactions)
                       .HasForeignKey(i => i.VendorId)

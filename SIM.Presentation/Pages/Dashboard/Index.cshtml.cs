@@ -13,14 +13,19 @@ namespace SIM.Presentation.Pages.Dashboard
         public List<IncomeExpenseModel> IncomeOutcomeInYear { get; set; } = new List<IncomeExpenseModel>();
         public List<decimal> IncomesInMonth => IncomeOutcomeInYear.Select(x => x.Income).ToList();
         public List<decimal> ExpensesInMonth => IncomeOutcomeInYear.Select(x => x.Expense).ToList();
+        public int OverBudgetCount { get; set; }
 
         public decimal? MonthlyIncomeGrowthPercentage { get; set; }
         public decimal? MonthlyExpenseGrowthPercentage { get; set; }
 
         private readonly ITransactionService _transactionService;
-        public DashboardModel(ITransactionService transactionService)
+        private readonly IBudgetService _budgetService;
+
+        public DashboardModel(ITransactionService transactionService, IBudgetService budgetService)
         {
             _transactionService = transactionService;
+            _budgetService = budgetService;
+
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -30,6 +35,9 @@ namespace SIM.Presentation.Pages.Dashboard
             await GetIncomeOutcomeInYear();
             await GetCurrentIncomeOutcomeInMonth();
             await GetLatestTransactions();
+
+            OverBudgetCount = await _budgetService.OverBudgetCount(CurrentUserId);
+
             return Page();
         }
 

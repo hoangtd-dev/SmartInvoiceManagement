@@ -63,15 +63,15 @@ namespace SIM.Infrastructure.MockData
                 new Transaction { Id = 12, CreatedDate = new DateTime(2025, 6, 19), TotalAmount = product1, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 5, VendorId = 1 },
 
                 // July 2025
-                new Transaction { Id = 13, CreatedDate = new DateTime(2025, 7, 6), TotalAmount = 13500, TransactionType = TransactionTypeEnum.Income, UserId = 1, CategoryId = 1, VendorId = 3 },
+                new Transaction { Id = 13, CreatedDate = new DateTime(2025, 7, 6), TotalAmount = 13500, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 1, VendorId = 3 },
                 new Transaction { Id = 14, CreatedDate = new DateTime(2025, 7, 25), TotalAmount = product5 * 3 + product6, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 6, VendorId = 1 },
 
                 // August 2025
-                new Transaction { Id = 15, CreatedDate = new DateTime(2025, 8, 2), TotalAmount = 12600, TransactionType = TransactionTypeEnum.Income, UserId = 1, CategoryId = 3, VendorId = 3 },
+                new Transaction { Id = 15, CreatedDate = new DateTime(2025, 8, 2), TotalAmount = 12600, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 3, VendorId = 3 },
                 new Transaction { Id = 16, CreatedDate = new DateTime(2025, 8, 16), TotalAmount = product3 + product4, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 6, VendorId = 2 },
 
                 // September 2025
-                new Transaction { Id = 17, CreatedDate = new DateTime(2025, 9, 8), TotalAmount = 13200, TransactionType = TransactionTypeEnum.Income, UserId = 1, CategoryId = 3, VendorId = 3 },
+                new Transaction { Id = 17, CreatedDate = new DateTime(2025, 9, 8), TotalAmount = 13200, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 3, VendorId = 3 },
                 new Transaction { Id = 18, CreatedDate = new DateTime(2025, 9, 21), TotalAmount = product2 * 2, TransactionType = TransactionTypeEnum.Expense, UserId = 1, CategoryId = 5, VendorId = 1 },
 
                 // October 2025
@@ -81,41 +81,42 @@ namespace SIM.Infrastructure.MockData
 
             modelBuilder.Entity<TransactionItem>().HasData(
                 // January
-                new TransactionItem { Id = 1, TransactionId = 2, Quantity = 1, Price = product1, Total = product1, CreatedDate = new DateTime(2025, 1, 10) },
-                new TransactionItem { Id = 2, TransactionId = 2, Quantity = 2, Price = product5, Total = product5, CreatedDate = new DateTime(2025, 2, 10) },
+                new TransactionItem { Id = 1, TransactionId = 2, Quantity = 1, Price = product1, Total = product1, ItemName = "Laptop", CreatedDate = new DateTime(2025, 1, 10) },
+                new TransactionItem { Id = 2, TransactionId = 2, Quantity = 2, Price = product5, Total = product5, ItemName = "Charger", CreatedDate = new DateTime(2025, 2, 10) },
 
                 // February
-                new TransactionItem { Id = 3, TransactionId = 4, Quantity = 2, Price = product3, Total = product3 * 2, CreatedDate = new DateTime(2025, 2, 15) },
+                new TransactionItem { Id = 3, TransactionId = 4, Quantity = 2, Price = product3, Total = product3 * 2, ItemName = "Printer", CreatedDate = new DateTime(2025, 2, 15) },
 
                 // March
-                new TransactionItem { Id = 4, TransactionId = 6, Quantity = 1, Price = product2, Total = product2, CreatedDate = new DateTime(2025, 3, 20) },
-                new TransactionItem { Id = 5, TransactionId = 6, Quantity = 1, Price = product6, Total = product6, CreatedDate = new DateTime(2025, 3, 20) },
+                new TransactionItem { Id = 4, TransactionId = 6, Quantity = 1, Price = product2, Total = product2, ItemName = "Grinder Machine", CreatedDate = new DateTime(2025, 3, 20) },
+                new TransactionItem { Id = 5, TransactionId = 6, Quantity = 1, Price = product6, Total = product6, ItemName = "Vacuum Machine", CreatedDate = new DateTime(2025, 3, 20) },
 
                 // April
-                new TransactionItem { Id = 6, TransactionId = 8, Quantity = 1, Price = product4, Total = product4, CreatedDate = new DateTime(2025, 4, 18) },
-                new TransactionItem { Id = 7, TransactionId = 8, Quantity = 1, Price = product7, Total = product7, CreatedDate = new DateTime(2025, 4, 18) },
+                new TransactionItem { Id = 6, TransactionId = 8, Quantity = 1, Price = product4, Total = product4, ItemName = "Notebook Pack", CreatedDate = new DateTime(2025, 4, 18) },
+                new TransactionItem { Id = 7, TransactionId = 8, Quantity = 1, Price = product7, Total = product7, ItemName = "Desk Organizer", CreatedDate = new DateTime(2025, 4, 18) },
 
                 // May
-                new TransactionItem { Id = 8, TransactionId = 10, Quantity = 2, Price = product8, Total = product8 * 2, CreatedDate = new DateTime(2025, 5, 22) },
+                new TransactionItem { Id = 8, TransactionId = 10, Quantity = 2, Price = product8, Total = product8 * 2, ItemName = "Wireless Headset", CreatedDate = new DateTime(2025, 5, 22) },
 
                 // June
-                new TransactionItem { Id = 9, TransactionId = 12, Quantity = 1, Price = product1, Total = product1, CreatedDate = new DateTime(2025, 6, 19) },
+                new TransactionItem { Id = 9, TransactionId = 12, Quantity = 1, Price = product1, Total = product1, ItemName = "Laptop Pro", CreatedDate = new DateTime(2025, 6, 19) },
 
                 // July
-                new TransactionItem { Id = 10, TransactionId = 14, Quantity = 3, Price = product5, Total = product5 * 3, CreatedDate = new DateTime(2025, 7, 25) },
-                new TransactionItem { Id = 11, TransactionId = 14, Quantity = 1, Price = product6, Total = product6, CreatedDate = new DateTime(2025, 7, 25) },
+                new TransactionItem { Id = 10, TransactionId = 14, Quantity = 3, Price = product5, Total = product5 * 3, ItemName = "Office Chair", CreatedDate = new DateTime(2025, 7, 25) },
+                new TransactionItem { Id = 11, TransactionId = 14, Quantity = 1, Price = product6, Total = product6, ItemName = "Filing Cabinet", CreatedDate = new DateTime(2025, 7, 25) },
 
                 // August
-                new TransactionItem { Id = 12, TransactionId = 16, Quantity = 1, Price = product3, Total = product3, CreatedDate = new DateTime(2025, 8, 16) },
-                new TransactionItem { Id = 13, TransactionId = 16, Quantity = 1, Price = product4, Total = product4, CreatedDate = new DateTime(2025, 8, 16) },
+                new TransactionItem { Id = 12, TransactionId = 16, Quantity = 1, Price = product3, Total = product3, ItemName = "Paper Cutter", CreatedDate = new DateTime(2025, 8, 16) },
+                new TransactionItem { Id = 13, TransactionId = 16, Quantity = 1, Price = product4, Total = product4, ItemName = "Marker Set", CreatedDate = new DateTime(2025, 8, 16) },
 
                 // September
-                new TransactionItem { Id = 14, TransactionId = 18, Quantity = 2, Price = product2, Total = product2 * 2, CreatedDate = new DateTime(2025, 9, 21) },
+                new TransactionItem { Id = 14, TransactionId = 18, Quantity = 2, Price = product2, Total = product2 * 2, ItemName = "Smartphone", CreatedDate = new DateTime(2025, 9, 21) },
 
                 // October
-                new TransactionItem { Id = 15, TransactionId = 20, Quantity = 1, Price = product7, Total = product7, CreatedDate = new DateTime(2025, 10, 28) },
-                new TransactionItem { Id = 16, TransactionId = 20, Quantity = 1, Price = product8, Total = product8, CreatedDate = new DateTime(2025, 10, 28) }
+                new TransactionItem { Id = 15, TransactionId = 20, Quantity = 1, Price = product7, Total = product7, ItemName = "Wireless Keyboard", CreatedDate = new DateTime(2025, 10, 28) },
+                new TransactionItem { Id = 16, TransactionId = 20, Quantity = 1, Price = product8, Total = product8, ItemName = "Bluetooth Mouse", CreatedDate = new DateTime(2025, 10, 28) }
             );
+
 
             modelBuilder.Entity<Budget>().HasData(
                 new Budget

@@ -90,8 +90,7 @@ namespace SIM.Infrastructure.Migrations
                         name: "FK_Budgets_TransactionCategories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "TransactionCategories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Budgets_Users_UserId",
                         column: x => x.UserId,
@@ -134,7 +133,7 @@ namespace SIM.Infrastructure.Migrations
                         column: x => x.VendorId,
                         principalTable: "Vendors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -143,6 +142,7 @@ namespace SIM.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -225,11 +225,11 @@ namespace SIM.Infrastructure.Migrations
                     { 10, 5, new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 399.98m, 1, 1, 3 },
                     { 11, 4, new DateTime(2025, 6, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12800m, 0, 1, 3 },
                     { 12, 5, new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 999.99m, 1, 1, 1 },
-                    { 13, 1, new DateTime(2025, 7, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 13500m, 0, 1, 3 },
+                    { 13, 1, new DateTime(2025, 7, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 13500m, 1, 1, 3 },
                     { 14, 6, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 389.96m, 1, 1, 1 },
-                    { 15, 3, new DateTime(2025, 8, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12600m, 0, 1, 3 },
+                    { 15, 3, new DateTime(2025, 8, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12600m, 1, 1, 3 },
                     { 16, 6, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 229.98m, 1, 1, 2 },
-                    { 17, 3, new DateTime(2025, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 13200m, 0, 1, 3 },
+                    { 17, 3, new DateTime(2025, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 13200m, 1, 1, 3 },
                     { 18, 5, new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 399.98m, 1, 1, 1 },
                     { 19, 4, new DateTime(2025, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 12400m, 0, 1, 3 },
                     { 20, 5, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 349.98m, 1, 1, 3 }
@@ -237,25 +237,25 @@ namespace SIM.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "TransactionItems",
-                columns: new[] { "Id", "CreatedDate", "IsDeleted", "Price", "Quantity", "Total", "TransactionId" },
+                columns: new[] { "Id", "CreatedDate", "IsDeleted", "ItemName", "Price", "Quantity", "Total", "TransactionId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 999.99m, 1, 999.99m, 2 },
-                    { 2, new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 29.99m, 2, 29.99m, 2 },
-                    { 3, new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 2, 299.98m, 4 },
-                    { 4, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 1, 199.99m, 6 },
-                    { 5, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 299.99m, 1, 299.99m, 6 },
-                    { 6, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 79.99m, 1, 79.99m, 8 },
-                    { 7, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 1, 149.99m, 8 },
-                    { 8, new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 2, 399.98m, 10 },
-                    { 9, new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 999.99m, 1, 999.99m, 12 },
-                    { 10, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 29.99m, 3, 89.97m, 14 },
-                    { 11, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 299.99m, 1, 299.99m, 14 },
-                    { 12, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 1, 149.99m, 16 },
-                    { 13, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 79.99m, 1, 79.99m, 16 },
-                    { 14, new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 2, 399.98m, 18 },
-                    { 15, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 149.99m, 1, 149.99m, 20 },
-                    { 16, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 199.99m, 1, 199.99m, 20 }
+                    { 1, new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Laptop", 999.99m, 1, 999.99m, 2 },
+                    { 2, new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Charger", 29.99m, 2, 29.99m, 2 },
+                    { 3, new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Printer", 149.99m, 2, 299.98m, 4 },
+                    { 4, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Grinder Machine", 199.99m, 1, 199.99m, 6 },
+                    { 5, new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Vacuum Machine", 299.99m, 1, 299.99m, 6 },
+                    { 6, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Notebook Pack", 79.99m, 1, 79.99m, 8 },
+                    { 7, new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Desk Organizer", 149.99m, 1, 149.99m, 8 },
+                    { 8, new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Wireless Headset", 199.99m, 2, 399.98m, 10 },
+                    { 9, new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Laptop Pro", 999.99m, 1, 999.99m, 12 },
+                    { 10, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Office Chair", 29.99m, 3, 89.97m, 14 },
+                    { 11, new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Filing Cabinet", 299.99m, 1, 299.99m, 14 },
+                    { 12, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Paper Cutter", 149.99m, 1, 149.99m, 16 },
+                    { 13, new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Marker Set", 79.99m, 1, 79.99m, 16 },
+                    { 14, new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Smartphone", 199.99m, 2, 399.98m, 18 },
+                    { 15, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Wireless Keyboard", 149.99m, 1, 149.99m, 20 },
+                    { 16, new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Bluetooth Mouse", 199.99m, 1, 199.99m, 20 }
                 });
 
             migrationBuilder.CreateIndex(

@@ -8,10 +8,8 @@ namespace SIM.Core.DTOs.Responses
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required]
         [Display(Name = "Email")]
         public string ContactEmail { get; set; }
-        [Required]
         [Display(Name = "Phone")]
         public string ContactPhone { get; set; }
         [Required]

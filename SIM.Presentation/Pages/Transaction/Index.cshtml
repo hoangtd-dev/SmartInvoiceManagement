@@ -8,8 +8,9 @@
 <div class="p-4 border border-gray-700 shadow-sm rounded-lg">
     <div class="flex justify-between">
         <h1 class="mb-4 text-lg font-bold">Transactions</h1>
-        <a asp-page="/Transaction/Create" class="border font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-blue-500 text-blue-500 hover:text-white hover:bg-blue-500">+ Create Transaction</a>
+        <a asp-page="/Transaction/Upsert" class="border font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-blue-500 text-blue-500 hover:text-white hover:bg-blue-500">+ Create Transaction</a>
     </div>
+    <partial name="_BudgetWarning" model="Model.OverBudgetCount" />
 
     @await Html.PartialAsync(partialViewName: "_DataTable", new DataTableViewModel
     {
@@ -19,17 +20,17 @@
         {
             Cells = new List<TableCell>
             {
-                new TableCell { Value = t.Type.ToString() },
+                new TableCell { Value = t.TransactionType.ToString() },
                 new TableCell { Value = t.TotalAmount.ToString("C") },
-                new TableCell { Value = t.CategoryName },
-                new TableCell { Value = t.VendorName },
+                new TableCell { Value = t.Category.Name },
+                new TableCell { Value = t.Vendor.Name },
                 new TableCell { Value = t.CreateDate.ToString("dd/MM/yyyy") },
             },
             Actions = new List<TableAction>
             {
                 new TableAction { Url = $"/Transaction/Upsert/{t.Id}", Icon = "edit_square", CssClass = "text-blue-700 hover:text-blue-600" },
                 new TableAction { Url = $"/Transaction/Delete/{t.Id}", Icon = "delete", CssClass = "text-red-700 hover:text-red-600" }
-              }
+           }
         }).ToList()
     })
 </div>

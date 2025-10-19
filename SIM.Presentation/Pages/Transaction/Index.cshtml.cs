@@ -7,11 +7,14 @@ namespace SIM.Presentation.Pages.Transactions
     public class IndexModel : BasePageModel
     {
         private readonly ITransactionService _transactionService;
+        private readonly IBudgetService _budgetService;
         public ICollection<Core.DTOs.Responses.TransactionModel> Transactions { get; set; }
+        public int OverBudgetCount { get; set; }
 
-        public IndexModel(ITransactionService transactionService)
+        public IndexModel(ITransactionService transactionService, IBudgetService budgetService)
         {
             _transactionService = transactionService;
+            _budgetService = budgetService;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -19,6 +22,9 @@ namespace SIM.Presentation.Pages.Transactions
             if (!IsAuthenticated) return RedirectToPage("/Login");
 
             Transactions = await _transactionService.GetTransactions();
+
+            OverBudgetCount = await _budgetService.OverBudgetCount(CurrentUserId);
+
             return Page();
         }
     }

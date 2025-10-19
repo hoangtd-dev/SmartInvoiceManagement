@@ -23,7 +23,7 @@ namespace SIM.Core.Services
             var totalExpense = transactions.Where(t => t.TransactionType == TransactionTypeEnum.Expense).Sum(transaction => transaction.TotalAmount);
 
             var newBudget = new Budget
-            { 
+            {
                 CategoryId = budget.CategoryId,
                 StartDate = budget.StartDate,
                 EndDate = budget.EndDate,
@@ -86,8 +86,8 @@ namespace SIM.Core.Services
                 StartDate = budget.StartDate,
                 EndDate = budget.EndDate,
                 CategoryId = budget.Category is not null ? budget.Category.Id : null,
-                Category = budget.Category is not null ? new TransactionCategoryModel 
-                { 
+                Category = budget.Category is not null ? new TransactionCategoryModel
+                {
                     Id = budget.Category.Id,
                     Name = budget.Category.Name,
                 } : null
@@ -98,7 +98,8 @@ namespace SIM.Core.Services
         {
             var budgets = await _budgetRepository.GetExpiredBudgets(userId);
 
-            return budgets.Select(budget => new BudgetModel {
+            return budgets.Select(budget => new BudgetModel
+            {
                 Id = budget.Id,
                 TotalAmount = budget.TotalAmount,
                 TotalExpense = budget.TotalExpense,
@@ -122,9 +123,24 @@ namespace SIM.Core.Services
             return hasActiveBudget;
         }
 
-        public Task<int> OverBudgetCount(int userId)
+        public async Task<int> OverBudgetCount(int userId)
         {
-            return _budgetRepository.OverBudgetCount(userId);
+            var activeBudgets = await _budgetRepository.GetActiveBudgets(userId);
+
+            int overBudgetCount = 0;
+
+            foreach (var budget in activeBudgets)
+            {
+                var transactions = await _transactionRepository.GetIncomeExpenseOfCurrentUserAsync(budget.UserId, budget.StartDate, budget.EndDate, budget.CategoryId);
+                var totalExpense = transactions.Where(t => t.TransactionType == TransactionTypeEnum.Expense).Sum(transaction => transaction.TotalAmount);
+
+                if (totalExpense > budget.TotalAmount)
+                {
+                    overBudgetCount++;
+                }
+            }
+
+            return overBudgetCount;
         }
 
         public async Task UpdateBudget(UpdateBudgetRequest updatedBudget)

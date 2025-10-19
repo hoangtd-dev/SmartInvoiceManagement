@@ -12,6 +12,7 @@ namespace SIM.Infrastructure.Configurations
                 entity.Property(e => e.Quantity).IsRequired();
                 entity.Property(e => e.Price).HasColumnType("decimal(18,2)").IsRequired();
                 entity.Property(e => e.Total).HasColumnType("decimal(18,2)").IsRequired();
+                entity.Property(e => e.ItemName).IsRequired();
 
                 entity.HasOne(ti => ti.Transtraction)
                       .WithMany(i => i.TransactionItems)
