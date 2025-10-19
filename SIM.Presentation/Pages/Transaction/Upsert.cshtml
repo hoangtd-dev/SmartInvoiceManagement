@@ -177,12 +177,12 @@
                         headerRow.id = "itemsHeaderRow";
                         headerRow.className = "flex gap-2 mb-1 text-gray-300 text-sm font-medium";
                         headerRow.innerHTML = `
-                            <div class="flex-1">Item Name</div>
-                            <div class="w-28">Quantity</div>
-                            <div class="w-28">Price</div>
-                            <div class="w-28">Total</div>
-                            <div class="w-10"></div>
-                        `;
+                                <div class="flex-1">Item Name</div>
+                                <div class="w-28">Quantity</div>
+                                <div class="w-28">Price</div>
+                                <div class="w-28">Total</div>
+                                <div class="w-10"></div>
+                            `;
                         itemsContainer.parentNode.insertBefore(headerRow, itemsContainer);
                     }
                     const temp = document.createElement('div');
@@ -209,6 +209,10 @@
             if (remove) {
                 remove.addEventListener("click", () => {
                     row.remove();
+                    if (document.querySelectorAll("#itemsContainer .item-row").length === 0) {
+                        const headerRow = document.getElementById("itemsHeaderRow");
+                        if (headerRow) headerRow.remove();
+                    }
                     updateTotalAmount();
                 });
             }
