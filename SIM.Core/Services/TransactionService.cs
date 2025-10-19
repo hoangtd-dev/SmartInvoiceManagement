@@ -133,6 +133,8 @@ namespace SIM.Core.Services
                 TransactionType = transaction.TransactionType,
                 TotalAmount = transaction.TotalAmount,
                 CreateDate = transaction.CreatedDate,
+                CategoryId = transaction.CategoryId,
+                VendorId = transaction.VendorId,
                 Category = new TransactionCategoryModel
                 {
                     Id = transaction.Category.Id,
@@ -142,7 +144,15 @@ namespace SIM.Core.Services
                 {
                     Id = transaction.Vendor.Id,
                     Name = transaction.Vendor.VendorName
-                }
+                },
+                Items = transaction.TransactionItems.Select(item => new TransactionItemModel
+                {
+                    Id = item.Id,
+                    ItemName = item.ItemName,
+                    Total = item.Total,
+                    Quantity = item.Quantity,
+                    Price = item.Price
+                }).ToList(),
             }).ToList();
         }
 

@@ -29,6 +29,7 @@ namespace SIM.Infrastructure.Repositories
             return await _appDbContext.Transactions
                 .Include(x => x.Category)
                 .Include(x => x.Vendor)
+                .Include(x => x.TransactionItems)
                 .Where(x => !x.IsDeleted)
                 .OrderByDescending(x => x.CreatedDate)
                 .ToListAsync();
