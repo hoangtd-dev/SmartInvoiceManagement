@@ -1,0 +1,38 @@
+@page
+@model WelcomeModel
+
+    <section class="bg-gradient-to-b from-slate-900 via-gray-900 to-gray-800 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="text-left">
+                    <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight">Smart Invoice Management</h1>
+                    <p class="mt-4 text-lg text-gray-300">Keep track of transactions, vendors and invoices with an easy, secure dashboard designed for small businesses.</p>
+
+                    <div class="mt-8 flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-3 sm:space-y-0">
+                        <a asp-page="@Model.LoginPage" class="inline-flex items-center justify-center px-6 py-3 rounded-md bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium">Get started — Sign in</a>
+                        <a asp-page="@Model.RegisterPage" class="inline-flex items-center justify-center px-6 py-3 rounded-md border border-gray-600 text-gray-200 hover:bg-gray-800 text-sm">Create an account</a>
+                    </div>
+                </div>
+
+                <div class="flex justify-center lg:justify-end">
+                    <div class="w-full max-w-md">
+                        <svg viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                            <rect x="0" y="0" width="600" height="400" rx="16" fill="#0b1220" />
+                            <g transform="translate(60,60) scale(0.75)">
+                                <rect x="10" y="10" width="420" height="260" rx="12" fill="#071023" stroke="#1f2937" />
+                                <rect x="36" y="40" width="360" height="28" rx="6" fill="#111827" />
+                                <rect x="36" y="80" width="260" height="18" rx="4" fill="#111827" />
+                                <rect x="36" y="110" width="300" height="18" rx="4" fill="#0f172a" />
+                                <rect x="36" y="140" width="200" height="18" rx="4" fill="#0f172a" />
+                                <g transform="translate(320,40)">
+                                    <rect x="0" y="0" width="80" height="80" rx="8" fill="#0ea5a4" />
+                                    <rect x="96" y="0" width="80" height="44" rx="8" fill="#06b6d4" />
+                                    <rect x="96" y="56" width="80" height="24" rx="8" fill="#0891b2" />
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

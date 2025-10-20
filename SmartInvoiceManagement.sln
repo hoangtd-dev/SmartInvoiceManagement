@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIM.Infrastructure", "SIM.I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIM.Presentation", "SIM.Presentation\SIM.Presentation.csproj", "{EABE7477-CFA5-A784-7D0E-314A53C60C96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIM.UnitTest", "SIM.UnitTest\SIM.UnitTest.csproj", "{0A74FF74-B032-42A7-9B83-4EEF7AF15B27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{EABE7477-CFA5-A784-7D0E-314A53C60C96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EABE7477-CFA5-A784-7D0E-314A53C60C96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EABE7477-CFA5-A784-7D0E-314A53C60C96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A74FF74-B032-42A7-9B83-4EEF7AF15B27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A74FF74-B032-42A7-9B83-4EEF7AF15B27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A74FF74-B032-42A7-9B83-4EEF7AF15B27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A74FF74-B032-42A7-9B83-4EEF7AF15B27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

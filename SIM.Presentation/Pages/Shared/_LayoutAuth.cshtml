@@ -1,0 +1,105 @@
+﻿@using SIM.Core.Interfaces.Services
+@using System.Security.Claims
+@inject IBudgetService budgetService
+
+@{
+    var userId = (User?.Identity?.IsAuthenticated ?? false) ? int.Parse(User.Claims.SingleOrDefault(x => x.Type ==
+    ClaimTypes.NameIdentifier)!.Value) : 0;
+
+    var overBudgetCount = 0;
+    if (userId > 0)
+    {
+        overBudgetCount = await budgetService.OverBudgetCount(userId);
+        await budgetService.UpdateBudgetToExpire(userId);
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Smart Transaction Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body>
+    <aside id="default-sidebar"
+        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        aria-label="Sidebar">
+        <div class="h-full px-3 py-4 overflow-y-auto bg-gray-800">
+            <ul class="space-y-2 font-medium">
+                <li>
+                    <a asp-page="/Dashboard/Index"
+                        class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Dashboard" ? "bg-gray-700" : "")">
+                        <span class="material-symbols-outlined">
+                            dashboard
+                        </span>
+                        <span class="ms-3">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="/Transaction/Index"
+                        class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Transaction" ? "bg-gray-700" : "")">
+                        <span class="material-symbols-outlined">
+                            receipt_long
+                        </span>
+                        <span class="ms-3">Transaction</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="/TransactionCategory/Index"
+                        class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Transaction Category" ? "bg-gray-700" : "")">
+                        <span class="material-symbols-outlined">
+                            category
+                        </span>
+                        <span class="ms-3">Transaction Category</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="/Vendor/Index"
+                        class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Vendor" ? "bg-gray-700" : "")">
+                        <span class="material-symbols-outlined">
+                            store
+                        </span>
+                        <span class="ms-3">Vendor</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="/Budget/Index"
+                        class="relative flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Budget" ? "bg-gray-700" : "")">
+                        <span class="material-symbols-outlined">
+                            account_balance_wallet
+                        </span>
+                        <span class="ms-3">Budget</span>
+                        @if (overBudgetCount > 0)
+                        {
+                            <span
+                                class="absolute top-50% right-0 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full bg-red-900 text-red-300">@overBudgetCount</span>
+                        }
+
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="/Account/Index"
+                        class="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group @(ViewData["ActivePage"]?.ToString() == "Account" ? "bg-gray-700" : "")">
+                        <span class="material-symbols-outlined">
+                            account_box
+                        </span>
+                        <span class="ms-3">Account</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <div class="px-4 py-8 bg-gray-900 text-white min-h-screen sm:ml-64">
+        @RenderBody()
+    </div>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+﻿@page
+@using SIM.Core.DTOs.Common
+@model SIM.Presentation.Pages.Vendor.VendorModel
+@{
+    ViewData["Title"] = ViewData["ActivePage"] = "Vendor";
+}
+
+<div class="p-4 border border-gray-700 shadow-sm rounded-lg">
+    <div class="flex justify-between">
+        <h1 class="mb-4 text-lg font-bold">Vendors</h1>
+        <a asp-page="/Vendor/Upsert" class="border font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-blue-500 text-blue-500 hover:text-white hover:bg-blue-500">+ Create Vendor</a>
+    </div>
+
+    @await Html.PartialAsync("_DataTable", new DataTableViewModel
+    {
+        ShowActions = true,
+        Headers = new List<string> { "Name", "Email", "Phone", "Address" },
+        Rows = Model.Vendors.Select(tc => new TableRow
+        {
+            Cells = new List<TableCell>
+            {
+                new TableCell { Value = tc.Name },
+                new TableCell { Value = tc.ContactEmail },
+                new TableCell { Value = tc.ContactPhone },
+                new TableCell { Value = tc.Address }
+            },
+            Actions = new List<TableAction>
+            {
+                new TableAction { Url = $"/Vendor/Upsert/{tc.Id}", Icon = "edit_square", CssClass = "text-blue-700 hover:text-blue-600" },
+                new TableAction { Url = $"/Vendor/Delete/{tc.Id}", Icon = "delete", CssClass = "text-red-700 hover:text-red-600" }
+            }
+            }).ToList(),
+        })
+</div>
+
+<partial name="_Toast" />

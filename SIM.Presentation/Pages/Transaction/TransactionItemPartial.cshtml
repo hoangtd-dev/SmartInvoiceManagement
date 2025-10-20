@@ -1,0 +1,37 @@
+@model SIM.Core.DTOs.Requests.TransactionItemInputModel
+
+<div class="flex gap-2 items-center item-row" data-index="@Model.Index">
+    <!-- Hidden inputs to preserve existing IDs -->
+    <input type="hidden" name="Transaction.Items[@Model.Index].Id" value="@(Model.Id ?? 0)" />
+    <input type="hidden" name="Transaction.Items[@Model.Index].TransactionId" value="@(Model.TransactionId)" />
+
+    <div class="flex flex-col flex-1">
+        <input id="item-name-@Model.Index" type="text" name="Transaction.Items[@Model.Index].ItemName"
+            value="@Model.ItemName" placeholder="Item name"
+            class="mt-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 w-full" />
+    </div>
+
+    <div class="flex flex-col w-28">
+        <input id="quantity-@Model.Index" type="number" name="Transaction.Items[@Model.Index].Quantity"
+            value="@Model.Quantity" placeholder="Quantity" min="0" step="1"
+            class="mt-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 item-qty" />
+    </div>
+
+    <div class="flex flex-col w-28">
+        <input id="price-@Model.Index" type="number" name="Transaction.Items[@Model.Index].Price" value="@Model.Price"
+            placeholder="Price" min="0" step="0.01"
+            class="mt-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 item-price" />
+    </div>
+
+    <div class="flex flex-col w-28">
+        <input id="total-@Model.Index" type="number" name="Transaction.Items[@Model.Index].Total" value="@Model.Total"
+            placeholder="Total" readonly
+            class="mt-1 rounded bg-gray-700 border border-gray-600 text-white px-3 py-2 item-total" />
+    </div>
+
+    <div class="flex items-center w-10">
+        <button type="button" class="px-2 py-1 bg-red-600 text-white rounded flex items-center gap-1 remove-item">
+            <span class="material-symbols-outlined">delete</span>
+        </button>
+    </div>
+</div>

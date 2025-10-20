@@ -1,0 +1,80 @@
+@model SIM.Core.DTOs.Requests.TransactionFilterModel
+@using SIM.Core.Entities
+
+<div class="bg-gray-800 p-4 rounded-lg mb-4 flex gap-4 items-stretch">
+
+    <div class="flex flex-col flex-1 md:flex-row md:flex-wrap md:gap-4">
+
+        <div class="flex flex-col md:flex-row md:gap-4 w-full mb-2">
+            <div class="flex flex-col flex-1">
+                <label class="text-sm mb-1">From Date</label>
+                <input asp-for="FromDate" type="date"
+                    class="rounded border border-gray-600 px-3 py-2 bg-gray-700 text-white w-full h-10" />
+            </div>
+
+            <div class="flex flex-col flex-1">
+                <label class="text-sm mb-1">To Date</label>
+                <input asp-for="ToDate" type="date"
+                    class="rounded border border-gray-600 px-3 py-2 bg-gray-700 text-white w-full h-10" />
+            </div>
+
+            <div class="flex flex-col w-40">
+                <label class="text-sm mb-1">Type</label>
+                <select asp-for="TransactionType"
+                    class="rounded border border-gray-600 px-3 py-2 bg-gray-700 text-white w-full h-10">
+                    <option value="">All Types</option>
+                    <option value="Income" selected="@(Model.TransactionType == "Income" ? "selected" : null)">
+                        Income</option>
+                    <option value="Expense" selected="@(Model.TransactionType == "Expense" ? "selected" : null)">
+                        Expense</option>
+                </select>
+            </div>
+
+            <div class="flex flex-col w-48">
+                <label class="text-sm mb-1">Category</label>
+                <select asp-for="SelectedCategoryId"
+                    class="rounded border border-gray-600 px-3 py-2 bg-gray-700 text-white w-full h-10">
+                    <option value="">All Categories</option>
+                    @foreach (var cat in Model.Categories)
+                    {
+                        <option value="@cat.Id" selected="@(Model.SelectedCategoryId == cat.Id ? "selected" : null)">
+                            @cat.Name
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:gap-4 w-full">
+            <div class="flex flex-col w-1/2">
+                <label class="text-sm mb-1">Item Keyword</label>
+                <input asp-for="Keyword" placeholder="Keyword"
+                    class="rounded border border-gray-600 px-3 py-2 bg-gray-700 text-white w-full h-10" />
+            </div>
+
+            <div class="flex flex-col w-1/4">
+                <label class="text-sm mb-1">Amount From</label>
+                <input asp-for="AmountFrom" placeholder="From"
+                    class="rounded border border-gray-600 px-3 py-2 bg-gray-700 text-white w-full h-10" />
+            </div>
+
+            <div class="flex flex-col w-1/4">
+                <label class="text-sm mb-1">Amount To</label>
+                <input asp-for="AmountTo" placeholder="To"
+                    class="rounded border border-gray-600 px-3 py-2 bg-gray-700 text-white w-full h-10" />
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col justify-center gap-2 w-40 flex-shrink-0 h-full">
+        <button type="submit"
+            class="bg-blue-600 hover:bg-blue-500 text-white rounded px-4 py-2 flex justify-center items-center">
+            Apply Filters
+        </button>
+        <a asp-page="./Index"
+            class="bg-gray-600 hover:bg-gray-500 text-white rounded px-4 py-2 flex justify-center items-center">
+            Reset Filters
+        </a>
+    </div>
+
+</div>

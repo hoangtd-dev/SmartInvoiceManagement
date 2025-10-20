@@ -22,7 +22,7 @@ namespace SIM.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SIM.Core.Entities.Invoice", b =>
+            modelBuilder.Entity("SIM.Core.Entities.Budget", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,7 +30,19 @@ namespace SIM.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
@@ -39,176 +51,180 @@ namespace SIM.Infrastructure.Migrations
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("TotalExpense")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("Invoices");
+                    b.ToTable("Budgets");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0,
-                            TotalAmount = 1399.97m,
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2024, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            StartDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 1,
+                            TotalAmount = 500.00m,
+                            TotalExpense = 450.00m,
                             UserId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0,
-                            TotalAmount = 449.97m,
-                            UserId = 2
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2024, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            StartDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 1,
+                            TotalAmount = 300.00m,
+                            TotalExpense = 0m,
+                            UserId = 1
                         },
                         new
                         {
                             Id = 3,
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2024, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            StartDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 1,
+                            TotalAmount = 1200.00m,
+                            TotalExpense = 100m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2024, 2, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            StartDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 1,
-                            TotalAmount = 109.98m,
+                            TotalAmount = 550.00m,
+                            TotalExpense = 0m,
                             UserId = 1
                         },
                         new
                         {
-                            Id = 4,
-                            CreatedDate = new DateTime(2024, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 5,
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2024, 2, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            StartDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 1,
-                            TotalAmount = 749.96m,
-                            UserId = 3
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedDate = new DateTime(2024, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 2,
-                            TotalAmount = 199.99m,
-                            UserId = 2
-                        });
-                });
-
-            modelBuilder.Entity("SIM.Core.Entities.InvoiceItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("InvoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("InvoiceItems");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 1,
-                            Price = 999.99m,
-                            ProductId = 1,
-                            Quantity = 1,
-                            Total = 999.99m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 1,
-                            Price = 199.99m,
-                            ProductId = 2,
-                            Quantity = 2,
-                            Total = 399.98m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 2,
-                            Price = 149.99m,
-                            ProductId = 3,
-                            Quantity = 3,
-                            Total = 449.97m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 3,
-                            Price = 79.99m,
-                            ProductId = 5,
-                            Quantity = 1,
-                            Total = 79.99m
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 3,
-                            Price = 29.99m,
-                            ProductId = 6,
-                            Quantity = 1,
-                            Total = 29.99m
+                            TotalAmount = 350.00m,
+                            TotalExpense = 0m,
+                            UserId = 1
                         },
                         new
                         {
                             Id = 6,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 4,
-                            Price = 299.99m,
-                            ProductId = 4,
-                            Quantity = 1,
-                            Total = 299.99m
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2024, 2, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            StartDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 1,
+                            TotalAmount = 1200.00m,
+                            TotalExpense = 0m,
+                            UserId = 1
                         },
                         new
                         {
                             Id = 7,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 4,
-                            Price = 149.99m,
-                            ProductId = 3,
-                            Quantity = 3,
-                            Total = 449.97m
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2024, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            StartDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 1,
+                            TotalAmount = 600.00m,
+                            TotalExpense = 0m,
+                            UserId = 1
                         },
                         new
                         {
                             Id = 8,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InvoiceId = 5,
-                            Price = 199.99m,
-                            ProductId = 2,
-                            Quantity = 1,
-                            Total = 199.99m
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2024, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            StartDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 1,
+                            TotalAmount = 400.00m,
+                            TotalExpense = 0m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2024, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            StartDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 1,
+                            TotalAmount = 1200.00m,
+                            TotalExpense = 0m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2025, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            StartDate = new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            TotalAmount = 650.00m,
+                            TotalExpense = 700.00m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2025, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            StartDate = new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            TotalAmount = 450.00m,
+                            TotalExpense = 100.00m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2025, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            StartDate = new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            TotalAmount = 1250.00m,
+                            TotalExpense = 1100.00m,
+                            UserId = 1
                         });
                 });
 
-            modelBuilder.Entity("SIM.Core.Entities.Product", b =>
+            modelBuilder.Entity("SIM.Core.Entities.Transaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -216,30 +232,22 @@ namespace SIM.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Category")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("ImageBase64")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
+                    b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
 
-                    b.Property<int>("StockQuantity")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<int>("VendorId")
@@ -247,106 +255,519 @@ namespace SIM.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
+
                     b.HasIndex("VendorId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Transactions");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Category = 0,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "High-performance laptop",
-                            ImageBase64 = "",
-                            Price = 999.99m,
-                            ProductName = "Laptop",
-                            StockQuantity = 50,
-                            VendorId = 1
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 12000m,
+                            TransactionType = 0,
+                            UserId = 1,
+                            VendorId = 3
                         },
                         new
                         {
                             Id = 2,
-                            Category = 0,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "24-inch LED monitor",
-                            ImageBase64 = "",
-                            Price = 199.99m,
-                            ProductName = "Monitor",
-                            StockQuantity = 100,
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 1029.98m,
+                            TransactionType = 1,
+                            UserId = 1,
                             VendorId = 1
                         },
                         new
                         {
                             Id = 3,
-                            Category = 0,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Ergonomic office chair",
-                            ImageBase64 = "",
-                            Price = 149.99m,
-                            ProductName = "Office Chair",
-                            StockQuantity = 75,
-                            VendorId = 2
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 12500m,
+                            TransactionType = 0,
+                            UserId = 1,
+                            VendorId = 3
                         },
                         new
                         {
                             Id = 4,
-                            Category = 0,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Standing desk",
-                            ImageBase64 = "",
-                            Price = 79.99m,
-                            ProductName = "Desk",
-                            StockQuantity = 30,
+                            CategoryId = 6,
+                            CreatedDate = new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 299.98m,
+                            TransactionType = 1,
+                            UserId = 1,
                             VendorId = 2
                         },
                         new
                         {
                             Id = 5,
-                            Category = 0,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Mechanical keyboard",
-                            ImageBase64 = "",
-                            Price = 29.99m,
-                            ProductName = "Keyboard",
-                            StockQuantity = 200,
-                            VendorId = 1
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 11800m,
+                            TransactionType = 0,
+                            UserId = 1,
+                            VendorId = 3
                         },
                         new
                         {
                             Id = 6,
-                            Category = 0,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Wireless mouse",
-                            ImageBase64 = "",
-                            Price = 299.99m,
-                            ProductName = "Mouse",
-                            StockQuantity = 150,
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 499.98m,
+                            TransactionType = 1,
+                            UserId = 1,
                             VendorId = 1
                         },
                         new
                         {
                             Id = 7,
-                            Category = 0,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "HD webcam",
-                            ImageBase64 = "",
-                            Price = 149.99m,
-                            ProductName = "Webcam",
-                            StockQuantity = 80,
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 13000m,
+                            TransactionType = 0,
+                            UserId = 1,
                             VendorId = 3
                         },
                         new
                         {
                             Id = 8,
-                            Category = 0,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Noise-cancelling headset",
-                            ImageBase64 = "",
-                            Price = 199.99m,
-                            ProductName = "Headset",
-                            StockQuantity = 60,
+                            CategoryId = 6,
+                            CreatedDate = new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 229.98m,
+                            TransactionType = 1,
+                            UserId = 1,
+                            VendorId = 2
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 12200m,
+                            TransactionType = 0,
+                            UserId = 1,
                             VendorId = 3
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 399.98m,
+                            TransactionType = 1,
+                            UserId = 1,
+                            VendorId = 3
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 6, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 12800m,
+                            TransactionType = 0,
+                            UserId = 1,
+                            VendorId = 3
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 999.99m,
+                            TransactionType = 1,
+                            UserId = 1,
+                            VendorId = 1
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2025, 7, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 13500m,
+                            TransactionType = 1,
+                            UserId = 1,
+                            VendorId = 3
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CategoryId = 6,
+                            CreatedDate = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 389.96m,
+                            TransactionType = 1,
+                            UserId = 1,
+                            VendorId = 1
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2025, 8, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 12600m,
+                            TransactionType = 1,
+                            UserId = 1,
+                            VendorId = 3
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CategoryId = 6,
+                            CreatedDate = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 229.98m,
+                            TransactionType = 1,
+                            UserId = 1,
+                            VendorId = 2
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2025, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 13200m,
+                            TransactionType = 1,
+                            UserId = 1,
+                            VendorId = 3
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 399.98m,
+                            TransactionType = 1,
+                            UserId = 1,
+                            VendorId = 1
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2025, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 12400m,
+                            TransactionType = 0,
+                            UserId = 1,
+                            VendorId = 3
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            TotalAmount = 349.98m,
+                            TransactionType = 1,
+                            UserId = 1,
+                            VendorId = 3
+                        });
+                });
+
+            modelBuilder.Entity("SIM.Core.Entities.TransactionCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TransactionCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Name = "Food"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Name = "Transportation"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Name = "Housing"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Name = "Salary"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Name = "Electronics"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Name = "Office Supplies"
+                        });
+                });
+
+            modelBuilder.Entity("SIM.Core.Entities.TransactionItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ItemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("TransactionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TransactionId");
+
+                    b.ToTable("TransactionItems");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Laptop",
+                            Price = 999.99m,
+                            Quantity = 1,
+                            Total = 999.99m,
+                            TransactionId = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Charger",
+                            Price = 29.99m,
+                            Quantity = 2,
+                            Total = 29.99m,
+                            TransactionId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Printer",
+                            Price = 149.99m,
+                            Quantity = 2,
+                            Total = 299.98m,
+                            TransactionId = 4
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedDate = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Grinder Machine",
+                            Price = 199.99m,
+                            Quantity = 1,
+                            Total = 199.99m,
+                            TransactionId = 6
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedDate = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Vacuum Machine",
+                            Price = 299.99m,
+                            Quantity = 1,
+                            Total = 299.99m,
+                            TransactionId = 6
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedDate = new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Notebook Pack",
+                            Price = 79.99m,
+                            Quantity = 1,
+                            Total = 79.99m,
+                            TransactionId = 8
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedDate = new DateTime(2025, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Desk Organizer",
+                            Price = 149.99m,
+                            Quantity = 1,
+                            Total = 149.99m,
+                            TransactionId = 8
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedDate = new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Wireless Headset",
+                            Price = 199.99m,
+                            Quantity = 2,
+                            Total = 399.98m,
+                            TransactionId = 10
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedDate = new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Laptop Pro",
+                            Price = 999.99m,
+                            Quantity = 1,
+                            Total = 999.99m,
+                            TransactionId = 12
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedDate = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Office Chair",
+                            Price = 29.99m,
+                            Quantity = 3,
+                            Total = 89.97m,
+                            TransactionId = 14
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedDate = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Filing Cabinet",
+                            Price = 299.99m,
+                            Quantity = 1,
+                            Total = 299.99m,
+                            TransactionId = 14
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedDate = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Paper Cutter",
+                            Price = 149.99m,
+                            Quantity = 1,
+                            Total = 149.99m,
+                            TransactionId = 16
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedDate = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Marker Set",
+                            Price = 79.99m,
+                            Quantity = 1,
+                            Total = 79.99m,
+                            TransactionId = 16
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedDate = new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Smartphone",
+                            Price = 199.99m,
+                            Quantity = 2,
+                            Total = 399.98m,
+                            TransactionId = 18
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedDate = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Wireless Keyboard",
+                            Price = 149.99m,
+                            Quantity = 1,
+                            Total = 149.99m,
+                            TransactionId = 20
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedDate = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ItemName = "Bluetooth Mouse",
+                            Price = 199.99m,
+                            Quantity = 1,
+                            Total = 199.99m,
+                            TransactionId = 20
                         });
                 });
 
@@ -359,7 +780,6 @@ namespace SIM.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -367,7 +787,6 @@ namespace SIM.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -375,6 +794,9 @@ namespace SIM.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -386,14 +808,14 @@ namespace SIM.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
 
                     b.ToTable("Users");
 
@@ -403,55 +825,12 @@ namespace SIM.Infrastructure.Migrations
                             Id = 1,
                             Address = "123 Main St",
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "john.doe@email.com",
-                            FirstName = "John",
-                            LastName = "Doe",
-                            PasswordHash = "abc@123",
+                            Email = "admin@gmail.com",
+                            FirstName = "Edward",
+                            IsDeleted = false,
+                            LastName = "Tran",
+                            PasswordHash = "100000.xoOaNrEukE+6bc1KUCkD+Q==.CP+sKGB54pKQ+qDs5yh1XMjrEOc2kJKniMlVGh17W7o=",
                             Phone = "123-456-7890"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "456 Oak Ave",
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "jane.smith@email.com",
-                            FirstName = "Jane",
-                            LastName = "Smith",
-                            PasswordHash = "abc@123",
-                            Phone = "123-456-7891"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Address = "789 Pine Rd",
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "bob.johnson@email.com",
-                            FirstName = "Bob",
-                            LastName = "Johnson",
-                            PasswordHash = "abc@123",
-                            Phone = "123-456-7892"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Address = "321 Elm St",
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "alice.brown@email.com",
-                            FirstName = "Alice",
-                            LastName = "Brown",
-                            PasswordHash = "abc@123",
-                            Phone = "123-456-7893"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Address = "654 Maple Dr",
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "charlie.wilson@email.com",
-                            FirstName = "Charlie",
-                            LastName = "Wilson",
-                            PasswordHash = "abc@123",
-                            Phone = "123-456-7894"
                         });
                 });
 
@@ -464,22 +843,22 @@ namespace SIM.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ContactEmail")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("ContactPhone")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("VendorName")
                         .IsRequired()
@@ -498,6 +877,7 @@ namespace SIM.Infrastructure.Migrations
                             ContactEmail = "info@techsupplies.com",
                             ContactPhone = "555-100-2000",
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             VendorName = "Tech Supplies Inc."
                         },
                         new
@@ -507,6 +887,7 @@ namespace SIM.Infrastructure.Migrations
                             ContactEmail = "sales@officeessentials.com",
                             ContactPhone = "555-100-3000",
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             VendorName = "Office Essentials"
                         },
                         new
@@ -516,69 +897,89 @@ namespace SIM.Infrastructure.Migrations
                             ContactEmail = "support@premiumelectronics.com",
                             ContactPhone = "555-100-4000",
                             CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             VendorName = "Premium Electronics"
                         });
                 });
 
-            modelBuilder.Entity("SIM.Core.Entities.Invoice", b =>
+            modelBuilder.Entity("SIM.Core.Entities.Budget", b =>
                 {
+                    b.HasOne("SIM.Core.Entities.TransactionCategory", "Category")
+                        .WithMany("Budgets")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("SIM.Core.Entities.User", "User")
-                        .WithMany("Invoices")
+                        .WithMany("Budgets")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SIM.Core.Entities.InvoiceItem", b =>
+            modelBuilder.Entity("SIM.Core.Entities.Transaction", b =>
                 {
-                    b.HasOne("SIM.Core.Entities.Invoice", "Invoice")
-                        .WithMany("InvoiceItems")
-                        .HasForeignKey("InvoiceId")
+                    b.HasOne("SIM.Core.Entities.TransactionCategory", "Category")
+                        .WithMany("Transactions")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SIM.Core.Entities.Product", "Product")
-                        .WithMany("InvoiceItems")
-                        .HasForeignKey("ProductId")
+                    b.HasOne("SIM.Core.Entities.User", "User")
+                        .WithMany("Transactions")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Invoice");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("SIM.Core.Entities.Product", b =>
-                {
                     b.HasOne("SIM.Core.Entities.Vendor", "Vendor")
-                        .WithMany("Products")
+                        .WithMany("Transactions")
                         .HasForeignKey("VendorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Category");
+
+                    b.Navigation("User");
+
                     b.Navigation("Vendor");
                 });
 
-            modelBuilder.Entity("SIM.Core.Entities.Invoice", b =>
+            modelBuilder.Entity("SIM.Core.Entities.TransactionItem", b =>
                 {
-                    b.Navigation("InvoiceItems");
+                    b.HasOne("SIM.Core.Entities.Transaction", "Transtraction")
+                        .WithMany("TransactionItems")
+                        .HasForeignKey("TransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Transtraction");
                 });
 
-            modelBuilder.Entity("SIM.Core.Entities.Product", b =>
+            modelBuilder.Entity("SIM.Core.Entities.Transaction", b =>
                 {
-                    b.Navigation("InvoiceItems");
+                    b.Navigation("TransactionItems");
+                });
+
+            modelBuilder.Entity("SIM.Core.Entities.TransactionCategory", b =>
+                {
+                    b.Navigation("Budgets");
+
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("SIM.Core.Entities.User", b =>
                 {
-                    b.Navigation("Invoices");
+                    b.Navigation("Budgets");
+
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("SIM.Core.Entities.Vendor", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }

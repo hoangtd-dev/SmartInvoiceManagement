@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SIM.Core.Interfaces.Repositories;
-using SIM.Infrastructure.Respositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SIM.Infrastructure.Repositories;
 
 namespace SIM.Infrastructure
 {
@@ -14,19 +9,21 @@ namespace SIM.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, string? connectionString)
         {
-            if (connectionString is null) {
+            if (connectionString is null)
+            {
                 connectionString = "Server=localhost\\SQLEXPRESS;Database=imdb;Trusted_Connection=true;TrustServerCertificate=true;";
             }
 
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IVendorRespository, VendorRepository>();
-            services.AddScoped<IInvoiceRepository, InvoiceRepository>();
-            services.AddScoped<IInvoiceItemRepository, InvoiceItemRepository>();
-            
+            services.AddScoped<IVendorRepository, VendorRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<ITransactionItemRepository, TransactionItemRepository>();
+            services.AddScoped<ITransactionCategoryRepository, TransactionCategoryRepository>();
+            services.AddScoped<IBudgetRepository, BudgetRepository>();
+
             return services;
         }
     }

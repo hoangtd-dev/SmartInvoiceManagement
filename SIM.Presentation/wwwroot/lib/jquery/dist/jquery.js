@@ -9109,7 +9109,7 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 		}
 	}
 
-	return { state: "success", data: response };
+	return { state: ToastStatusEnum.Success, data: response };
 }
 
 jQuery.extend( {

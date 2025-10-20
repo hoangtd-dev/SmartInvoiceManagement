@@ -1,0 +1,50 @@
+﻿@page
+@using SIM.Core.DTOs.Common
+@model SIM.Presentation.Pages.Budget.HistoryModel
+@{
+    ViewData["Title"] = ViewData["ActivePage"] = "Budget";
+}
+
+<div class="flex justify-between mb-4">
+    <h1 class="text-lg font-bold">Budgets History</h1>
+    <div class="flex gap-2">
+        <a asp-page="/Budget/Index" class="border font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-blue-500 text-blue-500 hover:text-white hover:bg-blue-500">Back To Active Budgets</a>
+    </div>
+</div>
+
+@foreach (var budget in Model.Budgets)
+{
+    <div class="p-8 bg-gray-800 shadow-sm rounded-lg mb-4">
+        <p class="text-4xl mb-2">$@budget.TotalExpense</p>
+
+        <div class="my-4">
+            <div class="flex justify-between mb-1">
+                <span class="text-base font-medium @(budget.Percentage >= 80 ? "text-red-500" : "text-blue-500")">@(budget.Category is not null ? budget.Category.Name : "All")</span>
+                <span class="text-sm font-medium @(budget.Percentage >= 80 ? "text-red-500" : "text-blue-500")">@(budget.Percentage)%</span>
+            </div>
+
+            <div class="w-full bg-gray-900 rounded-full h-2.5 mb-2">
+                <div class="h-2.5 rounded-full @(budget.Percentage >= 80 ? "bg-red-600" : "bg-blue-600")"
+                     style="width: @(budget.Percentage > 100 ? 100 : budget.Percentage)%"></div>
+            </div>
+        </div>
+
+        <div class="flex justify-between items-center mb-2">
+            <p class="text-sm text-gray-300">Total Amount</p>
+            <p class="text-sm">$@budget.TotalAmount</p>
+        </div>
+
+        <div class="flex justify-between items-center mb-2">
+            <p class="text-sm text-gray-300">Start Date</p>
+            <p class="text-sm">@budget.StartDate.ToString("MMM dd yyyy")</p>
+        </div>
+
+        <div class="flex justify-between items-center">
+            <p class="text-sm text-gray-300">End Date</p>
+            <p class="text-sm">@budget.EndDate.ToString("MMM dd yyyy")</p>
+        </div>
+
+    </div>
+    
+}
+<partial name="_Toast" />
