@@ -1,7 +1,6 @@
 #nullable disable
 using SIM.Core.Enums;
 using SIM.Core.DTOs.Requests;
-using System.ComponentModel.DataAnnotations;
 
 namespace SIM.Core.DTOs.Responses
 {
