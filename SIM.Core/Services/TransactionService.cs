@@ -175,10 +175,21 @@ namespace SIM.Core.Services
             var existing = await _transactionRepository.GetByIdAsync(transaction.Id);
             if (existing is null) throw new NotFoundException($"Transaction with id:{transaction.Id} is not found !!!");
 
-            if (transaction.TransactionType == TransactionTypeEnum.Expense)
+            var amount = 0m;
+            if (existing.TransactionType == TransactionTypeEnum.Expense && transaction.TransactionType == TransactionTypeEnum.Expense)
             {
-                await _budgetRepository.UpdateBudgetByCategory(transaction.UserId, (transaction.TotalAmount - existing.TotalAmount), transaction.CategoryId);
+                amount = transaction.TotalAmount - existing.TotalAmount;
             }
+            else if (existing.TransactionType == TransactionTypeEnum.Income && transaction.TransactionType == TransactionTypeEnum.Expense)
+            {
+                amount = transaction.TotalAmount;
+            }
+            else if (existing.TransactionType == TransactionTypeEnum.Expense && transaction.TransactionType == TransactionTypeEnum.Income)
+            { 
+                amount = -existing.TotalAmount;
+            }
+
+            await _budgetRepository.UpdateBudgetByCategory(transaction.UserId, amount, transaction.CategoryId);
 
             existing.VendorId = transaction.VendorId;
             existing.CategoryId = transaction.CategoryId;
