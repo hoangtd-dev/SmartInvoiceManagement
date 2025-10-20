@@ -194,6 +194,7 @@ namespace SIM.Core.Services
             existing.VendorId = transaction.VendorId;
             existing.CategoryId = transaction.CategoryId;
             existing.TotalAmount = transaction.TotalAmount;
+            existing.CreatedDate = transaction.CreateDate;
             existing.TransactionType = transaction.TransactionType;
 
             await _transactionRepository.UpdateAsync(existing);

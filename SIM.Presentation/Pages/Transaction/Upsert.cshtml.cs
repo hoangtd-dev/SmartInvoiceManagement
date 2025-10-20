@@ -161,6 +161,7 @@ namespace SIM.Presentation.Pages.Transactions
                         Id = Id.Value,
                         UserId = CurrentUserId,
                         VendorId = Transaction.VendorId.Value,
+                        CreateDate = Transaction.CreateDate,
                         CategoryId = Transaction.CategoryId,
                         TotalAmount = Transaction.TotalAmount,
                         TransactionType = Transaction.TransactionType
