@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SIM.Core.DTOs.Requests;
@@ -48,7 +49,7 @@ namespace SIM.Presentation.Pages.Transactions
             if (!IsAuthenticated) return RedirectToPage("/Login");
             try
             {
-                if (Id.HasValue)
+                if (IsEditMode)
                 {
                     var transaction = await _transactionService.GetTransactionById(Id.Value);
                     Transaction = new TransactionInputModel
@@ -56,7 +57,7 @@ namespace SIM.Presentation.Pages.Transactions
                         Id = transaction.Id,
                         TransactionType = transaction.TransactionType,
                         TotalAmount = transaction.TotalAmount,
-                        VendorId = transaction.VendorId,
+                        VendorId = transaction.VendorId.Value,
                         Vendor = transaction.Vendor,
                         CategoryId = transaction.CategoryId,
                         Category = transaction.Category,
@@ -70,6 +71,13 @@ namespace SIM.Presentation.Pages.Transactions
                             Quantity = item.Quantity,
                             Total = item.Total
                         }).ToList()
+                    };
+                }
+                else
+                {
+                    Transaction = new TransactionInputModel
+                    {
+                        CreateDate = DateTime.Today // ✅ Default to today for new transaction
                     };
                 }
                 await LoadOptionsAsync();
@@ -108,7 +116,35 @@ namespace SIM.Presentation.Pages.Transactions
             try
             {
                 if (!ModelState.IsValid)
-                    return Page();
+                {
+                    var errorMessages = new List<string>();
+                    Console.WriteLine("ModelState is invalid. Errors:" + JsonSerializer.Serialize(ModelState, new JsonSerializerOptions { WriteIndented = true }));
+
+                    var vendorValue = ModelState.ContainsKey("Transaction.VendorId") ? ModelState["Transaction.VendorId"]?.RawValue?.ToString()?.Trim() : null;
+                    var categoryValue = ModelState.ContainsKey("Transaction.CategoryId") ? ModelState["Transaction.CategoryId"]?.RawValue?.ToString()?.Trim() : null;
+                    var typeValue = ModelState.ContainsKey("Transaction.TransactionType") ? ModelState["Transaction.TransactionType"]?.RawValue?.ToString()?.Trim() : null;
+
+                    if (string.IsNullOrEmpty(categoryValue) || categoryValue == "0")
+                        errorMessages.Add("Error: Category is required");
+                    if (string.IsNullOrEmpty(typeValue))
+                        errorMessages.Add("Error: Transaction Type is required");
+                    if ((string.IsNullOrEmpty(vendorValue) || vendorValue == "0") && NewVendor.VendorName is null)
+                        errorMessages.Add("Error: Vendor is required");
+
+                    if (errorMessages.Count > 0)
+                    {
+                        // Use ViewData for same-page toast
+                        TempData["ToastMessage"] = string.Join("<br>", errorMessages);
+                        TempData["ToastStatus"] = (int)ToastStatusEnum.Fail;
+
+                        await LoadOptionsAsync();
+                        return Page();
+                    }
+                }
+                if (!IsEditMode && Transaction.CreateDate == default)
+                {
+                    Transaction.CreateDate = DateTime.Today;
+                }
 
                 // Handle vendor creation if new
                 if (!Transaction.VendorId.HasValue && !string.IsNullOrWhiteSpace(NewVendor?.VendorName))
@@ -183,6 +219,7 @@ namespace SIM.Presentation.Pages.Transactions
                     {
                         UserId = CurrentUserId,
                         VendorId = Transaction.VendorId.Value,
+                        CreateDate = Transaction.CreateDate,
                         CategoryId = Transaction.CategoryId,
                         TotalAmount = Transaction.TotalAmount,
                         TransactionType = Transaction.TransactionType

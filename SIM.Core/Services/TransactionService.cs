@@ -40,13 +40,13 @@ namespace SIM.Core.Services
                 CategoryId = transaction.CategoryId,
                 TotalAmount = transaction.TotalAmount,
                 TransactionType = transaction.TransactionType,
-                CreatedDate = DateTime.UtcNow
+                CreatedDate = transaction.CreateDate
             };
 
             var createdTransaction = await _transactionRepository.AddAsync(newTransaction);
 
             if (transaction.TransactionType == TransactionTypeEnum.Expense)
-            { 
+            {
                 await _budgetRepository.UpdateBudgetByCategory(transaction.UserId, transaction.TotalAmount, transaction.CategoryId);
             }
 
@@ -185,7 +185,7 @@ namespace SIM.Core.Services
                 amount = transaction.TotalAmount;
             }
             else if (existing.TransactionType == TransactionTypeEnum.Expense && transaction.TransactionType == TransactionTypeEnum.Income)
-            { 
+            {
                 amount = -existing.TotalAmount;
             }
 
