@@ -149,9 +149,14 @@ namespace SIM.Core.Services
 
             if (budget is null) throw new NotFoundException($"Budget with id:{updatedBudget!.Id} is not found !!!");
 
+            var transactions = await _transactionRepository.GetIncomeExpenseOfCurrentUserAsync(updatedBudget.UserId, updatedBudget.StartDate, updatedBudget.EndDate, budget.CategoryId);
+            var totalExpense = transactions.Where(t => t.TransactionType == TransactionTypeEnum.Expense).Sum(transaction => transaction.TotalAmount);
+
+
             budget.TotalAmount = updatedBudget.TotalAmount;
             budget.StartDate = updatedBudget.StartDate;
             budget.EndDate = updatedBudget.EndDate;
+            budget.TotalExpense = totalExpense;
 
             await _budgetRepository.UpdateAsync(budget);
         }
