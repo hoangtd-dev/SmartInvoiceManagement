@@ -77,7 +77,7 @@ namespace SIM.Presentation.Pages.Transactions
                 {
                     Transaction = new TransactionInputModel
                     {
-                        CreateDate = DateTime.Today // ✅ Default to today for new transaction
+                        CreateDate = DateTime.Today
                     };
                 }
                 await LoadOptionsAsync();
@@ -118,7 +118,6 @@ namespace SIM.Presentation.Pages.Transactions
                 if (!ModelState.IsValid)
                 {
                     var errorMessages = new List<string>();
-                    Console.WriteLine("ModelState is invalid. Errors:" + JsonSerializer.Serialize(ModelState, new JsonSerializerOptions { WriteIndented = true }));
 
                     var vendorValue = ModelState.ContainsKey("Transaction.VendorId") ? ModelState["Transaction.VendorId"]?.RawValue?.ToString()?.Trim() : null;
                     var categoryValue = ModelState.ContainsKey("Transaction.CategoryId") ? ModelState["Transaction.CategoryId"]?.RawValue?.ToString()?.Trim() : null;
@@ -133,17 +132,12 @@ namespace SIM.Presentation.Pages.Transactions
 
                     if (errorMessages.Count > 0)
                     {
-                        // Use ViewData for same-page toast
                         TempData["ToastMessage"] = string.Join("<br>", errorMessages);
                         TempData["ToastStatus"] = (int)ToastStatusEnum.Fail;
 
                         await LoadOptionsAsync();
                         return Page();
                     }
-                }
-                if (!IsEditMode && Transaction.CreateDate == default)
-                {
-                    Transaction.CreateDate = DateTime.Today;
                 }
 
                 // Handle vendor creation if new
