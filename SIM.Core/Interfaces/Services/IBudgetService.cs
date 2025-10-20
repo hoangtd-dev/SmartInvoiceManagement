@@ -5,6 +5,7 @@ namespace SIM.Core.Interfaces.Services
 {
     public interface IBudgetService
     {
+        Task UpdateBudgetToExpire(int userId);
         Task AddBudget(CreateBudgetRequest budget);
         Task UpdateBudget(UpdateBudgetRequest budget);
         Task<ICollection<BudgetModel>> GetActiveBudgets(int userId);

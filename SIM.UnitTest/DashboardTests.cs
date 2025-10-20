@@ -15,22 +15,26 @@ namespace SIM.UnitTest
         public async Task OnGet_LoadDashboardPage()
         {
             var mockTransactionService = new Mock<ITransactionService>();
+            var mockBudgetService = new Mock<IBudgetService>();
 
             var latestTransactions = new List<TransactionModel>
             {
-                new TransactionModel { Id = 1, TotalAmount = 100m, Type = TransactionTypeEnum.Expense },
-                new TransactionModel { Id = 2, TotalAmount = 100m, Type = TransactionTypeEnum.Expense }
+                new TransactionModel { Id = 1, TotalAmount = 100m, TransactionType = TransactionTypeEnum.Expense },
+                new TransactionModel { Id = 2, TotalAmount = 100m, TransactionType = TransactionTypeEnum.Expense }
             };
 
-            mockTransactionService.Setup(service => service.GetLatestTransactionsOfCurrentUser(1, 5))
+            mockTransactionService.Setup(service => service.GetLatestTransactionsOfCurrentUser(It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(latestTransactions);
+
+            mockBudgetService.Setup(service => service.OverBudgetCount(It.IsAny<int>()))
+                .ReturnsAsync(1);
 
             var incomeExpense = new IncomeExpenseModel { Expense = 100, Income = 200, Month = 1, Year = 2025 };
 
-            mockTransactionService.Setup(service => service.GetIncomeExpensesOfCurrentUserInMonth(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
+            mockTransactionService.Setup(service => service.GetIncomeExpensesOfCurrentUser(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(incomeExpense);
 
-            var dashboardModel = new DashboardModel(mockTransactionService.Object);
+            var dashboardModel = new DashboardModel(mockTransactionService.Object, mockBudgetService.Object);
             
             var httpContext = new DefaultHttpContext();
             httpContext.User = CreateUser();
@@ -45,10 +49,12 @@ namespace SIM.UnitTest
             await dashboardModel.OnGetAsync();
 
             mockTransactionService.Verify(service => service.GetLatestTransactionsOfCurrentUser(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
-            mockTransactionService.Verify(service => service.GetIncomeExpensesOfCurrentUserInMonth(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Exactly(14));
+            mockTransactionService.Verify(service => service.GetIncomeExpensesOfCurrentUser(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Exactly(14));
+            mockBudgetService.Verify(service => service.OverBudgetCount(It.IsAny<int>()), Times.Once);
 
             Assert.NotNull(dashboardModel.Transactions);
             Assert.Equal(2, dashboardModel.Transactions.Count);
+            Assert.Equal(1, dashboardModel.OverBudgetCount);
 
             Assert.NotNull(dashboardModel.CurrentIncomeOutcomeInMonth);
 

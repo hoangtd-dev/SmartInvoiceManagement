@@ -129,6 +129,7 @@ namespace SIM.Presentation.Pages.Transactions
                     var updateReq = new UpdateTransactionRequest
                     {
                         Id = Id.Value,
+                        UserId = CurrentUserId,
                         VendorId = Transaction.VendorId.Value,
                         CategoryId = Transaction.CategoryId,
                         TotalAmount = Transaction.TotalAmount,

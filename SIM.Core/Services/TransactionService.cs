@@ -16,16 +16,19 @@ namespace SIM.Core.Services
         private readonly IVendorRepository _vendorRepository;
         private readonly ITransactionCategoryRepository _transactionCategoryRepository;
         private readonly ITransactionItemRepository _transactionItemRepository;
+        private readonly IBudgetRepository _budgetRepository;
         public TransactionService(
             ITransactionRepository transactionRepository,
             IVendorRepository vendorRepository,
             ITransactionCategoryRepository transactionCategoryRepository,
-            ITransactionItemRepository transactionItemRepository)
+            ITransactionItemRepository transactionItemRepository,
+            IBudgetRepository budgetRepository)
         {
             _transactionRepository = transactionRepository;
             _vendorRepository = vendorRepository;
             _transactionCategoryRepository = transactionCategoryRepository;
             _transactionItemRepository = transactionItemRepository;
+            _budgetRepository = budgetRepository;
         }
 
         public async Task<TransactionModel> CreateTransaction(CreateTransactionRequest transaction)
@@ -41,6 +44,12 @@ namespace SIM.Core.Services
             };
 
             var createdTransaction = await _transactionRepository.AddAsync(newTransaction);
+
+            if (transaction.TransactionType == TransactionTypeEnum.Expense)
+            { 
+                await _budgetRepository.UpdateBudgetByCategory(transaction.UserId, transaction.TotalAmount, transaction.CategoryId);
+            }
+
             return new TransactionModel
             {
                 Id = createdTransaction.Id,
@@ -62,6 +71,11 @@ namespace SIM.Core.Services
         {
             var transaction = await _transactionRepository.GetByIdAsync(id);
             if (transaction is null) throw new NotFoundException($"Transaction with id:{id} is not found !!!");
+
+            if (transaction.TransactionType == TransactionTypeEnum.Expense)
+            {
+                await _budgetRepository.UpdateBudgetByCategory(transaction.UserId, -(transaction.TotalAmount), transaction.CategoryId);
+            }
 
             await _transactionRepository.DeleteAsync(transaction);
         }
@@ -160,6 +174,22 @@ namespace SIM.Core.Services
         {
             var existing = await _transactionRepository.GetByIdAsync(transaction.Id);
             if (existing is null) throw new NotFoundException($"Transaction with id:{transaction.Id} is not found !!!");
+
+            var amount = 0m;
+            if (existing.TransactionType == TransactionTypeEnum.Expense && transaction.TransactionType == TransactionTypeEnum.Expense)
+            {
+                amount = transaction.TotalAmount - existing.TotalAmount;
+            }
+            else if (existing.TransactionType == TransactionTypeEnum.Income && transaction.TransactionType == TransactionTypeEnum.Expense)
+            {
+                amount = transaction.TotalAmount;
+            }
+            else if (existing.TransactionType == TransactionTypeEnum.Expense && transaction.TransactionType == TransactionTypeEnum.Income)
+            { 
+                amount = -existing.TotalAmount;
+            }
+
+            await _budgetRepository.UpdateBudgetByCategory(transaction.UserId, amount, transaction.CategoryId);
 
             existing.VendorId = transaction.VendorId;
             existing.CategoryId = transaction.CategoryId;

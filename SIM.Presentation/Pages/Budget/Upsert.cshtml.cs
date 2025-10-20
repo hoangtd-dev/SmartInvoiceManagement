@@ -99,7 +99,8 @@ namespace SIM.Presentation.Pages.Budget
                         Id = Id.Value,
                         StartDate = Budget.StartDate,
                         EndDate = Budget.EndDate,
-                        TotalAmount = Budget.TotalAmount
+                        TotalAmount = Budget.TotalAmount,
+                        UserId = CurrentUserId
                     };
                     await _budgetService.UpdateBudget(budget);
                     TempData["ToastStatus"] = ToastStatusEnum.Success;

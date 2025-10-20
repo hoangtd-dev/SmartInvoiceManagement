@@ -89,5 +89,31 @@ namespace SIM.Infrastructure.Repositories
         {
             return await _appDbContext.Budgets.AnyAsync(x => x.UserId == userId && x.CategoryId == categoryId && x.Status == BudgetStatusEnum.Active && !x.IsDeleted);
         }
+
+        public async Task UpdateBudgetToExpire(int userId)
+        {
+            var budgets = _appDbContext.Budgets
+                .Where(x => x.Status == BudgetStatusEnum.Active && x.EndDate < DateTime.Now);
+
+            foreach (var budget in budgets)
+            {
+                budget.Status = BudgetStatusEnum.Expired;
+            }
+
+            await _appDbContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateBudgetByCategory(int userId, decimal amount, int categoryId)
+        {
+            var budgets = await _appDbContext.Budgets.Where(x => 
+                !x.IsDeleted && x.Status == BudgetStatusEnum.Active && x.UserId == userId && (x.CategoryId == categoryId || x.CategoryId == null)).ToListAsync();
+
+            foreach (var budget in budgets)
+            {
+                budget.TotalExpense += amount;
+            }
+
+            await _appDbContext.SaveChangesAsync();
+        }
     }
 }
