@@ -3,7 +3,6 @@ using SIM.Core.Interfaces.Services;
 using SIM.Presentation.Pages.Base;
 using SIM.Core.DTOs.Responses;
 using SIM.Core.DTOs.Requests;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace SIM.Presentation.Pages.Transactions
@@ -51,10 +50,7 @@ namespace SIM.Presentation.Pages.Transactions
 
             if (FilterModel.SelectedCategoryId != null)
             {
-                Console.WriteLine("Filtering by Category ID: " + FilterModel.SelectedCategoryId);
-                Console.WriteLine("Transactions before filter: " + JsonSerializer.Serialize(Transactions, new JsonSerializerOptions { WriteIndented = true, ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles }));
                 Transactions = Transactions.Where(t => t.CategoryId.ToString() == FilterModel.SelectedCategoryId.ToString()).ToList();
-
             }
             if (!string.IsNullOrWhiteSpace(FilterModel.Keyword))
             {

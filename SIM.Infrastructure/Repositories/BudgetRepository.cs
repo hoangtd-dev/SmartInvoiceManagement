@@ -103,10 +103,17 @@ namespace SIM.Infrastructure.Repositories
             await _appDbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateBudgetByCategory(int userId, decimal amount, int categoryId)
+        public async Task UpdateBudgetByCategory(int userId, decimal amount, int categoryId, DateTime createDate)
         {
-            var budgets = await _appDbContext.Budgets.Where(x => 
-                !x.IsDeleted && x.Status == BudgetStatusEnum.Active && x.UserId == userId && (x.CategoryId == categoryId || x.CategoryId == null)).ToListAsync();
+            var budgets = await _appDbContext.Budgets
+                .Where(x =>
+                    !x.IsDeleted &&
+                    x.Status == BudgetStatusEnum.Active &&
+                    x.UserId == userId &&
+                    (x.CategoryId == categoryId || x.CategoryId == null) &&
+                    x.StartDate <= createDate &&
+                    x.EndDate >= createDate)
+                .ToListAsync();
 
             foreach (var budget in budgets)
             {

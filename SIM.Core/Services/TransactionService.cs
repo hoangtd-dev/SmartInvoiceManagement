@@ -40,14 +40,14 @@ namespace SIM.Core.Services
                 CategoryId = transaction.CategoryId,
                 TotalAmount = transaction.TotalAmount,
                 TransactionType = transaction.TransactionType,
-                CreatedDate = DateTime.UtcNow
+                CreatedDate = transaction.CreateDate
             };
 
             var createdTransaction = await _transactionRepository.AddAsync(newTransaction);
 
             if (transaction.TransactionType == TransactionTypeEnum.Expense)
-            { 
-                await _budgetRepository.UpdateBudgetByCategory(transaction.UserId, transaction.TotalAmount, transaction.CategoryId);
+            {
+                await _budgetRepository.UpdateBudgetByCategory(transaction.UserId, transaction.TotalAmount, transaction.CategoryId, transaction.CreateDate);
             }
 
             return new TransactionModel
@@ -74,7 +74,7 @@ namespace SIM.Core.Services
 
             if (transaction.TransactionType == TransactionTypeEnum.Expense)
             {
-                await _budgetRepository.UpdateBudgetByCategory(transaction.UserId, -(transaction.TotalAmount), transaction.CategoryId);
+                await _budgetRepository.UpdateBudgetByCategory(transaction.UserId, -(transaction.TotalAmount), transaction.CategoryId, transaction.CreatedDate);
             }
 
             await _transactionRepository.DeleteAsync(transaction);
@@ -185,15 +185,16 @@ namespace SIM.Core.Services
                 amount = transaction.TotalAmount;
             }
             else if (existing.TransactionType == TransactionTypeEnum.Expense && transaction.TransactionType == TransactionTypeEnum.Income)
-            { 
+            {
                 amount = -existing.TotalAmount;
             }
 
-            await _budgetRepository.UpdateBudgetByCategory(transaction.UserId, amount, transaction.CategoryId);
+            await _budgetRepository.UpdateBudgetByCategory(transaction.UserId, amount, transaction.CategoryId, transaction.CreateDate);
 
             existing.VendorId = transaction.VendorId;
             existing.CategoryId = transaction.CategoryId;
             existing.TotalAmount = transaction.TotalAmount;
+            existing.CreatedDate = transaction.CreateDate;
             existing.TransactionType = transaction.TransactionType;
 
             await _transactionRepository.UpdateAsync(existing);
